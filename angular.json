@@ -54,7 +54,7 @@
               "src/assets/css/vendor/app/colors-text.css"
             ],
             "scripts": [
-              
+              "src/assets/js/vendor/core/all.js"
             ]
           },
           "configurations": {
