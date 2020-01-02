@@ -1,0 +1,154 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "App": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/App",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css",
+              "src/assets/css/vendor/bootstrap.css",
+              "src/assets/css/vendor/font-awesome.css",
+              "src/assets/css/vendor/picto.css",
+              "src/assets/css/vendor/material-design-iconic-font.css",
+              "src/assets/css/vendor/datepicker3.css",
+              "src/assets/css/vendor/jquery.minicolors.css",
+              "src/assets/css/vendor/railscasts.css",
+              "src/assets/css/vendor/owl.carousel.css",
+              "src/assets/css/vendor/slick.css",
+              "src/assets/css/vendor/daterangepicker-bs3.css",
+              "src/assets/css/vendor/jquery.bootstrap-touchspin.css",
+              "src/assets/css/vendor/select2.css",
+              "src/assets/css/vendor/jquery.countdown.css",
+              "src/assets/css/vendor/app/essentials.css",
+              "src/assets/css/vendor/app/material.css",
+              "src/assets/css/vendor/app/layout.css",
+              "src/assets/css/vendor/app/sidebar.css",
+              "src/assets/css/vendor/app/sidebar-skins.css",
+              "src/assets/css/vendor/app/navbar.css",
+              "src/assets/css/vendor/app/messages.css",
+              "src/assets/css/vendor/app/media.css",
+              "src/assets/css/vendor/app/charts.css",
+              "src/assets/css/vendor/app/maps.css",
+              "src/assets/css/vendor/app/colors-alerts.css",
+              "src/assets/css/vendor/app/colors-background.css",
+              "src/assets/css/vendor/app/colors-buttons.css",
+              "src/assets/css/vendor/app/colors-text.css"
+            ],
+            "scripts": [
+              
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "App:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "App:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "App:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "App:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "App:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "App"
+}
