@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { CourseCategoryComponent, courseCategoryFilterPipe } from './components/course-category/course-category.component';
+import { DeliveryTypeComponent, deliveryTypeFilterPipe } from './components/delivery-type/delivery-type.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,8 @@ import { CourseCategoryComponent, courseCategoryFilterPipe } from './components/
     courseTypeFilterPipe,
     CourseCategoryComponent,
     courseCategoryFilterPipe,
+    DeliveryTypeComponent,
+    deliveryTypeFilterPipe,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -37,7 +40,8 @@ import { CourseCategoryComponent, courseCategoryFilterPipe } from './components/
     RouterModule.forRoot([
       {path: '', component: DashboardComponent},
       {path:'coursetype', component : CourseTypeComponent},
-      {path:'coursecategory', component : CourseCategoryComponent}
+      {path:'coursecategory', component : CourseCategoryComponent},
+      {path:'deliverytype', component : DeliveryTypeComponent},
     ])
   ],
   providers: [],
