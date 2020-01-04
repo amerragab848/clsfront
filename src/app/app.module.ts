@@ -13,6 +13,7 @@ import { CourseTypeComponent, courseTypeFilterPipe } from './components/course-t
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { CourseCategoryComponent, courseCategoryFilterPipe } from './components/course-category/course-category.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     SidebarComponent,
     DashboardComponent,
     CourseTypeComponent,
-    courseTypeFilterPipe
+    courseTypeFilterPipe,
+    CourseCategoryComponent,
+    courseCategoryFilterPipe,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -33,7 +36,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     BrowserAnimationsModule,
     RouterModule.forRoot([
       {path: '', component: DashboardComponent},
-      {path:'coursetype', component : CourseTypeComponent}
+      {path:'coursetype', component : CourseTypeComponent},
+      {path:'coursecategory', component : CourseCategoryComponent}
     ])
   ],
   providers: [],
