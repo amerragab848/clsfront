@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  baseURL : "http://htvtesthost-001-site1.gtempurl.com/api/",
   production: false
 };
 
