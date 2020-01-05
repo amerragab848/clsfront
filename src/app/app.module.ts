@@ -13,6 +13,10 @@ import { CourseTypeComponent, courseTypeFilterPipe } from './components/course-t
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { ExamTypeComponent , examTypeFilterPipe } from './components/exam-type/exam-type/exam-type.component';
+import { LabTypeComponent , labTypeFilterPipe } from './components/lab-type/lab-type/lab-type.component';
+import { MaterialTypeComponent , materialTypeFilterPipe} from './components/material-type/material-type/material-type.component';
+import { VendorComponent , vendorFilterPipe} from './components/vendor/vendor/vendor.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,15 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     SidebarComponent,
     DashboardComponent,
     CourseTypeComponent,
-    courseTypeFilterPipe
+    courseTypeFilterPipe,
+    ExamTypeComponent,
+    examTypeFilterPipe,
+    LabTypeComponent,
+    labTypeFilterPipe,
+    MaterialTypeComponent,
+    materialTypeFilterPipe,
+    VendorComponent,
+    vendorFilterPipe
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -33,7 +45,11 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     BrowserAnimationsModule,
     RouterModule.forRoot([
       {path: '', component: DashboardComponent},
-      {path:'coursetype', component : CourseTypeComponent}
+      {path:'coursetype', component : CourseTypeComponent},
+      {path:'examtype', component : ExamTypeComponent},
+      {path:'labtype', component : LabTypeComponent},
+      {path:'materialtype', component : MaterialTypeComponent},
+      {path:'vendor', component : VendorComponent}
     ])
   ],
   providers: [],

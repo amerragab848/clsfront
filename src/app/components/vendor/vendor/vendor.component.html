@@ -1,0 +1,72 @@
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Vendors
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-sm-9">
+                            <div class="form-control-material">
+                              <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                <input id="addon" type="text" class="form-control"  [(ngModel)]=searchKey name="searchKey" placeholder="search key"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+                                <label for="addon">Search</label>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <table class="table table-bordered v-middle table-hover table-striped ">
+                            <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                   
+                            <tbody  *ngFor="let type of pageOfItems | vendorFilter : searchKey ">
+                              <tr>
+                                  <td>{{type.name}}</td>
+                                  <td>
+                                    <a   (click)="SelectCategoryToEdit(type)"class="btn btn-warning">Edit</a>
+                                  </td>
+                              </tr>
+                          </tbody>
+                          </table>
+                      </div>
+                </div>
+              
+            </div>
+            <div class="panel-footer">
+                <jw-pagination [pageSize]=4 [items]="vendors" (changePage)="onChangePage($event)"></jw-pagination>
+            </div>
+          </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Save Vendor
+            </div>
+            <div class="panel-body">
+              <form (submit)="SaveVendor()" #form="ngForm" >
+                <div class="form-group form-control-material static">
+                  <input id="typeNameTxt"  [(ngModel)]="vendor.name"  type="text" class="form-control" name="typeName" #typeName required  placeholder="Enter type name">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="typeNameTxt">
+                    Vendor Name  <span class="text-danger">*</span>
+                  </label>
+                  
+                </div>
+                <button type="submit"  [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>
+                <hr/>
+                <button type="button" (click)="ClearObject()" class="btn btn-danger form-control">Clear</button>
+              </form>
+            </div>
+          </div>
+    </div>
+</div>
