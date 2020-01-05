@@ -17,6 +17,8 @@ import { ExamTypeComponent , examTypeFilterPipe } from './components/exam-type/e
 import { LabTypeComponent , labTypeFilterPipe } from './components/lab-type/lab-type/lab-type.component';
 import { MaterialTypeComponent , materialTypeFilterPipe} from './components/material-type/material-type/material-type.component';
 import { VendorComponent , vendorFilterPipe} from './components/vendor/vendor/vendor.component';
+import { CourseCategoryComponent, courseCategoryFilterPipe } from './components/course-category/course-category.component';
+import { DeliveryTypeComponent, deliveryTypeFilterPipe } from './components/delivery-type/delivery-type.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,11 @@ import { VendorComponent , vendorFilterPipe} from './components/vendor/vendor/ve
     MaterialTypeComponent,
     materialTypeFilterPipe,
     VendorComponent,
-    vendorFilterPipe
+    vendorFilterPipe,
+    CourseCategoryComponent,
+    courseCategoryFilterPipe,
+    DeliveryTypeComponent,
+    deliveryTypeFilterPipe,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -49,7 +55,9 @@ import { VendorComponent , vendorFilterPipe} from './components/vendor/vendor/ve
       {path:'examtype', component : ExamTypeComponent},
       {path:'labtype', component : LabTypeComponent},
       {path:'materialtype', component : MaterialTypeComponent},
-      {path:'vendor', component : VendorComponent}
+      {path:'vendor', component : VendorComponent},
+      {path:'coursecategory', component : CourseCategoryComponent},
+      {path:'deliverytype', component : DeliveryTypeComponent}
     ])
   ],
   providers: [],
