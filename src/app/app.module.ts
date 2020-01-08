@@ -19,6 +19,8 @@ import { MaterialTypeComponent , materialTypeFilterPipe} from './components/mate
 import { VendorComponent , vendorFilterPipe} from './components/vendor/vendor/vendor.component';
 import { CourseCategoryComponent, courseCategoryFilterPipe } from './components/course-category/course-category.component';
 import { DeliveryTypeComponent, deliveryTypeFilterPipe } from './components/delivery-type/delivery-type.component';
+import { CourseComponent } from './components/course/course/course.component';
+import {AngularEditorModule} from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { DeliveryTypeComponent, deliveryTypeFilterPipe } from './components/deli
     courseCategoryFilterPipe,
     DeliveryTypeComponent,
     deliveryTypeFilterPipe,
+    CourseComponent,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -49,6 +52,7 @@ import { DeliveryTypeComponent, deliveryTypeFilterPipe } from './components/deli
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    AngularEditorModule,
     RouterModule.forRoot([
       {path: '', component: DashboardComponent},
       {path:'coursetype', component : CourseTypeComponent},
@@ -57,7 +61,8 @@ import { DeliveryTypeComponent, deliveryTypeFilterPipe } from './components/deli
       {path:'materialtype', component : MaterialTypeComponent},
       {path:'vendor', component : VendorComponent},
       {path:'coursecategory', component : CourseCategoryComponent},
-      {path:'deliverytype', component : DeliveryTypeComponent}
+      {path:'deliverytype', component : DeliveryTypeComponent},
+      {path:'course', component: CourseComponent}
     ])
   ],
   providers: [],
