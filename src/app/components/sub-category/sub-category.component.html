@@ -65,11 +65,12 @@
                 </div>
                 <div class="">
                     <div class="">
-                        <select id="categoryName{{id}}" [(ngModel)]="subCategory.courseCategoryName" name="courseCategoryName" class="form-control" #courseCategoryName data-live-search="true" required>
-                            <option *ngFor="let category of courseCategories" [ngValue]="category.name">{{category.name}}</option>
+                        <select  [(ngModel)]="subCategory.courseCategoryId" name="courseCategoryName" class="form-control" #courseCategoryName data-live-search="true" required>
+                            <option *ngFor="let category of courseCategories" [ngValue]="category.id">{{category.name}}</option>
                         </select>
                     </div>
                 </div>
+                <br/>
                 <button type="submit" [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>
                 <hr/>
                 <button type="button" (click)="ClearObject()" class="btn btn-danger form-control">Clear</button>

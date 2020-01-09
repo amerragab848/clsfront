@@ -43,6 +43,11 @@ export class SubCategoryComponent implements OnInit {
     private _courseCategoryService : CourseCategoryService
   ) { }
 
+  ngOnInit() {
+    this.GetSubCategories();
+    this.GetCourseCategories();
+  }
+
   GetSubCategories() {
     this._SubCategoryService.GetSubCategories().subscribe((data :any)=>{
        this.subCategories = data.result;
@@ -76,7 +81,6 @@ export class SubCategoryComponent implements OnInit {
         if(data.code === 200){
           this._toastSrv.success("","Saved Successfully");
           this.ClearObject();
-          this.GetSubCategories();
           this.btnClicked=false;
         }
         if(data.code === 500)
@@ -120,11 +124,7 @@ export class SubCategoryComponent implements OnInit {
     this.subCategory = subCategory;
   }
 
-  ngOnInit() {
-    this.GetSubCategories();
-    this.GetCourseCategories();
-  }
-
+  
 }
 
 @Pipe({
