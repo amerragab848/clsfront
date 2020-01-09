@@ -21,6 +21,7 @@ import { CourseCategoryComponent, courseCategoryFilterPipe } from './components/
 import { DeliveryTypeComponent, deliveryTypeFilterPipe } from './components/delivery-type/delivery-type.component';
 import { CourseComponent } from './components/course/course/course.component';
 import {AngularEditorModule} from '@kolkov/angular-editor';
+import { SubCategoryComponent, subCategoryFilterPipe } from './components/sub-category/sub-category.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,8 @@ import {AngularEditorModule} from '@kolkov/angular-editor';
     DeliveryTypeComponent,
     deliveryTypeFilterPipe,
     CourseComponent,
+    SubCategoryComponent,
+    subCategoryFilterPipe,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -62,7 +65,8 @@ import {AngularEditorModule} from '@kolkov/angular-editor';
       {path:'vendor', component : VendorComponent},
       {path:'coursecategory', component : CourseCategoryComponent},
       {path:'deliverytype', component : DeliveryTypeComponent},
-      {path:'course', component: CourseComponent}
+      {path:'course', component: CourseComponent},
+      {path:'subcategory', component: SubCategoryComponent}
     ])
   ],
   providers: [],
