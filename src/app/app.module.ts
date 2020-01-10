@@ -23,6 +23,7 @@ import { CourseComponent } from './components/course/course/course.component';
 import {AngularEditorModule} from '@kolkov/angular-editor';
 import { SubCategoryComponent, subCategoryFilterPipe } from './components/sub-category/sub-category.component';
 import { BranchComponent, branchFilterPipe } from './components/branch/branch.component';
+import { LabComponent, labFilterPipe } from './components/lab/lab.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,8 @@ import { BranchComponent, branchFilterPipe } from './components/branch/branch.co
     subCategoryFilterPipe,
     BranchComponent,
     branchFilterPipe,
+    LabComponent,
+    labFilterPipe,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -71,6 +74,7 @@ import { BranchComponent, branchFilterPipe } from './components/branch/branch.co
       {path:'course', component: CourseComponent},
       {path:'subcategory', component: SubCategoryComponent},
       {path:'branch', component: BranchComponent},
+      {path:'lab', component: LabComponent},
     ])
   ],
   providers: [],
