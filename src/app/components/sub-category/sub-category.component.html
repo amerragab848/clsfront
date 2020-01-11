@@ -65,8 +65,11 @@
                 </div>
                 <div class="">
                     <div class="">
+                      <label for="courseCategoryName">
+                        Category Name  <span class="text-danger">*</span>
+                      </label>
                         <select  [(ngModel)]="subCategory.courseCategoryId" name="courseCategoryName" class="form-control" #courseCategoryName data-live-search="true" required>
-                            <option *ngFor="let category of courseCategories" [ngValue]="category.id">{{category.name}}</option>
+                          <option *ngFor="let category of courseCategories" [ngValue]="category.id">{{category.name}}</option>
                         </select>
                     </div>
                 </div>
