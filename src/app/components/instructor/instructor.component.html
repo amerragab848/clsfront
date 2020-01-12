@@ -1,0 +1,127 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Instructors
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-sm-9">
+                            <div class="form-control-material">
+                              <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                <input id="addon" type="text" class="form-control"  [(ngModel)]=searchKey name="searchKey" placeholder="search key"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+                                <label for="addon">Search</label>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <table class="table table-bordered v-middle table-hover table-striped ">
+                            <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th>Mobile Phone</th>
+                                <th>Home Number</th>
+                                <th>Email</th>
+                                <th>Job Title</th>
+                                <th>Image</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            
+                            <tbody *ngFor="let instructor of pageOfItems | instructorFilter : searchKey">
+                              <tr>
+                                  <td>{{instructor.name}}</td>
+                                  <td>{{instructor.phone}}</td>
+                                  <td>{{instructor.number}}</td>
+                                  <td>{{instructor.email}}</td>
+                                  <td>{{instructor.major}}</td>
+                                  <!-- <td></td> -->
+                                  <td>{{instructor.image}}</td>
+                                  <td>
+                                    <a   (click)="SelectInstructorToEdit(branch)"class="btn btn-warning">Edit</a>
+                                  </td>
+                              </tr>
+                          </tbody>
+                          </table>
+                      </div>
+                </div>
+              
+            </div>
+            <div class="panel-footer">
+                <jw-pagination [pageSize]=4 [items]="instructors" (changePage)="onChangePage($event)"></jw-pagination>
+            </div>
+          </div>
+    </div>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Save Instructor
+            </div>
+            <div class="panel-body">
+              <form (submit)="SaveInstructor()" #form="ngForm" >
+                <div class="form-group form-control-material static">
+                  <input id="instructorNameTxt"  [(ngModel)]="instructor.name"  type="text" class="form-control" name="instructorName" #instructorName required  placeholder="Enter instructor name">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="instructorNameTxt">
+                    Instructor Name  <span class="text-danger">*</span>
+                  </label>      
+                </div>
+
+                <div class="form-group form-control-material static">
+                    <input id="instructorPhoneTxt"  [(ngModel)]="instructor.phone"  type="text" class="form-control" name="instructorPhone" #instructorPhone required  placeholder="Enter instructor phone">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="instructorPhoneTxt">
+                        Instructor Phone  <span class="text-danger">*</span>
+                    </label>            
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="instructorNumberTxt"  [(ngModel)]="instructor.number"  type="text" class="form-control" name="instructorNumber" #instructorNumber required  placeholder="Enter instructor number">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="instructorNumberTxt">
+                        Instructor Number  <span class="text-danger">*</span>
+                    </label>            
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="instructorEmailTxt"  [(ngModel)]="instructor.email"  type="text" class="form-control" name="instructorEmail" #instructorEmail required  placeholder="Enter instructor email">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="instructorEmailTxt">
+                        Instructor Email  <span class="text-danger">*</span>
+                    </label>            
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="instructorMajorTxt"  [(ngModel)]="instructor.major"  type="text" class="form-control" name="instructorMajor" #instructorMajor required  placeholder="Enter instructor job title">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="instructorMajorTxt">
+                        Instructor Job Title  <span class="text-danger">*</span>
+                    </label>            
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="instructorImageTxt"  [(ngModel)]="instructor.image"  type="text" class="form-control" name="instructorImage" #instructorImage required  placeholder="Enter instructor image">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="instructorImageTxt">
+                        Instructor Job Title  <span class="text-danger">*</span>
+                    </label>            
+                  </div>
+
+                  <angular-editor [placeholder]="'Enter instructor bio'" [(ngModel)]="instructor.bio" name="instructorBio"></angular-editor>
+                <button type="submit"  [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>
+                <hr/>
+                <button type="button" (click)="ClearObject()" class="btn btn-danger form-control">Clear</button>
+              </form>
+            </div>
+          </div>
+    </div>
+</div>
