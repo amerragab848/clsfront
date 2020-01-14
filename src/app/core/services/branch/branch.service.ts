@@ -1,38 +1,38 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SubCategoryService {
+export class BranchService {
 
   baseURL :string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) { 
     this.baseURL = environment.baseURL;
-   }
+  }
 
-  GetSubCategories(){
+  GetBranches(){
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
-    return this.http.get(this.baseURL+"CourseSubCategory",{
+    return this.http.get(this.baseURL+"Branch",{
       headers : headers
     });
   }
 
-  AddSubCategory(subCategory){
+  AddBranch(branch){
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
-    return this.http.post(this.baseURL+"CourseSubCategory",subCategory,{
+    return this.http.post(this.baseURL+"Branch",branch,{
       headers : headers
     });
   }
 
-  EditSubCategory(subCategory){
+  EditBranch(branch){
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
-    return this.http.put(this.baseURL+"CourseSubCategory",subCategory,{
+    return this.http.put(this.baseURL+"Branch",branch,{
       headers : headers
     });
   }

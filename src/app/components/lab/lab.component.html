@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Course Sub Categories
+                Branches Labs
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -22,17 +22,19 @@
                             <thead>
                               <tr>
                                 <th>Name</th>
-                                <th>Category</th>
+                                <th>Capacity</th>
+                                <th>Branch</th>
                                 <th>Action</th>
                               </tr>
                             </thead>
                             
-                            <tbody  *ngFor="let subCategory of pageOfItems | subCategoryFilter : searchKey ">
+                            <tbody  *ngFor="let lab of pageOfItems | labFilter : searchKey ">
                               <tr>
-                                  <td>{{subCategory.name}}</td>
-                                  <td>{{subCategory.courseCategoryName}}</td>
+                                  <td>{{lab.name}}</td>
+                                  <td>{{lab.capacity}}</td>
+                                  <td>{{lab.branchName}}</td>
                                   <td>
-                                    <a (click)="SelectSubCategoryToEdit(subCategory)"class="btn btn-warning">Edit</a>
+                                    <a (click)="SelectLabToEdit(lab)"class="btn btn-warning">Edit</a>
                                   </td>
                               </tr>
                           </tbody>
@@ -42,7 +44,7 @@
               
             </div>
             <div class="panel-footer">
-                <jw-pagination [pageSize]=4 [items]="subCategories" (changePage)="onChangePage($event)"></jw-pagination>
+                <jw-pagination [pageSize]=4 [items]="labs" (changePage)="onChangePage($event)"></jw-pagination>
             </div>
           </div>
     </div>
@@ -50,26 +52,23 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Save Sub Category
+                Save Lab
             </div>
             <div class="panel-body">
-              <form (submit)="SaveSubCategory()" #form="ngForm" >
+              <form (submit)="SaveLab()" #form="ngForm" >
                 <div class="form-group form-control-material static">
-                  <input id="subCategoryNameTxt"  [(ngModel)]="subCategory.name"  type="text" class="form-control" name="subCategoryName" #subCategoryName required  placeholder="Enter sub category name">
+                  <input id="labNameTxt"  [(ngModel)]="lab.name"  type="text" class="form-control" name="labName" #labName required  placeholder="Enter lab name">
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
-                  <label for="subCategoryNameTxt">
-                    Sub Category Name  <span class="text-danger">*</span>
+                  <label for="labNameTxt">
+                    Lab Name  <span class="text-danger">*</span>
                   </label>
                   
                 </div>
                 <div class="">
                     <div class="">
-                      <label for="courseCategoryName">
-                        Category Name  <span class="text-danger">*</span>
-                      </label>
-                        <select  [(ngModel)]="subCategory.courseCategoryId" name="courseCategoryName" class="form-control" #courseCategoryName data-live-search="true" required>
-                          <option *ngFor="let category of courseCategories" [ngValue]="category.id">{{category.name}}</option>
+                        <select  [(ngModel)]="lab.branchId" name="branchName" class="form-control" #branchName data-live-search="true" required>
+                            <option *ngFor="let branch of branches" [ngValue]="branch.id">{{branch.name}}</option>
                         </select>
                     </div>
                 </div>

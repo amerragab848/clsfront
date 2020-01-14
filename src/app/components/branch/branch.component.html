@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Course Sub Categories
+                Branches
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -22,17 +22,17 @@
                             <thead>
                               <tr>
                                 <th>Name</th>
-                                <th>Category</th>
+                                <th>Location</th>
                                 <th>Action</th>
                               </tr>
                             </thead>
                             
-                            <tbody  *ngFor="let subCategory of pageOfItems | subCategoryFilter : searchKey ">
+                            <tbody *ngFor="let branch of pageOfItems | branchFilter : searchKey">
                               <tr>
-                                  <td>{{subCategory.name}}</td>
-                                  <td>{{subCategory.courseCategoryName}}</td>
+                                  <td>{{branch.name}}</td>
+                                  <td>{{branch.location}}</td>
                                   <td>
-                                    <a (click)="SelectSubCategoryToEdit(subCategory)"class="btn btn-warning">Edit</a>
+                                    <a   (click)="SelectBranchToEdit(branch)"class="btn btn-warning">Edit</a>
                                   </td>
                               </tr>
                           </tbody>
@@ -42,7 +42,7 @@
               
             </div>
             <div class="panel-footer">
-                <jw-pagination [pageSize]=4 [items]="subCategories" (changePage)="onChangePage($event)"></jw-pagination>
+                <jw-pagination [pageSize]=4 [items]="branches" (changePage)="onChangePage($event)"></jw-pagination>
             </div>
           </div>
     </div>
@@ -50,31 +50,29 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Save Sub Category
+                Save Branch
             </div>
             <div class="panel-body">
-              <form (submit)="SaveSubCategory()" #form="ngForm" >
+              <form (submit)="SaveBranch()" #form="ngForm" >
                 <div class="form-group form-control-material static">
-                  <input id="subCategoryNameTxt"  [(ngModel)]="subCategory.name"  type="text" class="form-control" name="subCategoryName" #subCategoryName required  placeholder="Enter sub category name">
+                  <input id="branchNameTxt"  [(ngModel)]="branch.name"  type="text" class="form-control" name="branchName" #branchName required  placeholder="Enter branch name">
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
-                  <label for="subCategoryNameTxt">
-                    Sub Category Name  <span class="text-danger">*</span>
+                  <label for="branchNameTxt">
+                    Branch Name  <span class="text-danger">*</span>
                   </label>
                   
                 </div>
-                <div class="">
-                    <div class="">
-                      <label for="courseCategoryName">
-                        Category Name  <span class="text-danger">*</span>
-                      </label>
-                        <select  [(ngModel)]="subCategory.courseCategoryId" name="courseCategoryName" class="form-control" #courseCategoryName data-live-search="true" required>
-                          <option *ngFor="let category of courseCategories" [ngValue]="category.id">{{category.name}}</option>
-                        </select>
-                    </div>
-                </div>
-                <br/>
-                <button type="submit" [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>
+                <div class="form-group form-control-material static">
+                    <input id="locationNameTxt"  [(ngModel)]="branch.location"  type="text" class="form-control" name="branchLocation" #branchLocation required  placeholder="Enter branch location">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="locationNameTxt">
+                      Branch Location  <span class="text-danger">*</span>
+                    </label>
+                    
+                  </div>
+                <button type="submit"  [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>
                 <hr/>
                 <button type="button" (click)="ClearObject()" class="btn btn-danger form-control">Clear</button>
               </form>
