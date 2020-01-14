@@ -19,7 +19,7 @@ import { MaterialTypeComponent , materialTypeFilterPipe} from './components/mate
 import { VendorComponent , vendorFilterPipe} from './components/vendor/vendor/vendor.component';
 import { CourseCategoryComponent, courseCategoryFilterPipe } from './components/course-category/course-category.component';
 import { DeliveryTypeComponent, deliveryTypeFilterPipe } from './components/delivery-type/delivery-type.component';
-import { CourseComponent } from './components/course/course/course.component';
+import { CourseComponent , courseFilterPipe } from './components/course/course/course.component';
 import {AngularEditorModule} from '@kolkov/angular-editor';
 import { SubCategoryComponent, subCategoryFilterPipe } from './components/sub-category/sub-category.component';
 import { BranchComponent, branchFilterPipe } from './components/branch/branch.component';
@@ -56,6 +56,7 @@ import { InstructorComponent, instructorFilterPipe } from './components/instruct
     labFilterPipe,
     InstructorComponent,
     instructorFilterPipe,
+    courseFilterPipe
   ],
   imports: [
     SweetAlert2Module.forRoot(),

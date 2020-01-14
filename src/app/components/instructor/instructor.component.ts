@@ -12,6 +12,7 @@ export interface InstructorModel
   email:string;
   major:string;
   image:string;
+  bio:string;
 }
 
 @Component({
@@ -119,6 +120,6 @@ export class instructorFilterPipe implements PipeTransform{
     if(!contents || !searchKey){
       return contents;
     }
-    return contents.filter(c => c.name.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1);
+    return contents.filter(c => c.name.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 || c.number.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 || c.phone.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 || c.email.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1);
   }
 }

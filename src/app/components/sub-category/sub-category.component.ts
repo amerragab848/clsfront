@@ -135,6 +135,6 @@ export class subCategoryFilterPipe implements PipeTransform{
     if(!contents || !searchKey){
       return contents;
     }
-    return contents.filter(c => c.name.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1);
+    return contents.filter(c => c.name.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1  || c.courseCategoryName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1);
   }
 }

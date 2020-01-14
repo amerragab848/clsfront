@@ -19,7 +19,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input
-                                        type="search" class="form-control input-sm" placeholder=""
+                                        type="search" [(ngModel)]="searchKey" name="searchKey" class="form-control input-sm" placeholder=""
                                         aria-controls="DataTables_Table_0"></label></div>
                         </div>
                     </div>
@@ -32,42 +32,29 @@
                                     <tr role="row">
                                         <th>Name</th>
                                         <th>Category</th>
+                                        <th>Sub Category</th>
                                         <th>Type</th>
                                         <th>Exam</th>
                                         <th>Material</th>
                                         <th>Lab</th>
                                         <th>Vendor</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody  *ngFor="let course of pageOfItems | courseFilter : searchKey">
                                     <tr>
-                                        <td>C# Course</td>
-                                        <td>Software</td>
-                                        <td>Full Day</td>
-                                        <td>No Exam</td>
-                                        <td>Soft Copies</td>
-                                        <td>Lab</td>
-                                        <td>MicroSoft</td>
+                                        <td>{{course.name}}</td>
+                                        <td>{{course.courseCategoryName}}</td>
+                                        <td>{{course.courseSubCategoryName}}</td>
+                                        <td>{{course.courseTypeName}}</td>
+                                        <td>{{course.examTypeName}}</td>
+                                        <td>{{course.materialTypeName}}</td>
+                                        <td>{{course.labTypeName}}</td>
+                                        <td>{{course.vendorName}}</td>
+                                        <td>
+                                            <a class="btn btn-warning" (click)="SelectCourseToEdit(course)">Edit</a>
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <td>C# Course</td>
-                                        <td>Software</td>
-                                        <td>Full Day</td>
-                                        <td>No Exam</td>
-                                        <td>Soft Copies</td>
-                                        <td>Lab</td>
-                                        <td>MicroSoft</td>
-                                    </tr>
-                                    <tr>
-                                        <td>C# Course</td>
-                                        <td>Software</td>
-                                        <td>Full Day</td>
-                                        <td>No Exam</td>
-                                        <td>Soft Copies</td>
-                                        <td>Lab</td>
-                                        <td>MicroSoft</td>
-                                    </tr>
-                                    
                                 </tbody>
                             </table>
                         </div>
@@ -79,31 +66,15 @@
                             </div>
                             <div class="col-sm-7">
                                 <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-                                    <!-- <ul class="pagination">
-                                    <li class="paginate_button previous disabled" id="DataTables_Table_0_previous"><a
-                                            href="#" aria-controls="DataTables_Table_0" data-dt-idx="0"
-                                            tabindex="0">Previous</a></li>
-                                    <li class="paginate_button active"><a href="#" aria-controls="DataTables_Table_0"
-                                            data-dt-idx="1" tabindex="0">1</a></li>
-                                    <li class="paginate_button "><a href="#" aria-controls="DataTables_Table_0"
-                                            data-dt-idx="2" tabindex="0">2</a></li>
-                                    <li class="paginate_button "><a href="#" aria-controls="DataTables_Table_0"
-                                            data-dt-idx="3" tabindex="0">3</a></li>
-                                    <li class="paginate_button "><a href="#" aria-controls="DataTables_Table_0"
-                                            data-dt-idx="4" tabindex="0">4</a></li>
-                                    <li class="paginate_button "><a href="#" aria-controls="DataTables_Table_0"
-                                            data-dt-idx="5" tabindex="0">5</a></li>
-                                    <li class="paginate_button "><a href="#" aria-controls="DataTables_Table_0"
-                                            data-dt-idx="6" tabindex="0">6</a></li>
-                                    <li class="paginate_button next" id="DataTables_Table_0_next"><a href="#"
-                                            aria-controls="DataTables_Table_0" data-dt-idx="7" tabindex="0">Next</a>
-                                    </li>
-                                </ul> -->
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="panel-footer">
+                <jw-pagination [pageSize]=4 [items]="courses" (changePage)="onChangePage($event)"></jw-pagination>
             </div>
         </div>
 
@@ -113,58 +84,65 @@
                     <h3>Save Course</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form">
+                    <form #form="ngForm" class="form-horizontal" (submit)="SaveCourse()" role="form">
                         <div class="form-group">
                             <div class="col-sm-4">
                                 <div class="form-control-material static">
                                     <input type="text" class="form-control" id="courseNameTxt"
-                                        placeholder="Type here.."><span class="ma-form-highlight"></span><span
+                                    [(ngModel)]="course.name" name="courseNameTxt" class="form-control" #courseNameTxt  ><span class="ma-form-highlight"></span><span
                                         class="ma-form-bar"></span>
                                     <label for="courseNameTxt">Course Name</label>
                                 </div>
                             </div>
 
                             <div class="col-sm-4">
-                                <div class="">
-                                    <select class="form-control" data-live-search="true">
-                                        <option>choose category</option>
+                                <label for="courseCategoryName">
+                                    Course Category   <span class="text-danger">*</span>
+                                  </label>
+                                    <select (change)="GetSubCategories($event.target.value)" [(ngModel)]="course.courseCategoryId"   name="courseCategoryName" class="form-control" #courseCategoryName data-live-search="true" required>
+                                    <option *ngFor="let category of courseCategories" value="{{category.id}}">{{category.name}}</option>
                                     </select>
-                                </div>
                             </div>
 
+
                             <div class="col-sm-4">
-                                <div class="">
-                                    <select class="form-control" data-live-search="true">
-                                        <option>choose type</option>
+                                <label for="courseSubCategoryName">
+                                    Course Sub Category   <span class="text-danger">*</span>
+                                  </label>
+                                    <select  [(ngModel)]="course.courseSubCategoryId" name="courseSubCategoryName" class="form-control" #courseSubCategoryName data-live-search="true" required>
+                                      <option *ngFor="let category of courseSubCategories" [ngValue]="category.id">{{category.name}}</option>
                                     </select>
-                                </div>
                             </div>
+                           
 
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-4">
-                                <div class="">
-                                    <select class="form-control" data-live-search="true">
-                                        <option>choose delivery type</option>
+                                <label for="deliveryTypeName">
+                                    Delivery Type   <span class="text-danger">*</span>
+                                  </label>
+                                    <select  [(ngModel)]="course.deliveryTypeId" name="deliveryTypeName" class="form-control" #deliveryTypeName data-live-search="true" required>
+                                      <option *ngFor="let item of deliveryTypes" [ngValue]="item.id">{{item.name}}</option>
                                     </select>
-                                </div>
                             </div>
                             
                             <div class="col-sm-4">
-                                <div class="">
-                                    <select class="form-control" data-live-search="true">
-                                        <option>choose exam type</option>
+                                <label for="examTypeName">
+                                    Exam Type   <span class="text-danger">*</span>
+                                  </label>
+                                    <select  [(ngModel)]="course.examTypeId" name="examTypeName" class="form-control" #examTypeName data-live-search="true" required>
+                                      <option *ngFor="let item of examTypes" [ngValue]="item.id">{{item.name}}</option>
                                     </select>
-                                </div>
                             </div>
 
                             <div class="col-sm-4">
-                                <div class="">
-                                    <select class="form-control" data-live-search="true">
-                                        <option>choose material type</option>
+                                <label for="materialTypeName">
+                                    Material Type   <span class="text-danger">*</span>
+                                  </label>
+                                    <select  [(ngModel)]="course.materialTypeId" name="materialTypeName" class="form-control" #materialTypeName data-live-search="true" required>
+                                      <option *ngFor="let item of materialTypes" [ngValue]="item.id">{{item.name}}</option>
                                     </select>
-                                </div>
                             </div>
 
                            
@@ -172,12 +150,32 @@
 
                         <div class="form-group">
                             <div class="col-sm-4">
-                                <select class="form-control" data-live-search="true">
-                                    <option>choose vendor</option>
-                                </select>
+                                <label for="labTypeName">
+                                    Lab Type   <span class="text-danger">*</span>
+                                  </label>
+                                    <select  [(ngModel)]="course.labTypeId" name="labTypeName" class="form-control" #labTypeName data-live-search="true" required>
+                                      <option *ngFor="let item of labTypes" [ngValue]="item.id">{{item.name}}</option>
+                                    </select>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
+                                <label for="vendorName">
+                                    Vendor   <span class="text-danger">*</span>
+                                  </label>
+                                    <select  [(ngModel)]="course.vendorId" name="vendorName" class="form-control" #vendorName data-live-search="true" required>
+                                      <option *ngFor="let item of vendors" [ngValue]="item.id">{{item.name}}</option>
+                                    </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label for="courseTypeName">
+                                    Course Type   <span class="text-danger">*</span>
+                                  </label>
+                                    <select  [(ngModel)]="course.courseTypeId" name="courseTypeName" class="form-control" #courseTypeName data-live-search="true" required>
+                                      <option *ngFor="let item of courseTypes" [ngValue]="item.id">{{item.name}}</option>
+                                    </select>
+                            </div>
+                            <!-- <div class="col-sm-3">
                                 <div class="form-control-material static">
                                     <input type="number" class="form-control" id="durationNumber"
                                         placeholder="Number"><span class="ma-form-highlight"></span><span
@@ -192,10 +190,11 @@
                                     <option>Hours</option>
                                     <option>Day</option>
                                     <option>Week</option>
-                                    <option>Mobth</option>
+                                    <option>Month</option>
                                     <option>Year</option>
                                 </select>
                             </div>
+                             -->
                         </div>
 
                         <div class="form-group">
@@ -205,7 +204,7 @@
                                 </label>
                             </div>
                             <div class="col-sm-5">
-                                <angular-editor id="outline"></angular-editor>
+                                <angular-editor [(ngModel)]="course.outline" name="outline" id="outline"></angular-editor>
                             </div>
 
                             <div class="col-sm-1">
@@ -214,7 +213,7 @@
                                 </label>
                             </div>
                             <div class="col-sm-5">
-                                <angular-editor id="outcomes"></angular-editor>
+                                <angular-editor [(ngModel)]="course.outcomes" name="outcomes" id="outcomes"></angular-editor>
                             </div>
                         </div>
 
@@ -225,7 +224,7 @@
                                 </label>
                             </div>
                             <div class="col-sm-5">
-                                <angular-editor id="benefits"></angular-editor>
+                                <angular-editor [(ngModel)]="course.benefits" name="benefits" id="benefits"></angular-editor>
                             </div>
 
                             <div class="col-sm-1">
@@ -234,14 +233,14 @@
                                 </label>
                             </div>
                             <div class="col-sm-5">
-                                <angular-editor id="overview"></angular-editor>
+                                <angular-editor [(ngModel)]="course.overview" name="overview" id="overview"></angular-editor>
                             </div>
                         </div>
 
                         <div class="form-group margin-none">
                             <div class="col-sm-12">
-                                <button type="submit" class="btn btn-success form-control">Save</button>
-                                <button style="margin-top: 15px;" class="btn btn-danger form-control">Clear</button>
+                                <button [disabled]="form.invalid || btnClicked"  type="submit" class="btn btn-success form-control">Save</button>
+                                <button (click)="ClearObject()" style="margin-top: 15px;" class="btn btn-danger form-control">Clear</button>
                             </div>
                         </div>
                     </form>

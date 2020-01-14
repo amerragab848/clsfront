@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Branches Labs
+                Labs
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -63,8 +63,18 @@
                   <label for="labNameTxt">
                     Lab Name  <span class="text-danger">*</span>
                   </label>
-                  
                 </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="labCapacityTxt"  [(ngModel)]="lab.capacity"  type="number" class="form-control" name="labCapacity" #labcapacity required  placeholder="Enter lab capacity">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="labCapacityTxt">
+                    Lab Capacity  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+
                 <div class="">
                     <div class="">
                         <select  [(ngModel)]="lab.branchId" name="branchName" class="form-control" #branchName data-live-search="true" required>

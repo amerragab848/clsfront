@@ -13,7 +13,7 @@ export class ToastService {
       title: title,
       text: text,
       icon: 'success',
-      confirmButtonText: 'Cool'
+      confirmButtonText: 'OK'
     });
   }
 
@@ -22,7 +22,7 @@ export class ToastService {
       title: title,
       text: text,
       icon: 'error',
-      confirmButtonText: 'Cool'
+      confirmButtonText: 'OK'
     });
   }
 
@@ -31,7 +31,7 @@ export class ToastService {
       title: title,
       text: text,
       icon: 'warning',
-      confirmButtonText: 'Cool'
+      confirmButtonText: 'OK'
     });
   }
 
