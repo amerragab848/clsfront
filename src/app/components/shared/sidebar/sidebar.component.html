@@ -6,20 +6,37 @@
           <li class=""><a [routerLink]="['/']"><i class="fa fa-bar-chart-o"></i><span>Dashboard</span></a></li>
           <li class="hasSubmenu">
             <a href="#course-menu"><i class="fa fa-mortar-board"></i><span>Courses Defination</span></a>
-            <ul id="course-menu">
-              <li><a [routerLink]="['/coursetype']" ><span>Courses Types</span></a></li>
-              <li><a [routerLink]="['/examtype']" ><span>Exam Types</span></a></li>
-              <li><a [routerLink]="['/labtype']" ><span>Lab Types</span></a></li>
-              <li><a [routerLink]="['/materialtype']" ><span>Material Types</span></a></li>
-              <li><a [routerLink]="['/vendor']" ><span>Vendors</span></a></li>
-              <li><a [routerLink]="['/coursecategory']" ><span>Courses Category</span></a></li>
-              <li><a [routerLink]="['/deliverytype']" ><span>Delivery Type</span></a></li>
-              <li><a [routerLink]="['/course']" ><span>Course</span></a></li>
-              <li><a [routerLink]="['/subcategory']" ><span>SubCategory</span></a></li>
-              <li><a [routerLink]="['/branch']" ><span>Branches</span></a></li>
-              <li><a [routerLink]="['/lab']" ><span>Labs</span></a></li>
-              <li><a [routerLink]="['/instructor']" ><span>Instructors</span></a></li>
-            </ul>
+
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingThree">
+                  <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed"  role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      List
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                  <div class="panel-body">
+                    <ul id="course-menu">
+                          <li><a [routerLink]="['/coursetype']" ><span>Courses Types</span></a></li>
+                          <li><a [routerLink]="['/examtype']" ><span>Exam Types</span></a></li>
+                          <li><a [routerLink]="['/labtype']" ><span>Lab Types</span></a></li>
+                          <li><a [routerLink]="['/materialtype']" ><span>Material Types</span></a></li>
+                          <li><a [routerLink]="['/vendor']" ><span>Vendors</span></a></li>
+                          <li><a [routerLink]="['/coursecategory']" ><span>Courses Category</span></a></li>
+                          <li><a [routerLink]="['/deliverytype']" ><span>Delivery Type</span></a></li>
+                          <li><a [routerLink]="['/course']" ><span>Course</span></a></li>
+                          <li><a [routerLink]="['/subcategory']" ><span>SubCategory</span></a></li>
+                          <li><a [routerLink]="['/branch']" ><span>Branches</span></a></li>
+                          <li><a [routerLink]="['/lab']" ><span>Labs</span></a></li>
+                          <li><a [routerLink]="['/instructor']" ><span>Instructors</span></a></li>
+                        </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </li>
         </ul>
       </div>
