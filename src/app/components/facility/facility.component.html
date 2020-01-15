@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Branches Labs
+                Facilities
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -22,20 +22,19 @@
                             <thead>
                               <tr>
                                 <th>Name</th>
-                                <th>Capacity</th>
-                                <th>Branch</th>
-                                <th>Action</th>
+                                <th>Number</th>
+                                <th>Info</th>
+                                <!-- <th>Lab</th> -->
                               </tr>
                             </thead>
                             
-                            <tbody  *ngFor="let lab of pageOfItems | labFilter : searchKey ">
+                            <tbody *ngFor="let facility of pageOfItems | facilityFilter : searchKey ">
                               <tr>
-                                  <td>{{lab.name}}</td>
-                                  <td>{{lab.capacity}}</td>
-                                  <td>{{lab.branchName}}</td>
+                                  <td>{{facility.name}}</td>
+                                  <td>{{facility.number}}</td>
+                                  <td>{{facility.info}}</td>
                                   <td>
-                                    <a (click)="SelectLabToEdit(lab)"class="btn btn-warning">Edit</a>
-                                    <a [routerLink]="['/facility', lab.id]" class="btn btn-warning facility-btn">Facility</a>
+                                    <a (click)="SelectFacilityToEdit(facility)"class="btn btn-warning">Edit</a>
                                   </td>
                               </tr>
                           </tbody>
@@ -53,26 +52,20 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Save Lab
+                Save Facility
             </div>
             <div class="panel-body">
-              <form (submit)="SaveLab()" #form="ngForm" >
+              <form (submit)="SaveFacility()" #form="ngForm" >
                 <div class="form-group form-control-material static">
-                  <input id="labNameTxt"  [(ngModel)]="lab.name"  type="text" class="form-control" name="labName" #labName required  placeholder="Enter lab name">
+                  <input id="facilityNameTxt"  [(ngModel)]="facility.name"  type="text" class="form-control" name="facilityName" #facilityName required  placeholder="Enter facility name">
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
-                  <label for="labNameTxt">
-                    Lab Name  <span class="text-danger">*</span>
+                  <label for="facilityNameTxt">
+                    Facility Name  <span class="text-danger">*</span>
                   </label>
                   
                 </div>
-                <div class="">
-                    <div class="">
-                        <select  [(ngModel)]="lab.branchId" name="branchName" class="form-control" #branchName data-live-search="true" required>
-                            <option *ngFor="let branch of branches" [ngValue]="branch.id">{{branch.name}}</option>
-                        </select>
-                    </div>
-                </div>
+
                 <br/>
                 <button type="submit" [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>
                 <hr/>
