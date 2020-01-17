@@ -37,7 +37,6 @@ export class FacilityComponent implements OnInit {
   GetFacilities() {
     this._facilityService.GetFacilities().subscribe((data :any)=>{
        this.facilities = data.result;
-       console.log(this.facilities)
     }) 
   } 
 
@@ -54,6 +53,9 @@ export class FacilityComponent implements OnInit {
 
   SaveFacility()
   {
+    let labId = this.activatedRoute.snapshot.params.id;
+    this.facility.labId = parseInt(labId.toString());
+    parseInt(this.facility.number.toString());
     this.btnClicked=true;
     if(this.facility.id ==0){
       this._facilityService.AddFacility(this.facility).subscribe((data : any) =>{
@@ -105,9 +107,6 @@ export class FacilityComponent implements OnInit {
 
   ngOnInit() {
     this.GetFacilities();
-    this.activatedRoute.params.subscribe(params => {
-      console.log(params);
-    });
   }
 
 }

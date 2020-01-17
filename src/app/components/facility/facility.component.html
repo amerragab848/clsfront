@@ -24,7 +24,7 @@
                                 <th>Name</th>
                                 <th>Number</th>
                                 <th>Info</th>
-                                <!-- <th>Lab</th> -->
+                                <th>Action</th>
                               </tr>
                             </thead>
                             
@@ -44,7 +44,7 @@
               
             </div>
             <div class="panel-footer">
-                <jw-pagination [pageSize]=4 [items]="labs" (changePage)="onChangePage($event)"></jw-pagination>
+                <jw-pagination [pageSize]=4 [items]="facilities" (changePage)="onChangePage($event)"></jw-pagination>
             </div>
           </div>
     </div>
@@ -63,8 +63,18 @@
                   <label for="facilityNameTxt">
                     Facility Name  <span class="text-danger">*</span>
                   </label>
-                  
                 </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="facilityNumberTxt"  [(ngModel)]="facility.number" type="text" class="form-control" name="facilityNumber" #facilityNumber required  placeholder="Enter facility number">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="facilityNumberTxt">
+                    Facility Number  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <angular-editor [placeholder]="'Enter facility info'" [(ngModel)]="facility.info" name="facilityInfo"></angular-editor>
 
                 <br/>
                 <button type="submit" [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>
