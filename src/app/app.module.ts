@@ -26,6 +26,7 @@ import { BranchComponent, branchFilterPipe } from './components/branch/branch.co
 import { LabComponent, labFilterPipe } from './components/lab/lab.component';
 import { InstructorComponent, instructorFilterPipe } from './components/instructor/instructor.component';
 import { FacilityComponent, facilityFilterPipe } from './components/facility/facility.component';
+import { CourseOutlineComponent, courseOutlineFilterPipe } from './components/course-outline/course-outline.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,8 @@ import { FacilityComponent, facilityFilterPipe } from './components/facility/fac
     courseFilterPipe,
     FacilityComponent,
     facilityFilterPipe,
+    CourseOutlineComponent,
+    courseOutlineFilterPipe,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -84,6 +87,7 @@ import { FacilityComponent, facilityFilterPipe } from './components/facility/fac
       {path:'lab', component: LabComponent},
       {path:'instructor', component: InstructorComponent},
       {path:'facility/:id', component: FacilityComponent},
+      {path:'courseoutline/:id', component: CourseOutlineComponent},
     ])
   ],
   providers: [],

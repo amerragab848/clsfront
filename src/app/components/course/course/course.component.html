@@ -53,6 +53,7 @@
                                         <td>{{course.vendorName}}</td>
                                         <td>
                                             <a class="btn btn-warning" (click)="SelectCourseToEdit(course)">Edit</a>
+                                            <a [routerLink]="['/courseoutline', course.id]" class="btn btn-warning outline-btn">Outline</a>
                                         </td>
                                     </tr>
                                 </tbody>
