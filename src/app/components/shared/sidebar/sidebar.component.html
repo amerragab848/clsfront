@@ -8,14 +8,14 @@
             <a href="#course-menu"><i class="fa fa-mortar-board"></i><span>Courses Defination</span></a>
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
               <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingThree">
+                <div class="panel-heading" role="tab" id="headingOne">
                   <h4 class="panel-title">
-                    <a class="accordion-toggle collapsed"  role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                      List
+                    <a class="accordion-toggle collapsed"  role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                      List 1
                     </a>
                   </h4>
                 </div>
-                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                   <div class="panel-body">
                     <ul id="course-menu">
                           <li><a [routerLink]="['/coursetype']" ><span>Courses Types</span></a></li>
@@ -24,13 +24,29 @@
                           <li><a [routerLink]="['/materialtype']" ><span>Material Types</span></a></li>
                           <li><a [routerLink]="['/vendor']" ><span>Vendors</span></a></li>
                           <li><a [routerLink]="['/coursecategory']" ><span>Courses Category</span></a></li>
-                          <li><a [routerLink]="['/deliverytype']" ><span>Delivery Type</span></a></li>
-                          <li><a [routerLink]="['/course']" ><span>Course</span></a></li>
-                          <li><a [routerLink]="['/subcategory']" ><span>SubCategory</span></a></li>
-                          <li><a [routerLink]="['/branch']" ><span>Branches</span></a></li>
-                          <li><a [routerLink]="['/lab']" ><span>Labs</span></a></li>
-                          <li><a [routerLink]="['/instructor']" ><span>Instructors</span></a></li>
                         </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                  <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed"  role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      List 2
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                    <ul id="course-menu">
+                      <li><a [routerLink]="['/deliverytype']" ><span>Delivery Type</span></a></li>
+                      <li><a [routerLink]="['/course']" ><span>Course</span></a></li>
+                      <li><a [routerLink]="['/subcategory']" ><span>SubCategory</span></a></li>
+                      <li><a [routerLink]="['/branch']" ><span>Branches</span></a></li>
+                      <li><a [routerLink]="['/lab']" ><span>Labs</span></a></li>
+                      <li><a [routerLink]="['/instructor']" ><span>Instructors</span></a></li>
+                      <li><a [routerLink]="['/learningpath']" ><span>Learning Path</span></a></li>
+                    </ul>
                   </div>
                 </div>
               </div>
