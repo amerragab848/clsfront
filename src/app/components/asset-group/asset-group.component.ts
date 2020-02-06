@@ -37,7 +37,6 @@ export class AssetGroupComponent implements OnInit {
   GetAssetGroup() {
     this._assetGroupService.GetAssetGroup().subscribe((data :any)=>{
        this.assetGroups = data.result;
-       console.log(this.assetGroups)
     })
   } 
 
@@ -54,6 +53,9 @@ export class AssetGroupComponent implements OnInit {
 
   SaveAssetGroup()
   {
+    if (this.assetGroup.depreciatedByPercentage && this.assetGroup.depreciationAmount>100) {
+      this._toastSrv.error("Failed", "Depreciation Amount should be less than 100");
+  } else {
     this.assetGroup.depreciationAmount = parseInt(this.assetGroup.depreciationAmount.toString());
     this.assetGroup.depreciationDuration = parseInt(this.assetGroup.depreciationDuration.toString());
     this.assetGroup.assetMinmumAmount = parseInt(this.assetGroup.assetMinmumAmount.toString());
@@ -99,6 +101,7 @@ export class AssetGroupComponent implements OnInit {
       }
       );
     }
+  }
   }
 
   SelectAssetGroupToEdit(group)
