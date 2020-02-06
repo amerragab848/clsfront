@@ -54,6 +54,9 @@ export class AssetGroupComponent implements OnInit {
 
   SaveAssetGroup()
   {
+    this.assetGroup.depreciationAmount = parseInt(this.assetGroup.depreciationAmount.toString());
+    this.assetGroup.depreciationDuration = parseInt(this.assetGroup.depreciationDuration.toString());
+    this.assetGroup.assetMinmumAmount = parseInt(this.assetGroup.assetMinmumAmount.toString());
     this.btnClicked=true;
     if(this.assetGroup.id ==0){
       this._assetGroupService.AddAssetGroup(this.assetGroup).subscribe((data : any) =>{
