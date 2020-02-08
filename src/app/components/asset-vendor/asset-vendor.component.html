@@ -45,11 +45,49 @@
                                   <td>{{vendor.address}}</td>
                                   <td>
                                     <a (click)="SelectAssetVendorToEdit(vendor)"class="btn btn-warning">Edit</a>
-                                    <a class="btn btn-warning detail-btn">More Details</a>
+                                    <a class="btn btn-warning detail-btn" data-toggle="modal" [attr.data-target]="'#detailsModal' + vendor.id">More Details</a>
                                   </td>
                               </tr>
+
+                            <div class="modal fade" [attr.id]="'detailsModal' + vendor.id" role="dialog">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                
+                                    <div class="modal-header">
+                                    <h4 class="modal-title">Vendor Details</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    
+                                    <div class="modal-body">
+                                        <ul>
+                                            <li>Name: {{vendor.name}}</li>
+                                            <li>Email: {{vendor.email}}</li>
+                                            <li>Number: {{vendor.number}}</li>
+                                            <li>Mobile Number: {{vendor.mobileNumber}}</li>
+                                            <li>Phone: {{vendor.phone}}</li>
+                                            <li>Fax: {{vendor.fax}}</li>
+                                            <li>Country: {{vendor.country}}</li>
+                                            <li>Address: {{vendor.address}}</li>
+                                            <li>Contact Person Name: {{vendor.contactPersonName}}</li>
+                                            <li>Contct Person Number: {{vendor.contactPersonNumber}}</li>
+                                            <li>Contact Person Email: {{vendor.contactPersonEmail}}</li>
+                                            <li>Commercial File Number: {{vendor.commercialFileNumber}}</li>
+                                            <li>Tax Card: {{vendor.taxCard}}</li>
+                                            <li>Commercial Filae Path: {{vendor.commercialFilePath}}</li>
+                                            <li>Tax Card File Path: {{vendor.taxCardFilePath}}</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                    
+                                </div>
+                                </div>
+                            </div>
                           </tbody>
                           </table>
+
 
                       </div>
                 </div>
