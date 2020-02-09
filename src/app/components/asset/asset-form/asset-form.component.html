@@ -1,0 +1,126 @@
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#main">Main</a></li>
+    <li><a data-toggle="tab" href="#insurance">Insurance</a></li>
+    <li><a data-toggle="tab" href="#technical">Technical</a></li>
+  </ul>
+
+  <form (submit)="SaveAsset()" #form="ngForm" >
+      <div class="tab-content">
+     
+          <div id="main" class="tab-pane fade in active">
+              <div class="form-group form-control-material static">
+                  <input id="assetNameTxt"  [(ngModel)]="asset.name"  type="text" class="form-control" name="assetName" #assetName required  placeholder="Enter asset name">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetNameTxt">
+                    Asset Name  <span class="text-danger">*</span>
+                  </label>
+                  
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetSsn"  [(ngModel)]="asset.ssn"  type="text" class="form-control" name="assetSsn" #assetSsn required  placeholder="Enter asset SSN">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetSsn">
+                    Asset SSN  <span class="text-danger">*</span>
+                  </label>
+                  
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetBarcode"  [(ngModel)]="asset.barcode"  type="text" class="form-control" name="assetBarcode" #assetBarcode required  placeholder="Enter asset Barcode">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetBarcode">
+                    Asset Barcode  <span class="text-danger">*</span>
+                  </label>
+                  
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <div class="form-check">
+                      <label class="form-check-label" for="check1">
+                        <input type="checkbox" [(ngModel)]="assetGroup.isDepreciationable" class="form-check-input" id="check1" name="option1" value="something"> Depreciationable
+                      </label>
+                    </div>         
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <div class="form-check">
+                      <label class="form-check-label" for="check2">
+                        <input type="checkbox" [(ngModel)]="assetGroup.depreciatedByPercentage" class="form-check-input" id="check2" name="option2" value="something"> Depreciated By Percentage
+                      </label>
+                    </div>         
+                </div>
+          </div>
+          <div id="insurance" class="tab-pane fade">
+            <div class="form-group form-control-material static">
+              <div class="form-check">
+                  <label class="form-check-label" for="check3">
+                    <input type="checkbox" [(ngModel)]="asset.haveInsurance" class="form-check-input" id="check3" name="option2" value="something"> Asset Have Insurance
+                  </label>
+                </div>         
+            </div>
+
+              <div class="form-group form-control-material static">
+                  <input id="assetInsuranceCompany"  [(ngModel)]="asset.insuranceCompany"  type="text" class="form-control" name="assetInsuranceCompany" #assetInsuranceCompany required  placeholder="Enter asset insurance company">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetInsuranceCompany">
+                    Asset Insurance Company  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetInsuranceAmount"  [(ngModel)]="asset.insuranceAmount"  type="text" class="form-control" name="assetInsuranceAmount" #assetInsuranceAmount required  placeholder="Enter asset insurance amount">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetInsuranceAmount">
+                    Asset Insurance Amount  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetInsuranceDuration"  [(ngModel)]="asset.insuranceDuration"  type="text" class="form-control" name="assetInsuranceDuration" #assetInsuranceDuration required  placeholder="Enter asset insurance duration">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetInsuranceDuration">
+                    Asset Insurance Duration  <span class="text-danger">*</span>
+                  </label>
+                </div>
+          </div>
+          <div id="technical" class="tab-pane fade">
+              <div class="form-group form-control-material static">
+                  <input id="assetManufacturer"  [(ngModel)]="asset.manufacturer"  type="text" class="form-control" name="assetManufacturer" #assetManufacturer required  placeholder="Enter asset manufacturer">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetManufacturer">
+                    Asset Manufacturer  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetModel"  [(ngModel)]="asset.model"  type="text" class="form-control" name="assetModel" #assetModel required  placeholder="Enter asset model">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetModel">
+                    Asset Model  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetManufacturingYear"  [(ngModel)]="asset.manufacturingYear"  type="text" class="form-control" name="assetManufacturingYear" #assetManufacturingYear required  placeholder="Enter asset manufacturing year">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetManufacturingYear">
+                    Asset Manufacturing Year  <span class="text-danger">*</span>
+                  </label>
+                </div>
+          </div>
+      
+      </div>
+      <button type="submit"  [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>
+              <hr/>
+              <button type="button" (click)="ClearObject()" class="btn btn-danger form-control">Clear</button>
+  </form>

@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class AssetVendorService {
+export class AssetService {
 
   baseURL :string;
 
@@ -13,27 +13,28 @@ export class AssetVendorService {
     this.baseURL = environment.baseURL;
   }
 
-  GetAssetVendor(){
+  GetAsset(){
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
-    return this.http.get(this.baseURL+"AssetVendor",{
+    return this.http.get(this.baseURL+"AssetItem",{
       headers : headers
     });
   }
 
-  AddAssetVendor(assetVendor){
+  AddAsset(asset){
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
-    return this.http.post(this.baseURL+"AssetVendor",assetVendor,{
+    return this.http.post(this.baseURL+"AssetItem",asset,{
       headers : headers
     });
   }
 
-  EditAssetVendor(assetVendor){
+  EditAsset(asset){
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
-    return this.http.put(this.baseURL+"AssetVendor",assetVendor,{
+    return this.http.put(this.baseURL+"AssetItem",asset,{
       headers : headers
     });
   }
+
 }

@@ -11,7 +11,7 @@ export interface SubCategoryModel
   courseCategoryId:number;
 }
 
-export interface CourseCategoryModel 
+export interface CourseCategoryModel
 {
   id:number;
   name:string;

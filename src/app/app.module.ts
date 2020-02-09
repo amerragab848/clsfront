@@ -30,6 +30,8 @@ import { CourseOutlineComponent, courseOutlineFilterPipe } from './components/co
 import { LearningPathComponent, learningPathFilterPipe } from './components/learning-path/learning-path.component';
 import { AssetGroupComponent, assetGroupFilterPipe } from './components/asset-group/asset-group.component';
 import { AssetVendorComponent, assetVendorFilterPipe } from './components/asset-vendor/asset-vendor.component';
+import { AssetInfoComponent, assetFilterPipe } from './components/asset/asset-info/asset-info.component';
+import { AssetFormComponent } from './components/asset/asset-form/asset-form.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,9 @@ import { AssetVendorComponent, assetVendorFilterPipe } from './components/asset-
     assetGroupFilterPipe,
     AssetVendorComponent,
     assetVendorFilterPipe,
+    AssetInfoComponent,
+    AssetFormComponent,
+    assetFilterPipe,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -100,6 +105,8 @@ import { AssetVendorComponent, assetVendorFilterPipe } from './components/asset-
       {path:'learningpath', component : LearningPathComponent},
       {path:'assetgroup', component : AssetGroupComponent},
       {path:'assetvendor', component : AssetVendorComponent},
+      {path:'asset', component : AssetInfoComponent},
+      {path:'assetform/:id', component : AssetFormComponent},
     ])
   ],
   providers: [],
