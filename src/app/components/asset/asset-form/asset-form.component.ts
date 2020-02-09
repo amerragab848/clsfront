@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { AssetService } from 'src/app/core/services/asset/asset.service';
 
@@ -52,19 +53,29 @@ export class AssetFormComponent implements OnInit {
   constructor(
     private _toastSrv : ToastService,
     private _assetService : AssetService,
+    private activatedRoute: ActivatedRoute
   ) { }
+
+  GetAsset() {
+    this._assetService.GetAsset().subscribe((data :any)=>{
+       this.assets = data.result;
+       console.log(this.assets)
+       
+
+    })
+  }
 
   ClearObject(){
     this.asset =<AssetModel>{
       id:0
     };
-    // this.GetSubCategories();
   }
 
   SaveAsset()
   {
+    let assetId = this.activatedRoute.snapshot.params.id;
     this.btnClicked=true;
-    if(this.asset.id ==0){
+    if(assetId ==0){
       this._assetService.AddAsset(this.asset).subscribe((data : any) =>{
         if(data.code === 200){
           this._toastSrv.success("","Saved Successfully");
@@ -108,6 +119,6 @@ export class AssetFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this. GetAsset();
   }
-
 }

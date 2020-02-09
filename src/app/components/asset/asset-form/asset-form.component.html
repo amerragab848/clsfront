@@ -13,7 +13,7 @@
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetNameTxt">
-                    Asset Name  <span class="text-danger">*</span>
+                    Asset Name   <span class="text-danger">*</span>
                   </label>
                   
                 </div>
@@ -41,7 +41,7 @@
                 <div class="form-group form-control-material static">
                   <div class="form-check">
                       <label class="form-check-label" for="check1">
-                        <input type="checkbox" [(ngModel)]="assetGroup.isDepreciationable" class="form-check-input" id="check1" name="option1" value="something"> Depreciationable
+                        <input type="checkbox" [(ngModel)]="asset.isDepreciationable" class="form-check-input" id="check1" name="option1" value="something"> Depreciationable
                       </label>
                     </div>         
                 </div>
@@ -49,9 +49,27 @@
                 <div class="form-group form-control-material static">
                   <div class="form-check">
                       <label class="form-check-label" for="check2">
-                        <input type="checkbox" [(ngModel)]="assetGroup.depreciatedByPercentage" class="form-check-input" id="check2" name="option2" value="something"> Depreciated By Percentage
+                        <input type="checkbox" [(ngModel)]="asset.depreciatedByPercentage" class="form-check-input" id="check2" name="option2" value="something"> Depreciated By Percentage
                       </label>
                     </div>         
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetDepreciationAmount"  [(ngModel)]="asset.depreciationAmount"  type="text" class="form-control" name="assetDepreciationAmount" #assetDepreciationAmount required  placeholder="Enter asset depreciation amount">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetDepreciationAmount">
+                    Asset Depreciation Amount  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetDepreciationDuration"  [(ngModel)]="asset.depreciationDuration"  type="text" class="form-control" name="assetDepreciationDuration" #assetDepreciationDuration required  placeholder="Enter asset depreciation duration">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetDepreciationDuration">
+                    Asset Depreciation Duration  <span class="text-danger">*</span>
+                  </label>
                 </div>
           </div>
           <div id="insurance" class="tab-pane fade">

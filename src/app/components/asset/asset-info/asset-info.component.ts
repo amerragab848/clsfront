@@ -133,6 +133,11 @@ export class AssetInfoComponent implements OnInit {
     this.pageOfItems = pageOfItems;
   }
 
+  SelectAssetToEdit(asset)
+  {
+    this.asset = asset;
+  }
+
   ngOnInit() {
     this.GetAsset();
     this.GetAssetGroup();
