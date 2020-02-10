@@ -36,6 +36,16 @@ export class InstructorService {
       headers : headers
     });
   }
+
+  DeleteInstructor(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"Instructor/"+id,{
+      headers : headers
+    });
+  }
+
 }
 
 

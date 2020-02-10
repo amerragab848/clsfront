@@ -34,7 +34,8 @@
                                   <td>{{lab.capacity}}</td>
                                   <td>{{lab.branchName}}</td>
                                   <td>
-                                    <a (click)="SelectLabToEdit(lab)"class="btn btn-warning">Edit</a>
+                                    <a (click)="SelectLabToEdit(lab)"class="btn btn-warning">Edit</a> | 
+                                    <a   (click)="DeleteLab(lab.id)"class="btn btn-danger">Delete</a>
                                     <a [routerLink]="['/facility', lab.id]" class="btn btn-warning facility-btn">Facility</a>
                                   </td>
                               </tr>

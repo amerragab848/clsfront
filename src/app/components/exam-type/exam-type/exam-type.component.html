@@ -32,6 +32,8 @@
                                   <td>{{type.name}}</td>
                                   <td>
                                     <a   (click)="SelectCategoryToEdit(type)"class="btn btn-warning">Edit</a>
+                                    | 
+                                    <a   (click)="DeleteType(type.id)"class="btn btn-danger">Delete</a>
                                   </td>
                               </tr>
                           </tbody>

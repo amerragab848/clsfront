@@ -30,7 +30,8 @@
                               <tr>
                                   <td>{{category.name}}</td>
                                   <td>
-                                    <a   (click)="SelectCategoryToEdit(category)"class="btn btn-warning">Edit</a>
+                                    <a   (click)="SelectCategoryToEdit(category)"class="btn btn-warning">Edit</a> | 
+                                    <a   (click)="DeleteCategory(category.id)"class="btn btn-danger">Delete</a>
                                   </td>
                               </tr>
                           </tbody>

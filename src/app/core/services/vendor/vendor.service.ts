@@ -36,4 +36,13 @@ export class VendorService {
     });
   }
 
+  DeleteVendor(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"Vendor/"+id,{
+      headers : headers
+    });
+  }
+
 }

@@ -10,6 +10,7 @@ import {ExamTypeService} from '../../../core/services/exam-type/exam-type.servic
 import {LabTypeService} from '../../../core/services/lab-type/lab-type.service';
 import {MaterialTypeService} from '../../../core/services/material-type/material-type.service';
 import {VendorService} from '../../../core/services/vendor/vendor.service';
+let fileUpload = require('fuctbase64');
 
 @Component({
   selector: 'app-course',
@@ -19,8 +20,7 @@ import {VendorService} from '../../../core/services/vendor/vendor.service';
 export class CourseComponent implements OnInit {
 
   course : CourseModel =<CourseModel>{
-    id:0,
-    name:''
+    id:0
   }
   courses : CourseModel[];
   materialTypes :MaterialTypeModel[];
@@ -61,20 +61,39 @@ export class CourseComponent implements OnInit {
   onChangePage(pageOfItems: Array<any>) {
     this.pageOfItems = pageOfItems;
   }
+ 
   ClearObject(){
     this.course =<CourseModel>{
       id:0
     };
     this.GetCourses();
+    this.fileResult = null;
+    this.fileInput = null;
   }
+
+  fileResult: any = null;
+  fileInput : any = null;
+  async onFileChange(event){
+    try {
+      let result = await fileUpload(event);
+      this.fileResult = result;
+      console.log(this.fileResult);
+    }
+    catch{
+      this.fileResult = null;
+    }
+}
 
   SaveCourse()
   {
 
     this.course.courseSubCategoryId =  parseInt(this.course.courseSubCategoryId.toString());
-    this.course.courseCategoryId =  parseInt(this.course.courseCategoryId.toString());
-
     this.btnClicked=true;
+    if(this.fileResult !=null)
+    {
+      this.course.base64File = this.fileResult.base64;
+        this.course.fileName = this.fileResult.name
+    }
     if(this.course.id ==0){
       this._courseService.AddCourse(this.course).subscribe((data : any) =>{
         if(data.code === 200){
@@ -124,13 +143,29 @@ export class CourseComponent implements OnInit {
     console.log(course);
   }
 
+  DeleteCourse(id)
+  {
+      this._courseService.DeleteCourse(id).subscribe((data : any) =>{
+        if(data.code === 200){
+          this._toastSrv.success("Success","");
+          this.ClearObject();
+        }
+        if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      },
+      (error) =>{
+        this._toastSrv.error("Failed","You can not delete this record");
+      }
+      );
+  }
+
 
   // Get Lockups
   GetAllLockups()
   {
     this.GetCourseCategories();
-    this.GetCourseTypes();
-    this.GetDeliveryTypes();
     this.GetExamTypes();
     this.GetLabTypes();
     this.GetMaterialTypes();
@@ -149,18 +184,6 @@ export class CourseComponent implements OnInit {
     this._subCategorySrv.GetSubCategories().subscribe((data :any)=>{
       this.courseSubCategories = data.result.filter(c=> c.courseCategoryId ==id);
       console.log(this.courseSubCategories);
-   }) 
-  }
-  GetCourseTypes()
-  {
-    this._courseTypeSrv.GetCourseTypes().subscribe((data :any)=>{
-      this.courseTypes = data.result;
-   }) 
-  }
-  GetDeliveryTypes()
-  {
-    this._deliveryTypeSrv.GetDeliveryTypes().subscribe((data :any)=>{
-      this.deliveryTypes = data.result;
    }) 
   }
   GetExamTypes()
@@ -234,20 +257,21 @@ export interface CourseModel
   benefits:string;
   courseCategoryId:number;
   courseSubCategoryId:number;
-  deliveryTypeId:number;
   examTypeId:number;
   materialTypeId:number;
   vendorId:number;
   labTypeId:number;
-  courseTypeId:number;
   courseCategoryName:string;
   courseSubCategoryName:string;
-  deliveryTypeName:string;
   examTypeName:string;
   materialTypeName:string;
   vendorName:string;
   labTypeName:string;
-  courseTypeName:string;
+  prerequisites:string;
+  audianceProfile:string;
+  base64File:string;
+  image:string;
+  fileName:string;
 }
 
 
@@ -259,6 +283,6 @@ export class courseFilterPipe implements PipeTransform{
     if(!contents || !searchKey){
       return contents;
     }
-    return contents.filter(c => c.name.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 || c.courseCategoryName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 || c.examTypeName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 || c.deliveryTypeName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 || c.vendorName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 || c.materialTypeName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 || c.courseTypeName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1  || c.courseSubCategoryName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 );
+    return contents.filter(c => c.name.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 || c.courseCategoryName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 || c.examTypeName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 ||  c.vendorName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 || c.materialTypeName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 ||  c.courseSubCategoryName.toLowerCase().indexOf(searchKey.toLowerCase()) !==-1 );
   }
 }

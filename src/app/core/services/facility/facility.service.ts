@@ -36,4 +36,12 @@ export class FacilityService {
       headers : headers
     });
   }
+  DeleteFacility(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"Facility/"+id,{
+      headers : headers
+    });
+  }
 }

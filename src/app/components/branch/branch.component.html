@@ -32,7 +32,8 @@
                                   <td>{{branch.name}}</td>
                                   <td>{{branch.location}}</td>
                                   <td>
-                                    <a   (click)="SelectBranchToEdit(branch)"class="btn btn-warning">Edit</a>
+                                    <a   (click)="SelectBranchToEdit(branch)"class="btn btn-warning">Edit</a> | 
+                                    <a   (click)="DeleteBranch(branch.id)"class="btn btn-danger">Delete</a>
                                   </td>
                               </tr>
                           </tbody>

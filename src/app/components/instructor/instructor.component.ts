@@ -2,7 +2,7 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { InstructorService } from 'src/app/core/services/instructor/instructor.service';
 import { DomSanitizer } from '@angular/platform-browser';
-
+let fileUpload = require('fuctbase64');
 export interface InstructorModel 
 {
   id:number;
@@ -11,8 +11,19 @@ export interface InstructorModel
   number:string;
   email:string;
   major:string;
-  image:string;
   bio:string;
+  image:string;
+  base64File:string;
+  fileName:string;
+  grade:string;
+  company:string;
+  tranningCenter:string;
+  cvPath:string;
+  cvBase64:string;
+  cvFileName:string;
+  nationalIdPath:string;
+  nationalIdBase64:string;
+  nationalIdFileName:string;
 }
 
 @Component({
@@ -21,7 +32,39 @@ export interface InstructorModel
   styleUrls: ['./instructor.component.css']
 })
 export class InstructorComponent implements OnInit {
-
+  fileImageInput:any;
+  fileImageResult: any = null;
+  async onFileImageChange(event){
+    try {
+      let result = await fileUpload(event);
+      this.fileImageResult = result;
+    }
+    catch{
+      this.fileImageResult = null;
+    }
+  }
+  fileCVInput:any;
+  fileCVResult: any = null;
+  async onFileCVChange(event){
+    try {
+      let result = await fileUpload(event);
+      this.fileCVResult = result;
+    }
+    catch{
+      this.fileCVResult = null;
+    }
+  }
+  fileNationalIdInput:any;
+  fileNationalIdResult: any = null;
+  async onFileNationalIdChange(event){
+    try {
+      let result = await fileUpload(event);
+      this.fileNationalIdResult = result;
+    }
+    catch{
+      this.fileNationalIdResult = null;
+    }
+  }
   instructor : InstructorModel =<InstructorModel>{
     id :0
   };
@@ -52,11 +95,31 @@ export class InstructorComponent implements OnInit {
       id:0
     };
     this.GetInstructors();
+    this.fileImageResult = null;
+    this.fileImageInput = null;
+    this.fileCVInput = null;
+    this.fileNationalIdInput = null;
+
   }
 
   SaveInstructor()
   {
     this.btnClicked=true;
+    if(this.fileImageResult !=null)
+    {
+      this.instructor.base64File = this.fileImageResult.base64;
+        this.instructor.fileName = this.fileImageResult.name
+    }
+    if(this.fileNationalIdResult !=null)
+    {
+      this.instructor.nationalIdBase64 = this.fileNationalIdResult.base64;
+        this.instructor.nationalIdFileName = this.fileNationalIdResult.name
+    }
+    if(this.fileCVResult !=null)
+    {
+      this.instructor.cvBase64 = this.fileCVResult.base64;
+        this.instructor.cvFileName = this.fileCVResult.name
+    }
     if(this.instructor.id ==0){
       this._instructorService.AddInstructor(this.instructor).subscribe((data : any) =>{
         if(data.code === 200){
@@ -110,6 +173,23 @@ export class InstructorComponent implements OnInit {
     this.GetInstructors();
   }
 
+  DeleteInstructor(id)
+  {
+    this._instructorService.DeleteInstructor(id).subscribe((data : any) =>{
+      if(data.code === 200){
+        this._toastSrv.success("Success","");
+        this.ClearObject();
+      }
+      if(data.code === 500)
+      {
+        this._toastSrv.error("Failed",data.message);
+      }
+    },
+    (error) =>{
+      this._toastSrv.error("Failed","You can not delete this record");
+    }
+    );
+  }
 }
 
 @Pipe({

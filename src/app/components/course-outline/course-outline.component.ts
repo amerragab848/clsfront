@@ -34,7 +34,7 @@ export class CourseOutlineComponent implements OnInit {
 
   GetCourseOutlines() {
     this._courseOutlineService.GetCourseOutlines().subscribe((data :any)=>{
-       this.courseOutlines = data.result;
+       this.courseOutlines = data.result.filter(o=> o.courseId == this.activatedRoute.snapshot.params.id);
     }) 
   } 
 

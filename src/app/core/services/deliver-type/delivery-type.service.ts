@@ -36,4 +36,12 @@ export class DeliveryTypeService {
       headers : headers
     });
   }
+  DeleteDeliveryType(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"DeliveryType/"+id,{
+      headers : headers
+    });
+  }
 }

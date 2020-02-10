@@ -36,4 +36,13 @@ export class LabTypeService {
     });
   }
 
+  DeleteLabType(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"LabType/"+id,{
+      headers : headers
+    });
+  }
+
 }

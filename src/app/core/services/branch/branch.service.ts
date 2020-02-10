@@ -36,4 +36,13 @@ export class BranchService {
       headers : headers
     });
   }
+
+  DeleteBranch(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"Branch/"+id,{
+      headers : headers
+    });
+  }
 }

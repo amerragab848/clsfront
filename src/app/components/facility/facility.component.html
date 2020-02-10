@@ -23,7 +23,7 @@
                               <tr>
                                 <th>Name</th>
                                 <th>Number</th>
-                                <th>Info</th>
+                                <!-- <th>Info</th> -->
                                 <th>Action</th>
                               </tr>
                             </thead>
@@ -32,9 +32,11 @@
                               <tr>
                                   <td>{{facility.name}}</td>
                                   <td>{{facility.number}}</td>
-                                  <td>{{facility.info}}</td>
+                                  <!-- <td>{{facility.info}}</td> -->
                                   <td>
                                     <a (click)="SelectFacilityToEdit(facility)"class="btn btn-warning">Edit</a>
+                                    | 
+                                    <a   (click)="DeleteFacility(facility.id)"class="btn btn-danger">Delete</a>
                                   </td>
                               </tr>
                           </tbody>

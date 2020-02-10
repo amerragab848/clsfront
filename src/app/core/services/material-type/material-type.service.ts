@@ -36,4 +36,12 @@ export class MaterialTypeService {
     });
   }
 
+  DeleteMaterialType(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"MaterialType/"+id,{
+      headers : headers
+    });
+  }
 }

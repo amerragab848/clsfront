@@ -101,6 +101,24 @@ export class LabTypeComponent implements OnInit {
     this.labType = labType;
   }
 
+  
+  DeleteType(id)
+  {
+      this._labTypeService.DeleteLabType(id).subscribe((data : any) =>{
+        if(data.code === 200){
+          this._toastSrv.success("Success","");
+          this.ClearObject();
+        }
+        if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      },
+      (error) =>{
+        this._toastSrv.error("Failed","You can not delete this record");
+      }
+      );
+  }
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
     this.pageOfItems = pageOfItems;

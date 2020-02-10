@@ -119,6 +119,23 @@ export class LabComponent implements OnInit {
     this.lab = lab;
   }
 
+  DeleteLab(id)
+  {
+      this._labService.DeleteLab(id).subscribe((data : any) =>{
+        if(data.code === 200){
+          this._toastSrv.success("Success","");
+          this.ClearObject();
+        }
+        if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      },
+      (error) =>{
+        this._toastSrv.error("Failed","You can not delete this record");
+      }
+      );
+  }
   ngOnInit() {
     this.GetLabs();
     this.GetBranches();

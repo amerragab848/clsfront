@@ -38,6 +38,7 @@
                                         <th>Material</th>
                                         <th>Lab</th>
                                         <th>Vendor</th>
+                                        <th>Image</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -46,13 +47,16 @@
                                         <td>{{course.name}}</td>
                                         <td>{{course.courseCategoryName}}</td>
                                         <td>{{course.courseSubCategoryName}}</td>
-                                        <td>{{course.courseTypeName}}</td>
                                         <td>{{course.examTypeName}}</td>
                                         <td>{{course.materialTypeName}}</td>
                                         <td>{{course.labTypeName}}</td>
                                         <td>{{course.vendorName}}</td>
                                         <td>
-                                            <a class="btn btn-warning" (click)="SelectCourseToEdit(course)">Edit</a>
+                                            <img src="https://localhost:44384{{course.image}}" width="150" height="70" />
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-warning" (click)="SelectCourseToEdit(course)">Edit</a> | 
+                                            <a   (click)="DeleteCourse(course.id)"class="btn btn-danger">Delete</a> |
                                             <a [routerLink]="['/courseoutline', course.id]" class="btn btn-warning outline-btn">Outline</a>
                                         </td>
                                     </tr>
@@ -120,15 +124,6 @@
 
                         <div class="form-group">
                             <div class="col-sm-4">
-                                <label for="deliveryTypeName">
-                                    Delivery Type   <span class="text-danger">*</span>
-                                  </label>
-                                    <select  [(ngModel)]="course.deliveryTypeId" name="deliveryTypeName" class="form-control" #deliveryTypeName data-live-search="true" required>
-                                      <option *ngFor="let item of deliveryTypes" [ngValue]="item.id">{{item.name}}</option>
-                                    </select>
-                            </div>
-                            
-                            <div class="col-sm-4">
                                 <label for="examTypeName">
                                     Exam Type   <span class="text-danger">*</span>
                                   </label>
@@ -146,10 +141,6 @@
                                     </select>
                             </div>
 
-                           
-                        </div>
-
-                        <div class="form-group">
                             <div class="col-sm-4">
                                 <label for="labTypeName">
                                     Lab Type   <span class="text-danger">*</span>
@@ -158,7 +149,10 @@
                                       <option *ngFor="let item of labTypes" [ngValue]="item.id">{{item.name}}</option>
                                     </select>
                             </div>
+                        </div>
 
+                        <div class="form-group">
+                            
                             <div class="col-sm-4">
                                 <label for="vendorName">
                                     Vendor   <span class="text-danger">*</span>
@@ -167,15 +161,14 @@
                                       <option *ngFor="let item of vendors" [ngValue]="item.id">{{item.name}}</option>
                                     </select>
                             </div>
-
                             <div class="col-sm-4">
-                                <label for="courseTypeName">
-                                    Course Type   <span class="text-danger">*</span>
-                                  </label>
-                                    <select  [(ngModel)]="course.courseTypeId" name="courseTypeName" class="form-control" #courseTypeName data-live-search="true" required>
-                                      <option *ngFor="let item of courseTypes" [ngValue]="item.id">{{item.name}}</option>
-                                    </select>
+                                <label for="instructorImage">
+                                    Image 
+                                   </label>
+                                <input (change)="onFileChange($event)" [(ngModel)]="fileInput" name="fileInput" id="fileInput"  type="file" class="form-control"/>
+                               
                             </div>
+
                             <!-- <div class="col-sm-3">
                                 <div class="form-control-material static">
                                     <input type="number" class="form-control" id="durationNumber"
@@ -230,18 +223,36 @@
 
                             <div class="col-sm-1">
                                 <label class="control-label text-right">
-                                    overview
+                                    Overview
                                 </label>
                             </div>
                             <div class="col-sm-5">
                                 <angular-editor [(ngModel)]="course.overview" name="overview" id="overview"></angular-editor>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <label class="control-label text-right">
+                                    Prerequisites
+                                </label>
+                            </div>
+                            <div class="col-sm-5">
+                                <angular-editor [(ngModel)]="course.prerequisites" name="prerequisites" id="prerequisites"></angular-editor>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <label class="control-label text-right">
+                                    Audiance Profile
+                                </label>
+                            </div>
+                            <div class="col-sm-5">
+                                <angular-editor [(ngModel)]="course.audianceProfile" name="audianceProfile" id="audianceProfile"></angular-editor>
                             </div>
                         </div>
 
                         <div class="form-group margin-none">
                             <div class="col-sm-12">
                                 <button [disabled]="form.invalid || btnClicked"  type="submit" class="btn btn-success form-control">Save</button>
-                                <button (click)="ClearObject()" style="margin-top: 15px;" class="btn btn-danger form-control">Clear</button>
+                                <button type="button" (click)="ClearObject()" style="margin-top: 15px;" class="btn btn-danger form-control">Clear</button>
                             </div>
                         </div>
                     </form>

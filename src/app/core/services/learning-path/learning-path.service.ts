@@ -36,4 +36,13 @@ export class LearningPathService {
       headers : headers
     });
   }
+
+  DeleteLearningPath(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"LearningPath/"+id,{
+      headers : headers
+    });
+  }
 }

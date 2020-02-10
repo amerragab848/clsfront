@@ -36,7 +36,7 @@ export class FacilityComponent implements OnInit {
 
   GetFacilities() {
     this._facilityService.GetFacilities().subscribe((data :any)=>{
-       this.facilities = data.result;
+       this.facilities = data.result.filter(f=>f.labId == this.activatedRoute.snapshot.params.id );
     }) 
   } 
 
@@ -55,7 +55,7 @@ export class FacilityComponent implements OnInit {
   {
     let labId = this.activatedRoute.snapshot.params.id;
     this.facility.labId = parseInt(labId.toString());
-    parseInt(this.facility.number.toString());
+    this.facility.number = parseInt(this.facility.number.toString());
     this.btnClicked=true;
     if(this.facility.id ==0){
       this._facilityService.AddFacility(this.facility).subscribe((data : any) =>{
@@ -103,6 +103,23 @@ export class FacilityComponent implements OnInit {
   SelectFacilityToEdit(facility)
   {
     this.facility = facility;
+  }
+  DeleteFacility(id)
+  {
+      this._facilityService.DeleteFacility(id).subscribe((data : any) =>{
+        if(data.code === 200){
+          this._toastSrv.success("Success","");
+          this.ClearObject();
+        }
+        if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      },
+      (error) =>{
+        this._toastSrv.error("Failed","You can not delete this record");
+      }
+      );
   }
 
   ngOnInit() {

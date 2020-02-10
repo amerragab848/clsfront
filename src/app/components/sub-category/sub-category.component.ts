@@ -124,6 +124,23 @@ export class SubCategoryComponent implements OnInit {
     this.subCategory = subCategory;
   }
 
+  DeleteSubCategory(id)
+  {
+      this._SubCategoryService.DeleteCourseSubCategory(id).subscribe((data : any) =>{
+        if(data.code === 200){
+          this._toastSrv.success("Success","");
+          this.ClearObject();
+        }
+        if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      },
+      (error) =>{
+        this._toastSrv.error("Failed","You can not delete this record");
+      }
+      );
+  }
   
 }
 

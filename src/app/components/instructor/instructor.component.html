@@ -26,8 +26,8 @@
                                 <th>Home Number</th>
                                 <th>Email</th>
                                 <th>Job Title</th>
-                                <!-- <th>Image</th> -->
-                                <th>Action</th>
+                                <th>Image</th>
+                                <th></th>
                               </tr>
                             </thead>
                             
@@ -38,10 +38,23 @@
                                   <td>{{instructor.number}}</td>
                                   <td>{{instructor.email}}</td>
                                   <td>{{instructor.major}}</td>
-                                  <!-- <td></td> -->
-                                  <!-- <td>{{instructor.image}}</td> -->
                                   <td>
-                                    <a   (click)="SelectInstructorToEdit(instructor)"class="btn btn-warning">Edit</a>
+                                    <img src="https://localhost:44384{{instructor.image}}" height="70" />
+                                  </td>
+                                  <td>
+                                    <div class="btn-group">
+                                      <button type="button" class="btn btn-info dropdown-toggle ripple" data-toggle="dropdown" aria-expanded="false"><span class="ink animate" style="height: 196px; width: 196px; top: -72px; left: -38.2031px;"></span>
+                                        Files
+                                        <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu pull-right" style="height: auto; display: none; overflow: visible; top: 100%; opacity: 0;">
+                                        <li><a target="_blank" href="https://localhost:44384{{instructor.nationalIdPath}}">NationalId</a></li>
+                                        <li><a target="_blank" href="https://localhost:44384{{instructor.cvPath}}">CV</a></li>
+                                      </ul>
+                                    </div>
+                                    | 
+                                    <a   (click)="SelectInstructorToEdit(instructor)"class="btn btn-warning">Edit</a> | 
+                                    <a   (click)="DeleteInstructor(instructor.id)"class="btn btn-danger">Delete</a>
                                   </td>
                               </tr>
                           </tbody>
@@ -60,6 +73,7 @@
             <div class="panel-heading">
                 Save Instructor
             </div>
+
             <div class="panel-body">
               <form (submit)="SaveInstructor()" #form="ngForm" >
                 <div class="form-group form-control-material static">
@@ -70,7 +84,30 @@
                     Instructor Name  <span class="text-danger">*</span>
                   </label>      
                 </div>
-
+                <div class="form-group form-control-material static">
+                  <input (change)="onFileImageChange($event)" [(ngModel)]="fileImageInput" name="fileImageInput" id="fileImageInput"  type="file" class="form-control"/>
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="fileImageInput">
+                    Instructor Image 
+                  </label>  
+                </div>
+                <div class="form-group form-control-material static">
+                  <input (change)="onFileCVChange($event)" [(ngModel)]="fileCVInput" name="fileCVInput" id="fileCVInput"  type="file" class="form-control"/>
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="fileCVInput">
+                    Instructor CV 
+                  </label>  
+                </div>
+                <div class="form-group form-control-material static">
+                  <input (change)="onFileNationalIdChange($event)" [(ngModel)]="fileNationalIdInput" name="fileNationalIdInput" id="fileNationalIdInput"  type="file" class="form-control"/>
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="NationalId">
+                    Instructor National Id 
+                  </label>  
+                </div>
                 <div class="form-group form-control-material static">
                     <input id="instructorPhoneTxt"  [(ngModel)]="instructor.phone"  type="text" class="form-control" name="instructorPhone" #instructorPhone required  placeholder="Enter instructor phone">
                     <span class="ma-form-highlight"></span>
@@ -99,6 +136,33 @@
                   </div>
 
                   <div class="form-group form-control-material static">
+                    <input id="instructorgradeTxt"  [(ngModel)]="instructor.grade"  type="text" class="form-control" name="instructorGrade" #instructorGrade   placeholder="Enter instructor grade">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="instructorgradeTxt">
+                        Instructor Grade  
+                    </label>            
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="instructorCompanyTxt"  [(ngModel)]="instructor.company"  type="text" class="form-control" name="instructorCompany" #instructorCompany   placeholder="Enter instructor company">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="instructorCompanyTxt">
+                        Instructor Company 
+                    </label>            
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="instructorTranningCenterTxt"  [(ngModel)]="instructor.tranningCenter"  type="text" class="form-control" name="tranningCenter" #tranningCenter required  placeholder="Enter instructor tranning center">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="instructorTranningCenterTxt">
+                        Instructor Tranning Center  <span class="text-danger">*</span>
+                    </label>            
+                  </div>
+
+                  <div class="form-group form-control-material static">
                     <input id="instructorMajorTxt"  [(ngModel)]="instructor.major"  type="text" class="form-control" name="instructorMajor" #instructorMajor required  placeholder="Enter instructor job title">
                     <span class="ma-form-highlight"></span>
                     <span class="ma-form-bar"></span>
@@ -118,7 +182,7 @@
 
                   <angular-editor [placeholder]="'Enter instructor bio'" [(ngModel)]="instructor.bio" name="instructorBio"></angular-editor>
                 <br/>
-                <button type="submit"  [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>
+                <button type="submit"  class="btn btn-success form-control">Submit</button>
                 <hr/>
                 <button type="button" (click)="ClearObject()" class="btn btn-danger form-control">Clear</button>
               </form>

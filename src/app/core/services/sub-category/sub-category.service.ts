@@ -36,4 +36,13 @@ export class SubCategoryService {
       headers : headers
     });
   }
+  DeleteCourseSubCategory(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"CourseSubCategory/"+id,{
+      headers : headers
+    });
+  }
+
 }

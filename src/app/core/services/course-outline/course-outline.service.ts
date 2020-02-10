@@ -36,5 +36,12 @@ export class CourseOutlineService {
       headers : headers
     });
   }
-
+  DeleteCourseOtline(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"CourseOtline/"+id,{
+      headers : headers
+    });
+  }
 }

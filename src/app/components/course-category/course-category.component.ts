@@ -8,6 +8,10 @@ export interface CourseCategoryModel
   name:string;
 }
 
+export interface APIWrapper
+{
+  result:CourseCategoryModel[];
+}
 @Component({
   selector: 'app-course-category',
   templateUrl: './course-category.component.html',
@@ -31,7 +35,7 @@ export class CourseCategoryComponent implements OnInit {
 
   GetCourseCategories()
   {
-    this._courseCategoryService.GetCourseCategories().subscribe((data :any)=>{
+    this._courseCategoryService.GetCourseCategories().subscribe((data :APIWrapper)=>{
        this.courseCategories = data.result;
     })
    
@@ -93,6 +97,24 @@ export class CourseCategoryComponent implements OnInit {
       }
       );
     }
+  }
+
+  DeleteCategory(id)
+  {
+      this._courseCategoryService.DeleteCategory(id).subscribe((data : any) =>{
+        if(data.code === 200){
+          this._toastSrv.success("Success","");
+          this.ClearObject();
+        }
+        if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      },
+      (error) =>{
+        this._toastSrv.error("Failed","You can not delete this record");
+      }
+      );
   }
 
   SelectCategoryToEdit(courseCategory)

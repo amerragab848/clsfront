@@ -28,10 +28,12 @@ import { InstructorComponent, instructorFilterPipe } from './components/instruct
 import { FacilityComponent, facilityFilterPipe } from './components/facility/facility.component';
 import { CourseOutlineComponent, courseOutlineFilterPipe } from './components/course-outline/course-outline.component';
 import { LearningPathComponent, learningPathFilterPipe } from './components/learning-path/learning-path.component';
-
+import {ToastComponent} from 'src/app/components/shared/toast/toast.component';
+import { RoundComponent } from './components/round/round.component';
 @NgModule({
   declarations: [
     JwPaginationComponent,
+    ToastComponent,
     AppComponent,
     FixedNavbarComponent,
     SidebarComponent,
@@ -66,6 +68,7 @@ import { LearningPathComponent, learningPathFilterPipe } from './components/lear
     courseOutlineFilterPipe,
     LearningPathComponent,
     learningPathFilterPipe,
+    RoundComponent,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -92,6 +95,8 @@ import { LearningPathComponent, learningPathFilterPipe } from './components/lear
       {path:'facility/:id', component: FacilityComponent},
       {path:'courseoutline/:id', component: CourseOutlineComponent},
       {path:'learningpath', component : LearningPathComponent},
+      {path:'rounds', component : RoundComponent},
+
     ])
   ],
   providers: [],

@@ -36,4 +36,13 @@ export class CourseService {
       headers : headers
     });
   }
+
+  DeleteCourse(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"Course/"+id,{
+      headers : headers
+    });
+  }
 }
