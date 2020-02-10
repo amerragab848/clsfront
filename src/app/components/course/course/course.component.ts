@@ -10,6 +10,7 @@ import {ExamTypeService} from '../../../core/services/exam-type/exam-type.servic
 import {LabTypeService} from '../../../core/services/lab-type/lab-type.service';
 import {MaterialTypeService} from '../../../core/services/material-type/material-type.service';
 import {VendorService} from '../../../core/services/vendor/vendor.service';
+// Imports
 let fileUpload = require('fuctbase64');
 
 @Component({
