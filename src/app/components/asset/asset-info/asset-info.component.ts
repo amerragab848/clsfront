@@ -1,9 +1,5 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { AssetService } from 'src/app/core/services/asset/asset.service';
-import { AssetGroupService } from 'src/app/core/services/asset-group/asset-group.service';
-import { AssetVendorService } from 'src/app/core/services/asset-vendor/asset-vendor.service';
-import { BranchService } from 'src/app/core/services/branch/branch.service';
 
 export interface AssetModel 
 {
@@ -36,44 +32,6 @@ export interface AssetModel
   branchId: number;
 }
 
-export interface AssetGroupModel 
-{
-  id:number;
-  name:string;
-  isDepreciationable:boolean;
-  depreciatedByPercentage:boolean;
-  depreciationAmount:number;
-  depreciationDuration:number;
-  assetMinmumAmount:number;
-}
-
-export interface AssetVendorModel 
-{
-  id:number;
-  name:string;
-  email: string;
-  number: string;
-  mobileNumber: string;
-  phone: string;
-  fax: string;
-  country: string;
-  address: string;
-  contactPersonName: string;
-  contactPersonNumber: string;
-  contactPersonEmail: string;
-  commercialFileNumber: string;
-  taxCard: string;
-  commercialFilePath: string;
-  taxCardFilePath: string;
-}
-
-export interface BranchModel 
-{
-  id:number;
-  name:string;
-  location:string;
-}
-
 @Component({
   selector: 'app-asset-info',
   templateUrl: './asset-info.component.html',
@@ -86,19 +44,12 @@ export class AssetInfoComponent implements OnInit {
   };
 
   assets : AssetModel[];
-  assetGroups : AssetGroupModel[];
-  assetVendors : AssetVendorModel[];
-  branches : BranchModel[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
 
   constructor(
-    private _toastSrv : ToastService,
     private _assetService : AssetService,
-    private _assetGroupService : AssetGroupService,
-    private _assetVendorService : AssetVendorService,
-    private _branchService : BranchService,
   ) { }
 
   GetAsset() {
@@ -108,41 +59,12 @@ export class AssetInfoComponent implements OnInit {
     })
   }
 
-  GetAssetGroup() {
-    this._assetGroupService.GetAssetGroup().subscribe((data :any)=>{
-       this.assetGroups = data.result;
-       console.log(this.assetGroups)
-    })
-  }
-
-  GetAssetVendor() {
-    this._assetVendorService.GetAssetVendor().subscribe((data :any)=>{
-       this.assetVendors = data.result;
-       console.log(this.assetVendors)
-    })
-  }
-
-  GetBranch() {
-    this._branchService.GetBranches().subscribe((data :any)=>{
-       this.branches = data.result;
-       console.log(this.branches)
-    })
-  }
-
   onChangePage(pageOfItems: Array<any>) {
     this.pageOfItems = pageOfItems;
   }
 
-  SelectAssetToEdit(asset)
-  {
-    this.asset = asset;
-  }
-
   ngOnInit() {
     this.GetAsset();
-    this.GetAssetGroup();
-    this.GetAssetVendor();
-    this.GetBranch();
   }
 
 }

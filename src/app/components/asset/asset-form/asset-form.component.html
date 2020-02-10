@@ -71,12 +71,79 @@
                     Asset Depreciation Duration  <span class="text-danger">*</span>
                   </label>
                 </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetPrice"  [(ngModel)]="asset.price"  type="text" class="form-control" name="assetPrice" #assetPrice required  placeholder="Enter asset price">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetPrice">
+                    Asset Price  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetQuantity"  [(ngModel)]="asset.quantity"  type="text" class="form-control" name="assetQuantity" #assetQuantity required  placeholder="Enter asset quantity">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetQuantity">
+                    Asset Price  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetMinmumAmount"  [(ngModel)]="asset.assetMinmumAmount"  type="text" class="form-control" name="assetMinmumAmount" #assetMinmumAmount required  placeholder="Enter asset minmum amount">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetMinmumAmount">
+                    Asset Minmum Amount  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetNote"  [(ngModel)]="asset.note"  type="text" class="form-control" name="assetNote" #assetNote required  placeholder="Enter asset note">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetNote">
+                    Asset Minmum Amount  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <div class="form-check">
+                      <label class="form-check-label" for="check3">
+                        <input type="checkbox" [(ngModel)]="asset.isNew" class="form-check-input" id="check3" name="option2" value="something"> Asset New
+                      </label>
+                    </div>         
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetAccusationDate"  [(ngModel)]="asset.accusationDate"  type="text" class="form-control" name="assetAccusationDate" #assetAccusationDate required  placeholder="Enter asset accusation date">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetAccusationDate">
+                    Asset Accusation Date  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div *ngFor="let vendor of assetVendors">{{vendor.name}}</div>
+                <select  [(ngModel)]="asset.assetVendorId" name="assetVendorName" class="form-control" #assetVendorName data-live-search="true" required>
+                  <option *ngFor="let vendor of assetVendors" [ngValue]="vendor.id">{{vendor.name}}</option>
+                </select>
+
+                <select  [(ngModel)]="asset.assetGroupId" name="assetGroupName" class="form-control" #assetGroupName data-live-search="true" required>
+                  <option *ngFor="let assetGroup of assetGroups" [ngValue]="assetGroup.id">{{assetGroup.name}}</option>
+                </select>
+
+                <select  [(ngModel)]="asset.branchId" name="assetBranch" class="form-control" #assetBranch data-live-search="true" required>
+                  <option *ngFor="let branch of branches" [ngValue]="branch.id">{{branch.name}}</option>
+                </select>
           </div>
           <div id="insurance" class="tab-pane fade">
+
             <div class="form-group form-control-material static">
               <div class="form-check">
-                  <label class="form-check-label" for="check3">
-                    <input type="checkbox" [(ngModel)]="asset.haveInsurance" class="form-check-input" id="check3" name="option2" value="something"> Asset Have Insurance
+                  <label class="form-check-label" for="check4">
+                    <input type="checkbox" [(ngModel)]="asset.haveInsurance" class="form-check-input" id="check4" name="option2" value="something"> Asset Have Insurance
                   </label>
                 </div>         
             </div>
@@ -109,6 +176,7 @@
                 </div>
           </div>
           <div id="technical" class="tab-pane fade">
+
               <div class="form-group form-control-material static">
                   <input id="assetManufacturer"  [(ngModel)]="asset.manufacturer"  type="text" class="form-control" name="assetManufacturer" #assetManufacturer required  placeholder="Enter asset manufacturer">
                   <span class="ma-form-highlight"></span>

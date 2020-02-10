@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { AssetService } from 'src/app/core/services/asset/asset.service';
+import { AssetGroupService } from 'src/app/core/services/asset-group/asset-group.service';
+import { AssetVendorService } from 'src/app/core/services/asset-vendor/asset-vendor.service';
+import { BranchService } from 'src/app/core/services/branch/branch.service';
 
 export interface AssetModel 
 {
@@ -34,6 +37,44 @@ export interface AssetModel
   branchId: number;
 }
 
+export interface AssetGroupModel 
+{
+  id:number;
+  name:string;
+  isDepreciationable:boolean;
+  depreciatedByPercentage:boolean;
+  depreciationAmount:number;
+  depreciationDuration:number;
+  assetMinmumAmount:number;
+}
+
+export interface AssetVendorModel 
+{
+  id:number;
+  name:string;
+  email: string;
+  number: string;
+  mobileNumber: string;
+  phone: string;
+  fax: string;
+  country: string;
+  address: string;
+  contactPersonName: string;
+  contactPersonNumber: string;
+  contactPersonEmail: string;
+  commercialFileNumber: string;
+  taxCard: string;
+  commercialFilePath: string;
+  taxCardFilePath: string;
+}
+
+export interface BranchModel 
+{
+  id:number;
+  name:string;
+  location:string;
+}
+
 @Component({
   selector: 'app-asset-form',
   templateUrl: './asset-form.component.html',
@@ -41,27 +82,53 @@ export interface AssetModel
 })
 export class AssetFormComponent implements OnInit {
 
-  asset : AssetModel =<AssetModel>{
+  assetItem : AssetModel =<AssetModel>{
     id :0
   };
 
-  assets : AssetModel[];
+  asset : AssetModel;
+  assetGroups : AssetGroupModel[];
+  assetVendors : AssetVendorModel[];
+  branches : BranchModel[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
+  
 
   constructor(
     private _toastSrv : ToastService,
     private _assetService : AssetService,
+    private _assetGroupService : AssetGroupService,
+    private _assetVendorService : AssetVendorService,
+    private _branchService : BranchService,
     private activatedRoute: ActivatedRoute
   ) { }
 
-  GetAsset() {
-    this._assetService.GetAsset().subscribe((data :any)=>{
-       this.assets = data.result;
-       console.log(this.assets)
-       
+  GetAssetById() {
+    let assetId = this.activatedRoute.snapshot.params.id;
+    this._assetService.GetAssetById(assetId).subscribe((data :any)=>{
+       this.asset = data.result;
+    })
+  }
 
+  GetAssetGroup() {
+    this._assetGroupService.GetAssetGroup().subscribe((data :any)=>{
+       this.assetGroups = data.result;
+       console.log(this.assetGroups)
+    })
+  }
+
+  GetAssetVendor() {
+    this._assetVendorService.GetAssetVendor().subscribe((data :any)=>{
+       this.assetVendors = data.result;
+       console.log(this.assetVendors)
+    })
+  }
+
+  GetBranch() {
+    this._branchService.GetBranches().subscribe((data :any)=>{
+       this.branches = data.result;
+       console.log(this.branches)
     })
   }
 
@@ -119,6 +186,9 @@ export class AssetFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this. GetAsset();
+    this.GetAssetById();
+    this.GetAssetGroup();
+    this.GetAssetVendor();
+    this.GetBranch();
   }
 }
