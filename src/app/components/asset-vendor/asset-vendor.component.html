@@ -1,0 +1,251 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Asset Vendor
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-sm-9">
+                            <div class="form-control-material">
+                              <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                <input id="addon" type="text" class="form-control"  [(ngModel)]=searchKey name="searchKey" placeholder="search key"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+                                <label for="addon">Search</label>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <table class="table table-bordered v-middle table-hover table-striped ">
+                            <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Number</th>
+                                <th>Mobile Number</th>
+                                <th>Phone</th>
+                                <th>Fax</th>
+                                <th>Country</th>
+                                <th>Address</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            
+                            <tbody *ngFor="let vendor of pageOfItems | assetVendorFilter : searchKey">
+                              <tr>
+                                  <td>{{vendor.name}}</td>
+                                  <td>{{vendor.email}}</td>
+                                  <td>{{vendor.number}}</td>
+                                  <td>{{vendor.mobileNumber}}</td>
+                                  <td>{{vendor.phone}}</td>
+                                  <td>{{vendor.fax}}</td>
+                                  <td>{{vendor.country}}</td>
+                                  <td>{{vendor.address}}</td>
+                                  <td>
+                                    <a (click)="SelectAssetVendorToEdit(vendor)"class="btn btn-warning">Edit</a>
+                                    <a class="btn btn-warning detail-btn" data-toggle="modal" [attr.data-target]="'#detailsModal' + vendor.id">More Details</a>
+                                  </td>
+                              </tr>
+
+                            <div class="modal fade" [attr.id]="'detailsModal' + vendor.id" role="dialog">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                
+                                    <div class="modal-header">
+                                    <h4 class="modal-title">Vendor Details</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    
+                                    <div class="modal-body">
+                                        <ul>
+                                            <li>Name: {{vendor.name}}</li>
+                                            <li>Email: {{vendor.email}}</li>
+                                            <li>Number: {{vendor.number}}</li>
+                                            <li>Mobile Number: {{vendor.mobileNumber}}</li>
+                                            <li>Phone: {{vendor.phone}}</li>
+                                            <li>Fax: {{vendor.fax}}</li>
+                                            <li>Country: {{vendor.country}}</li>
+                                            <li>Address: {{vendor.address}}</li>
+                                            <li>Contact Person Name: {{vendor.contactPersonName}}</li>
+                                            <li>Contct Person Number: {{vendor.contactPersonNumber}}</li>
+                                            <li>Contact Person Email: {{vendor.contactPersonEmail}}</li>
+                                            <li>Commercial File Number: {{vendor.commercialFileNumber}}</li>
+                                            <li>Tax Card: {{vendor.taxCard}}</li>
+                                            <li>Commercial Filae Path: {{vendor.commercialFilePath}}</li>
+                                            <li>Tax Card File Path: {{vendor.taxCardFilePath}}</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                    
+                                </div>
+                                </div>
+                            </div>
+                          </tbody>
+                          </table>
+
+
+                      </div>
+                </div>
+              
+            </div>
+            <div class="panel-footer">
+                <jw-pagination [pageSize]=4 [items]="assetVendors" (changePage)="onChangePage($event)"></jw-pagination>
+            </div>
+          </div>
+    </div>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Save Asset Vendor
+            </div>
+            <div class="panel-body">
+              <form (submit)="SaveAssetVendor()" #form="ngForm" >
+                <div class="form-group form-control-material static">
+                  <input id="vendorNameTxt"  [(ngModel)]="assetVendor.name"  type="text" class="form-control" name="vendorName" #vendorName required  placeholder="Enter asset vendor name">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="vendorNameTxt">
+                    Asset Vendor Name  <span class="text-danger">*</span>
+                  </label>      
+                </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorEmail"  [(ngModel)]="assetVendor.email"  type="email" class="form-control" name="vendorEmail" #vendorEmail required  placeholder="Enter asset vendor email">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorEmail">
+                      Asset Vendor Email  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorNumber"  [(ngModel)]="assetVendor.number"  type="text" class="form-control" name="vendorNumber" #vendorNumber required  placeholder="Enter asset vendor number">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorNumber">
+                      Asset Vendor Number  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorMobileNumber"  [(ngModel)]="assetVendor.mobileNumber"  type="text" class="form-control" name="vendorMobileNumber" #vendorMobileNumber required  placeholder="Enter asset vendor mobile number">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorMobileNumber">
+                      Asset Vendor Mobile Number  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorPhone"  [(ngModel)]="assetVendor.phone"  type="text" class="form-control" name="vendorPhone" #vendorPhone required  placeholder="Enter asset vendor phone">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorPhone">
+                      Asset Vendor Phone  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorFax"  [(ngModel)]="assetVendor.fax"  type="text" class="form-control" name="vendorFax" #vendorFax required  placeholder="Enter asset vendor fax">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorFax">
+                      Asset Vendor Fax  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorCountry"  [(ngModel)]="assetVendor.country"  type="text" class="form-control" name="vendorCountry" #vendorCountry required  placeholder="Enter asset vendor country">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorCountry">
+                      Asset Vendor Country  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorAddress"  [(ngModel)]="assetVendor.address"  type="text" class="form-control" name="vendorAddress" #vendorAddress required  placeholder="Enter asset vendor address">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorAddress">
+                      Asset Vendor Address  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorContactPersonName"  [(ngModel)]="assetVendor.contactPersonName"  type="text" class="form-control" name="vendorContactPersonName" #vendorContactPersonName required  placeholder="Enter asset vendor contact person name">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorContactPersonName">
+                      Asset Vendor Contact Person Name  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorContactPersonNumber"  [(ngModel)]="assetVendor.contactPersonNumber"  type="text" class="form-control" name="vendorContactPersonNumber" #vendorContactPersonNumber required  placeholder="Enter asset vendor contact person number">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorContactPersonNumber">
+                      Asset Vendor Contact Person Number  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorContactPersonEmail"  [(ngModel)]="assetVendor.contactPersonEmail"  type="text" class="form-control" name="VendorContactPersonEmail" #VendorContactPersonEmail required  placeholder="Enter asset vendor contact person email">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorContactPersonEmail">
+                      Asset Vendor Contact Person Email  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorCommercialFileNumber"  [(ngModel)]="assetVendor.commercialFileNumber"  type="text" class="form-control" name="vendorCommercialFileNumber" #vendorCommercialFileNumber required  placeholder="Enter asset vendor commercial file number">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorCommercialFileNumber">
+                      Asset Vendor Commercial File Number  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorTaxCard"  [(ngModel)]="assetVendor.taxCard"  type="text" class="form-control" name="vendorTaxCard" #vendorTaxCard required  placeholder="Enter asset vendor tax card">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorTaxCard">
+                      Asset Vendor Tax Card  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorCommercialFilePath"  [(ngModel)]="assetVendor.commercialFilePath"  type="text" class="form-control" name="vendorCommercialFilePath" #vendorCommercialFilePath required  placeholder="Enter asset vendor commercial file path">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorCommercialFilePath">
+                      Asset Vendor Commercial File Path  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                  <div class="form-group form-control-material static">
+                    <input id="vendorTaxCardFilePath"  [(ngModel)]="assetVendor.taxCardFilePath"  type="text" class="form-control" name="vendorTaxCardFilePath" #vendorTaxCardFilePath required  placeholder="Enter asset vendor tax card file path">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="vendorTaxCardFilePath">
+                      Asset Vendor Tax Card File Path  <span class="text-danger">*</span>
+                    </label>      
+                  </div>
+
+                <br/>
+                <button type="submit"  [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>
+                <hr/>
+                <button type="button" (click)="ClearObject()" class="btn btn-danger form-control">Clear</button>
+              </form>
+            </div>
+          </div>
+    </div>
+</div>

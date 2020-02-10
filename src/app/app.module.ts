@@ -30,6 +30,11 @@ import { CourseOutlineComponent, courseOutlineFilterPipe } from './components/co
 import { LearningPathComponent, learningPathFilterPipe } from './components/learning-path/learning-path.component';
 import {ToastComponent} from 'src/app/components/shared/toast/toast.component';
 import { RoundComponent } from './components/round/round.component';
+import { AssetGroupComponent, assetGroupFilterPipe } from './components/asset-group/asset-group.component';
+import { AssetVendorComponent, assetVendorFilterPipe } from './components/asset-vendor/asset-vendor.component';
+import { AssetInfoComponent, assetFilterPipe } from './components/asset/asset-info/asset-info.component';
+import { AssetFormComponent } from './components/asset/asset-form/asset-form.component';
+
 @NgModule({
   declarations: [
     JwPaginationComponent,
@@ -69,6 +74,13 @@ import { RoundComponent } from './components/round/round.component';
     LearningPathComponent,
     learningPathFilterPipe,
     RoundComponent,
+    AssetGroupComponent,
+    assetGroupFilterPipe,
+    AssetVendorComponent,
+    assetVendorFilterPipe,
+    AssetInfoComponent,
+    AssetFormComponent,
+    assetFilterPipe,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -96,7 +108,10 @@ import { RoundComponent } from './components/round/round.component';
       {path:'courseoutline/:id', component: CourseOutlineComponent},
       {path:'learningpath', component : LearningPathComponent},
       {path:'rounds', component : RoundComponent},
-
+      {path:'assetgroup', component : AssetGroupComponent},
+      {path:'assetvendor', component : AssetVendorComponent},
+      {path:'asset', component : AssetInfoComponent},
+      {path:'assetform/:id', component : AssetFormComponent},
     ])
   ],
   providers: [],
