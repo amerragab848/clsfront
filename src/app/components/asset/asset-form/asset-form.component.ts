@@ -109,9 +109,11 @@ export class AssetFormComponent implements OnInit {
 
   GetAssetById() {
     // let assetId = this.activatedRoute.snapshot.params.id;
-    this._assetService.GetAssetById(this.assetId).subscribe((data :any)=>{
-       this.asset = data.result;
-    })
+    if(this.assetId != 0){
+      this._assetService.GetAssetById(this.assetId).subscribe((data :any)=>{
+        this.asset = data.result;
+      })
+    }
   }
 
   GetAssetGroup() {
@@ -191,8 +193,6 @@ export class AssetFormComponent implements OnInit {
     this.GetAssetGroup();
     this.GetAssetVendor();
     this.GetBranch();
-    if(this.assetId !==0){
-      this.GetAssetById();
-    }  
+    this.GetAssetById();
   }
 }

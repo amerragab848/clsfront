@@ -130,7 +130,6 @@
                 <select  [(ngModel)]="asset.assetVendorId" name="assetVendorName" class="form-control" #assetVendorName data-live-search="true" required>
                   <option *ngFor="let vendor of assetVendors" [ngValue]="vendor.id">{{vendor.name}}</option>
                 </select>
-                {{vendor.name}} {{asset.assetVendorId}}
 
                 <select  [(ngModel)]="asset.assetGroupId" name="assetGroupName" class="form-control" #assetGroupName data-live-search="true" required>
                   <option *ngFor="let assetGroup of assetGroups" [ngValue]="assetGroup.id">{{assetGroup.name}}</option>
