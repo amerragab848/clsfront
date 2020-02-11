@@ -82,10 +82,6 @@ export interface BranchModel
 })
 export class AssetFormComponent implements OnInit {
 
-  // assetItem : AssetModel =<AssetModel>{
-  //   id :0
-  // };
-
   asset : AssetModel=<AssetModel>{
     id :0
   };;
@@ -108,7 +104,6 @@ export class AssetFormComponent implements OnInit {
   ) { }
 
   GetAssetById() {
-    // let assetId = this.activatedRoute.snapshot.params.id;
     if(this.assetId != 0){
       this._assetService.GetAssetById(this.assetId).subscribe((data :any)=>{
         this.asset = data.result;
@@ -116,24 +111,27 @@ export class AssetFormComponent implements OnInit {
     }
   }
 
+  getGroup(id) {
+    this._assetService.GetAssetById(id).subscribe((data :any)=>{
+      this.assetGroups = data.result;
+    })
+  }
+
   GetAssetGroup() {
     this._assetGroupService.GetAssetGroup().subscribe((data :any)=>{
        this.assetGroups = data.result;
-       console.log(this.assetGroups)
     })
   }
 
   GetAssetVendor() {
     this._assetVendorService.GetAssetVendor().subscribe((data :any)=>{
        this.assetVendors = data.result;
-       console.log(this.assetVendors)
     })
   }
 
   GetBranch() {
     this._branchService.GetBranches().subscribe((data :any)=>{
        this.branches = data.result;
-       console.log(this.branches)
     })
   }
 

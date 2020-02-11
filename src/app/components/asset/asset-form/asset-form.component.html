@@ -1,4 +1,4 @@
-<a class="btn btn-warning asset-btn" [routerLink]="['/asset']">Back</a>
+<a class="btn btn-success asset-btn" [routerLink]="['/asset']">Back</a>
 
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#main">Main</a></li>
@@ -119,7 +119,7 @@
                 </div>
 
                 <div class="form-group form-control-material static">
-                  <input id="assetAccusationDate"  [(ngModel)]="asset.accusationDate"  type="text" class="form-control" name="assetAccusationDate" #assetAccusationDate required  placeholder="Enter asset accusation date">
+                  <input id="assetAccusationDate"  [(ngModel)]="asset.accusationDate"  type="date" class="form-control" name="assetAccusationDate" #assetAccusationDate required  placeholder="Enter asset accusation date">
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetAccusationDate">
@@ -127,17 +127,33 @@
                   </label>
                 </div>
 
-                <select  [(ngModel)]="asset.assetVendorId" name="assetVendorName" class="form-control" #assetVendorName data-live-search="true" required>
-                  <option *ngFor="let vendor of assetVendors" [ngValue]="vendor.id">{{vendor.name}}</option>
-                </select>
+                <div>
+                  <label for="assetVendorName">
+                    Asset Vendor Name  <span class="text-danger">*</span>
+                  </label>
+                  <select  [(ngModel)]="asset.assetVendorId" name="assetVendorName" class="form-control" #assetVendorName data-live-search="true" required>
+                    <option *ngFor="let vendor of assetVendors" [ngValue]="vendor.id">{{vendor.name}}</option>
+                  </select>
+                </div>
 
-                <select  [(ngModel)]="asset.assetGroupId" name="assetGroupName" class="form-control" #assetGroupName data-live-search="true" required>
-                  <option *ngFor="let assetGroup of assetGroups" [ngValue]="assetGroup.id">{{assetGroup.name}}</option>
-                </select>
+                <div>
+                  <label for="assetGroupName">
+                    Asset Group Name  <span class="text-danger">*</span>
+                  </label>
+                  <select  [(ngModel)]="asset.assetGroupId" (change)="getGroup($event.target.value)" name="assetGroupName" class="form-control" #assetGroupName data-live-search="true" required>
+                    <option *ngFor="let assetGroup of assetGroups" [ngValue]="assetGroup.id" (click)="GetAssetById()">{{assetGroup.name}}</option>
+                  </select>
+                </div>
 
-                <select  [(ngModel)]="asset.branchId" name="assetBranch" class="form-control" #assetBranch data-live-search="true" required>
-                  <option *ngFor="let branch of branches" [ngValue]="branch.id">{{branch.name}}</option>
-                </select>
+                <div>
+                  <label for="assetBranch">
+                    Asset Branch  <span class="text-danger">*</span>
+                  </label>
+                  <select  [(ngModel)]="asset.branchId" name="assetBranch" class="form-control" #assetBranch data-live-search="true" required>
+                    <option *ngFor="let branch of branches" [ngValue]="branch.id">{{branch.name}}</option>
+                  </select>
+                </div>
+                
           </div>
           <div id="insurance" class="tab-pane fade">
 
@@ -207,7 +223,7 @@
           </div>
       
       </div>
-      <button type="submit"  [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>
+      <button type="submit"  [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Save</button>
               <hr/>
               <button type="button" (click)="ClearObject()" class="btn btn-danger form-control">Clear</button>
   </form>

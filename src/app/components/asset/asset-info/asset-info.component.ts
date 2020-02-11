@@ -55,7 +55,6 @@ export class AssetInfoComponent implements OnInit {
   GetAsset() {
     this._assetService.GetAsset().subscribe((data :any)=>{
        this.assets = data.result;
-       console.log(this.assets)
     })
   }
 
