@@ -82,17 +82,20 @@ export interface BranchModel
 })
 export class AssetFormComponent implements OnInit {
 
-  assetItem : AssetModel =<AssetModel>{
-    id :0
-  };
+  // assetItem : AssetModel =<AssetModel>{
+  //   id :0
+  // };
 
-  asset : AssetModel;
+  asset : AssetModel=<AssetModel>{
+    id :0
+  };;
   assetGroups : AssetGroupModel[];
   assetVendors : AssetVendorModel[];
   branches : BranchModel[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
+  assetId = this.activatedRoute.snapshot.params.id;
   
 
   constructor(
@@ -105,8 +108,8 @@ export class AssetFormComponent implements OnInit {
   ) { }
 
   GetAssetById() {
-    let assetId = this.activatedRoute.snapshot.params.id;
-    this._assetService.GetAssetById(assetId).subscribe((data :any)=>{
+    // let assetId = this.activatedRoute.snapshot.params.id;
+    this._assetService.GetAssetById(this.assetId).subscribe((data :any)=>{
        this.asset = data.result;
     })
   }
@@ -140,9 +143,8 @@ export class AssetFormComponent implements OnInit {
 
   SaveAsset()
   {
-    let assetId = this.activatedRoute.snapshot.params.id;
     this.btnClicked=true;
-    if(assetId ==0){
+    if(this.assetId ==0){
       this._assetService.AddAsset(this.asset).subscribe((data : any) =>{
         if(data.code === 200){
           this._toastSrv.success("","Saved Successfully");
@@ -186,9 +188,11 @@ export class AssetFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.GetAssetById();
     this.GetAssetGroup();
     this.GetAssetVendor();
     this.GetBranch();
+    if(this.assetId !==0){
+      this.GetAssetById();
+    }  
   }
 }

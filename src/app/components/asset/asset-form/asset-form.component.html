@@ -1,3 +1,5 @@
+<a class="btn btn-warning asset-btn" [routerLink]="['/asset']">Back</a>
+
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#main">Main</a></li>
     <li><a data-toggle="tab" href="#insurance">Insurance</a></li>
@@ -9,11 +11,11 @@
      
           <div id="main" class="tab-pane fade in active">
               <div class="form-group form-control-material static">
-                  <input id="assetNameTxt"  [(ngModel)]="asset.name"  type="text" class="form-control" name="assetName" #assetName required  placeholder="Enter asset name">
+                  <input id="assetNameTxt"  [(ngModel)]="asset.name"  type="text" class="form-control" name="assettName" #assettName required  placeholder="Enter asset name">
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetNameTxt">
-                    Asset Name   <span class="text-danger">*</span>
+                    Asset Name  <span class="text-danger">*</span>
                   </label>
                   
                 </div>
@@ -86,7 +88,7 @@
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetQuantity">
-                    Asset Price  <span class="text-danger">*</span>
+                    Asset Quantity  <span class="text-danger">*</span>
                   </label>
                 </div>
 
@@ -104,7 +106,7 @@
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetNote">
-                    Asset Minmum Amount  <span class="text-danger">*</span>
+                    Asset Note  <span class="text-danger">*</span>
                   </label>
                 </div>
 
@@ -125,10 +127,10 @@
                   </label>
                 </div>
 
-                <div *ngFor="let vendor of assetVendors">{{vendor.name}}</div>
                 <select  [(ngModel)]="asset.assetVendorId" name="assetVendorName" class="form-control" #assetVendorName data-live-search="true" required>
                   <option *ngFor="let vendor of assetVendors" [ngValue]="vendor.id">{{vendor.name}}</option>
                 </select>
+                {{vendor.name}} {{asset.assetVendorId}}
 
                 <select  [(ngModel)]="asset.assetGroupId" name="assetGroupName" class="form-control" #assetGroupName data-live-search="true" required>
                   <option *ngFor="let assetGroup of assetGroups" [ngValue]="assetGroup.id">{{assetGroup.name}}</option>
