@@ -1,0 +1,14 @@
+select.form-control {
+    margin-bottom: 5px;
+    box-shadow: none;
+    background-color: transparent;
+}
+
+label {
+    font-weight: normal;
+}
+
+.asset-btn,
+.tab-content {
+    margin-bottom: 10px;
+}

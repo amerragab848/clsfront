@@ -1,7 +1,10 @@
+<a class="btn btn-success asset-btn" [routerLink]="['/asset']">Back</a>
+
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#main">Main</a></li>
     <li><a data-toggle="tab" href="#insurance">Insurance</a></li>
     <li><a data-toggle="tab" href="#technical">Technical</a></li>
+    <li><a data-toggle="tab" href="#image">Image</a></li>
   </ul>
 
   <form (submit)="SaveAsset()" #form="ngForm" >
@@ -9,11 +12,11 @@
      
           <div id="main" class="tab-pane fade in active">
               <div class="form-group form-control-material static">
-                  <input id="assetNameTxt"  [(ngModel)]="asset.name"  type="text" class="form-control" name="assetName" #assetName required  placeholder="Enter asset name">
+                  <input id="assetNameTxt"  [(ngModel)]="asset.name"  type="text" class="form-control" name="assettName" #assettName required  placeholder="Enter asset name">
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetNameTxt">
-                    Asset Name   <span class="text-danger">*</span>
+                    Asset Name  <span class="text-danger">*</span>
                   </label>
                   
                 </div>
@@ -36,6 +39,15 @@
                     Asset Barcode  <span class="text-danger">*</span>
                   </label>
                   
+                </div>
+
+                <div>
+                  <label for="assetGroupName">
+                    Asset Group Name  <span class="text-danger">*</span>
+                  </label>
+                  <select  [(ngModel)]="asset.assetGroupId" (change)="GetGroupSettings($event.target.value)" name="assetGroupName" class="form-control" #assetGroupName  required>
+                  <option *ngFor="let assetGroup of assetGroups" value="{{assetGroup.id}}">{{assetGroup.name}}</option>
+                  </select>
                 </div>
 
                 <div class="form-group form-control-material static">
@@ -68,21 +80,96 @@
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetDepreciationDuration">
-                    Asset Depreciation Duration  <span class="text-danger">*</span>
+                    Asset Depreciation Duration in Month  <span class="text-danger">*</span>
                   </label>
                 </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetMinmumAmount"  [(ngModel)]="asset.assetMinmumAmount"  type="text" class="form-control" name="assetMinmumAmount" #assetMinmumAmount required  placeholder="Enter asset minmum amount">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetMinmumAmount">
+                    Asset Minmum Amount  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetPrice"  [(ngModel)]="asset.price"  type="text" class="form-control" name="assetPrice" #assetPrice required  placeholder="Enter asset price">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetPrice">
+                    Asset Price  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetQuantity"  [(ngModel)]="asset.quantity"  type="text" class="form-control" name="assetQuantity" #assetQuantity required  placeholder="Enter asset quantity">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetQuantity">
+                    Asset Quantity  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                
+
+                <div class="form-group form-control-material static">
+                  <input id="assetNote"  [(ngModel)]="asset.note"  type="text" class="form-control" name="assetNote" #assetNote   placeholder="Enter asset note">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetNote">
+                    Asset Note  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <div class="form-check">
+                      <label class="form-check-label" for="check3">
+                        <input type="checkbox" [(ngModel)]="asset.isNew" class="form-check-input" id="check3" name="option2" value="something"> Asset New
+                      </label>
+                    </div>         
+                </div>
+
+                <div class="form-group form-control-material static">
+                  <input id="assetAccusationDate"  [(ngModel)]="asset.accusationDate"  type="date" class="form-control" name="assetAccusationDate" #assetAccusationDate required  placeholder="Enter asset accusation date">
+                  <span class="ma-form-highlight"></span>
+                  <span class="ma-form-bar"></span>
+                  <label for="assetAccusationDate">
+                    Asset Accusation Date  <span class="text-danger">*</span>
+                  </label>
+                </div>
+
+                <div>
+                  <label for="assetVendorName">
+                    Asset Vendor Name  <span class="text-danger">*</span>
+                  </label>
+                  <select  [(ngModel)]="asset.assetVendorId" name="assetVendorName" class="form-control" #assetVendorName data-live-search="true" required>
+                    <option *ngFor="let vendor of assetVendors" [ngValue]="vendor.id">{{vendor.name}}</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="assetBranch">
+                    Asset Branch  <span class="text-danger">*</span>
+                  </label>
+                  <select  [(ngModel)]="asset.branchId" name="assetBranch" class="form-control" #assetBranch data-live-search="true" required>
+                    <option *ngFor="let branch of branches" [ngValue]="branch.id">{{branch.name}}</option>
+                  </select>
+                </div>
+                
           </div>
           <div id="insurance" class="tab-pane fade">
+
             <div class="form-group form-control-material static">
               <div class="form-check">
-                  <label class="form-check-label" for="check3">
-                    <input type="checkbox" [(ngModel)]="asset.haveInsurance" class="form-check-input" id="check3" name="option2" value="something"> Asset Have Insurance
+                  <label class="form-check-label" for="check4">
+                    <input type="checkbox" [(ngModel)]="asset.haveInsurance" class="form-check-input" id="check4" name="option2" value="something"> Asset Have Insurance
                   </label>
                 </div>         
             </div>
 
               <div class="form-group form-control-material static">
-                  <input id="assetInsuranceCompany"  [(ngModel)]="asset.insuranceCompany"  type="text" class="form-control" name="assetInsuranceCompany" #assetInsuranceCompany required  placeholder="Enter asset insurance company">
+                  <input id="assetInsuranceCompany"  [(ngModel)]="asset.insuranceCompany"  type="text" class="form-control" name="assetInsuranceCompany" #assetInsuranceCompany   placeholder="Enter asset insurance company">
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetInsuranceCompany">
@@ -91,7 +178,7 @@
                 </div>
 
                 <div class="form-group form-control-material static">
-                  <input id="assetInsuranceAmount"  [(ngModel)]="asset.insuranceAmount"  type="text" class="form-control" name="assetInsuranceAmount" #assetInsuranceAmount required  placeholder="Enter asset insurance amount">
+                  <input id="assetInsuranceAmount"  [(ngModel)]="asset.insuranceAmount"  type="text" class="form-control" name="assetInsuranceAmount" #assetInsuranceAmount   placeholder="Enter asset insurance amount">
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetInsuranceAmount">
@@ -100,7 +187,7 @@
                 </div>
 
                 <div class="form-group form-control-material static">
-                  <input id="assetInsuranceDuration"  [(ngModel)]="asset.insuranceDuration"  type="text" class="form-control" name="assetInsuranceDuration" #assetInsuranceDuration required  placeholder="Enter asset insurance duration">
+                  <input id="assetInsuranceDuration"  [(ngModel)]="asset.insuranceDuration"  type="text" class="form-control" name="assetInsuranceDuration" #assetInsuranceDuration   placeholder="Enter asset insurance duration">
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetInsuranceDuration">
@@ -109,8 +196,9 @@
                 </div>
           </div>
           <div id="technical" class="tab-pane fade">
+
               <div class="form-group form-control-material static">
-                  <input id="assetManufacturer"  [(ngModel)]="asset.manufacturer"  type="text" class="form-control" name="assetManufacturer" #assetManufacturer required  placeholder="Enter asset manufacturer">
+                  <input id="assetManufacturer"  [(ngModel)]="asset.manufacturer"  type="text" class="form-control" name="assetManufacturer" #assetManufacturer   placeholder="Enter asset manufacturer">
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetManufacturer">
@@ -119,7 +207,7 @@
                 </div>
 
                 <div class="form-group form-control-material static">
-                  <input id="assetModel"  [(ngModel)]="asset.model"  type="text" class="form-control" name="assetModel" #assetModel required  placeholder="Enter asset model">
+                  <input id="assetModel"  [(ngModel)]="asset.model"  type="text" class="form-control" name="assetModel" #assetModel   placeholder="Enter asset model">
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetModel">
@@ -128,7 +216,7 @@
                 </div>
 
                 <div class="form-group form-control-material static">
-                  <input id="assetManufacturingYear"  [(ngModel)]="asset.manufacturingYear"  type="text" class="form-control" name="assetManufacturingYear" #assetManufacturingYear required  placeholder="Enter asset manufacturing year">
+                  <input id="assetManufacturingYear"  [(ngModel)]="asset.manufacturingYear"  type="text" class="form-control" name="assetManufacturingYear" #assetManufacturingYear   placeholder="Enter asset manufacturing year">
                   <span class="ma-form-highlight"></span>
                   <span class="ma-form-bar"></span>
                   <label for="assetManufacturingYear">
@@ -138,7 +226,7 @@
           </div>
       
       </div>
-      <button type="submit"  [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>
+      <button type="submit"  [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Save</button>
               <hr/>
               <button type="button" (click)="ClearObject()" class="btn btn-danger form-control">Clear</button>
   </form>

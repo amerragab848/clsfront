@@ -21,6 +21,14 @@ export class AssetService {
     });
   }
 
+  GetAssetById(assetId){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.get(this.baseURL+"AssetItem/"+assetId, {
+      headers : headers
+    });
+  }
+
   AddAsset(asset){
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');

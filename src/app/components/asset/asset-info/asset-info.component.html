@@ -1,4 +1,4 @@
-<a class="btn btn-warning asset-btn" [routerLink]="['/assetform', 0]">Add Asset</a>
+<a class="btn btn-success asset-btn" [routerLink]="['/assetform', 0]">Add Asset</a>
    
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -34,7 +34,8 @@
                               <td>{{asset.barcode}}</td>
                               <td>{{asset.price}}</td>
                               <td>
-                                <a [routerLink]="['/assetform', asset.id]" (click)="SelectAssetToEdit(asset)"class="btn btn-warning">Edit</a>
+                                <a [routerLink]="['/assetform', asset.id]" class="btn btn-warning">Edit/View</a>
+                                 | <a type="button" class="btn btn-danger">Delete</a>
                               </td>
                           </tr>
                       </tbody>
