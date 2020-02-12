@@ -21,6 +21,14 @@ export class AssetGroupService {
     });
   }
 
+  GetAssetGroupById(id){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.get(this.baseURL+"AssetGroup/"+id,{
+      headers : headers
+    });
+  }
+
   AddAssetGroup(assetGroup){
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
