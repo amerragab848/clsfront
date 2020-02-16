@@ -22,7 +22,6 @@
                             <thead>
                               <tr>
                                 <th>Name</th>
-                                <th>Info</th>
                                 <th>Action</th>
                               </tr>
                             </thead>
@@ -30,7 +29,6 @@
                             <tbody  *ngFor="let path of pageOfItems | learningPathFilter : searchKey ">
                               <tr>
                                   <td>{{path.name}}</td>
-                                  <td>{{path.info}}</td>
                                   <td>
                                     <a   (click)="SelectLearningPathToEdit(path)"class="btn btn-warning">Edit</a>
                                   </td>

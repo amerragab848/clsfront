@@ -10,6 +10,8 @@ import {ExamTypeService} from '../../../core/services/exam-type/exam-type.servic
 import {LabTypeService} from '../../../core/services/lab-type/lab-type.service';
 import {MaterialTypeService} from '../../../core/services/material-type/material-type.service';
 import {VendorService} from '../../../core/services/vendor/vendor.service';
+import {LearningPathService} from '../../../core/services/learning-path/learning-path.service';
+
 // Imports
 let fileUpload = require('fuctbase64');
 
@@ -32,6 +34,7 @@ export class CourseComponent implements OnInit {
   courseSubCategories :CourseCategoryModel[];
   courseTypes :CourseTypeModel[];
   vendors :VendorModel[];
+  learningPaths:any[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
@@ -46,7 +49,9 @@ export class CourseComponent implements OnInit {
     private _courseService : CourseService,
     private _vendoerSrv :VendorService,
     private _toastSrv : ToastService,
-    private _subCategorySrv : SubCategoryService
+    private _subCategorySrv : SubCategoryService,
+    private _learningPathSrv : LearningPathService
+    
       ) { }
 
   ngOnInit() {
@@ -171,11 +176,19 @@ export class CourseComponent implements OnInit {
     this.GetLabTypes();
     this.GetMaterialTypes();
     this.GetVendors();
+    this.GetLearningPaths();
   }
   GetCourseCategories()
   {
     this._courseCategorySrv.GetCourseCategories().subscribe((data :any)=>{
       this.courseCategories = data.result;
+   }) 
+  }
+
+  GetLearningPaths()
+  {
+    this._learningPathSrv.GetLearningPathes().subscribe((data :any)=>{
+      this.learningPaths = data.result;
    }) 
   }
   
@@ -262,6 +275,8 @@ export interface CourseModel
   materialTypeId:number;
   vendorId:number;
   labTypeId:number;
+  learningPathId:number;
+  learningPathName :string;
   courseCategoryName:string;
   courseSubCategoryName:string;
   examTypeName:string;

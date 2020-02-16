@@ -24,6 +24,24 @@
                     </div>
                     <div class="form-group">
                         <label >
+                            Round Type <span class="text-danger">*</span>
+                        </label>
+                        <select class="form-control">
+                            <option>Full Day</option>
+                            <option>Half Day</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label >
+                            Delivery Type <span class="text-danger">*</span>
+                        </label>
+                        <select class="form-control">
+                            <option>On Site</option>
+                            <option>Offline</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label >
                             Branch <span class="text-danger">*</span>
                         </label>
                         <select class="form-control"></select>
@@ -41,7 +59,7 @@
                         <select class="form-control"></select>
                     </div>
                     <br />
-                    <button type="submit" class="btn btn-success form-control">Submit</button>
+                    <button type="submit" class="btn btn-success form-control">Save Round</button>
                     <hr />
                     <!-- <button type="button" (click)="ClearObject()" class="btn btn-danger form-control">Clear</button> -->
                 </form>
@@ -66,10 +84,15 @@
                             <select class="form-control" required>
                                 <option>Sunday</option>
                                 <option>Monday</option>
+                                <option>Tuesday</option>
+                                <option>Wednesday</option>
+                                <option>Thursday</option>
+                                <option>Friday</option>
+                                <option>Saturday</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="">
                                 Time From <span class="text-danger">*</span>
@@ -77,13 +100,17 @@
                             <input type="text" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="">
                                 Time To <span class="text-danger">*</span>
                             </label>
                             <input type="text" class="form-control" />
                         </div>
+                    </div>
+                    <div class="col-md-2">
+                        <p>.</p>
+                        <button class="btn btn-success" >Add</button>
                     </div>
                 </div>
                 <hr />
@@ -148,7 +175,8 @@
                         <td>Planned</td>
                         <td>
                             <a class="btn btn-warning">Details</a> | 
-                            <a class="btn btn-danger">Remove</a>
+                            <a class="btn btn-danger">Remove</a> | 
+                            <a class="btn btn-info">Activate</a>
                         </td>
                     </tr>
                 </tbody>

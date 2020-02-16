@@ -45,4 +45,13 @@ export class AssetService {
     });
   }
 
+  DeleteAsset(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"AssetItem/"+id,{
+      headers : headers
+    });
+  }
+
 }

@@ -36,4 +36,13 @@ export class AssetVendorService {
       headers : headers
     });
   }
+
+  DeleteAssetVendor(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"AssetVendor/"+id,{
+      headers : headers
+    });
+  }
 }

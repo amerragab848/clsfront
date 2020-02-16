@@ -1,5 +1,6 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { AssetService } from 'src/app/core/services/asset/asset.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
 
 export interface AssetModel 
 {
@@ -50,6 +51,7 @@ export class AssetInfoComponent implements OnInit {
 
   constructor(
     private _assetService : AssetService,
+    private _toastSrv : ToastService
   ) { }
 
   GetAsset() {
@@ -62,6 +64,24 @@ export class AssetInfoComponent implements OnInit {
     this.pageOfItems = pageOfItems;
   }
 
+  
+  DeleteAsset(id)
+  {
+      this._assetService.DeleteAsset(id).subscribe((data : any) =>{
+        if(data.code === 200){
+          this._toastSrv.success("Success","");
+          this.GetAsset();
+        }
+        if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      },
+      (error) =>{
+        this._toastSrv.error("Failed","You can not delete this record");
+      }
+      );
+  }
   ngOnInit() {
     this.GetAsset();
   }

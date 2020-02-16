@@ -224,7 +224,15 @@
                   </label>
                 </div>
           </div>
-      
+          <div id="image" class="tab-pane fade">
+          <img src="https://localhost:44384{{asset.image}}" height="200" />
+            <hr/>
+            <label for="image">
+              Image 
+             </label>
+            <input (change)="onFileChange($event)" [(ngModel)]="fileInput" name="fileInput" id="fileInput"  type="file" class="form-control"/>
+          </div>
+
       </div>
       <button type="submit"  [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Save</button>
               <hr/>

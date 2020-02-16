@@ -41,7 +41,8 @@
                                   <td>{{group.assetMinmumAmount}}</td>
                                   <td>
                                     <a   (click)="SelectAssetGroupToEdit(group)"class="btn btn-warning">Edit</a>
-                                  </td>
+                                    | <a (click)="DeleteAssetGroup(group.id)" type="button" class="btn btn-danger">Delete</a >
+                                    </td>
                               </tr>
                           </tbody>
                           </table>

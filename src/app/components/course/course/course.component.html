@@ -33,11 +33,11 @@
                                         <th>Name</th>
                                         <th>Category</th>
                                         <th>Sub Category</th>
-                                        <th>Type</th>
                                         <th>Exam</th>
                                         <th>Material</th>
                                         <th>Lab</th>
                                         <th>Vendor</th>
+                                        <th>Learning Path</th>
                                         <th>Image</th>
                                         <th>Actions</th>
                                     </tr>
@@ -51,6 +51,7 @@
                                         <td>{{course.materialTypeName}}</td>
                                         <td>{{course.labTypeName}}</td>
                                         <td>{{course.vendorName}}</td>
+                                        <td>{{course.learningPathName}}</td>
                                         <td>
                                             <img src="https://localhost:44384{{course.image}}" width="150" height="70" />
                                         </td>
@@ -162,11 +163,18 @@
                                     </select>
                             </div>
                             <div class="col-sm-4">
+                                <label for="learningPath">
+                                    Learning Path   <span class="text-danger"></span>
+                                  </label>
+                                    <select  [(ngModel)]="course.learningPathId" name="learningPath" class="form-control" #learningPath data-live-search="true" >
+                                      <option *ngFor="let item of learningPaths" [ngValue]="item.id">{{item.name}}</option>
+                                    </select>
+                            </div>
+                            <div class="col-sm-4">
                                 <label for="instructorImage">
                                     Image 
                                    </label>
                                 <input (change)="onFileChange($event)" [(ngModel)]="fileInput" name="fileInput" id="fileInput"  type="file" class="form-control"/>
-                               
                             </div>
 
                             <!-- <div class="col-sm-3">

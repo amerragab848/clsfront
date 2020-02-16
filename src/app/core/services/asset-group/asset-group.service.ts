@@ -44,4 +44,13 @@ export class AssetGroupService {
       headers : headers
     });
   }
+
+  DeleteAssetGroup(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"AssetGroup/"+id,{
+      headers : headers
+    });
+  }
 }

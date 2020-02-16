@@ -45,8 +45,9 @@
                                   <td>{{vendor.address}}</td>
                                   <td>
                                     <a (click)="SelectAssetVendorToEdit(vendor)"class="btn btn-warning">Edit</a>
-                                    <a class="btn btn-warning detail-btn" data-toggle="modal" [attr.data-target]="'#detailsModal' + vendor.id">More Details</a>
-                                  </td>
+                                    <a class="btn btn-info detail-btn" data-toggle="modal" [attr.data-target]="'#detailsModal' + vendor.id">More Details</a>
+                                    | <a (click)="DeleteAssetVendor(vendor.id)" type="button" class="btn btn-danger">Delete</a >
+                                    </td>
                               </tr>
 
                             <div class="modal fade" [attr.id]="'detailsModal' + vendor.id" role="dialog">
@@ -73,8 +74,8 @@
                                             <li>Contact Person Email: {{vendor.contactPersonEmail}}</li>
                                             <li>Commercial File Number: {{vendor.commercialFileNumber}}</li>
                                             <li>Tax Card: {{vendor.taxCard}}</li>
-                                            <li>Commercial Filae Path: {{vendor.commercialFilePath}}</li>
-                                            <li>Tax Card File Path: {{vendor.taxCardFilePath}}</li>
+                                            <!-- <li>Commercial Filae Path: {{vendor.commercialFilePath}}</li>
+                                            <li>Tax Card File Path: {{vendor.taxCardFilePath}}</li> -->
                                         </ul>
                                     </div>
                                     
@@ -222,15 +223,15 @@
                     </label>      
                   </div>
 
-                  <div class="form-group form-control-material static">
+                  <!-- <div class="form-group form-control-material static">
                     <input id="vendorCommercialFilePath"  [(ngModel)]="assetVendor.commercialFilePath"  type="text" class="form-control" name="vendorCommercialFilePath" #vendorCommercialFilePath required  placeholder="Enter asset vendor commercial file path">
                     <span class="ma-form-highlight"></span>
                     <span class="ma-form-bar"></span>
                     <label for="vendorCommercialFilePath">
                       Asset Vendor Commercial File Path  <span class="text-danger">*</span>
                     </label>      
-                  </div>
-
+                  </div> -->
+<!-- 
                   <div class="form-group form-control-material static">
                     <input id="vendorTaxCardFilePath"  [(ngModel)]="assetVendor.taxCardFilePath"  type="text" class="form-control" name="vendorTaxCardFilePath" #vendorTaxCardFilePath required  placeholder="Enter asset vendor tax card file path">
                     <span class="ma-form-highlight"></span>
@@ -238,7 +239,7 @@
                     <label for="vendorTaxCardFilePath">
                       Asset Vendor Tax Card File Path  <span class="text-danger">*</span>
                     </label>      
-                  </div>
+                  </div> -->
 
                 <br/>
                 <button type="submit"  [disabled]="form.invalid || btnClicked" class="btn btn-success form-control">Submit</button>

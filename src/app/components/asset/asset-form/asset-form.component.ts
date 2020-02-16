@@ -5,7 +5,7 @@ import { AssetService } from 'src/app/core/services/asset/asset.service';
 import { AssetGroupService } from 'src/app/core/services/asset-group/asset-group.service';
 import { AssetVendorService } from 'src/app/core/services/asset-vendor/asset-vendor.service';
 import { BranchService } from 'src/app/core/services/branch/branch.service';
-
+let fileUpload = require('fuctbase64');
 
 
 @Component({
@@ -18,7 +18,7 @@ export class AssetFormComponent implements OnInit {
 
   asset : AssetModel=<AssetModel>{
     id :0
-  };;
+  };
   assetGroups : AssetGroupModel[];
   assetVendors : AssetVendorModel[];
   branches : BranchModel[];
@@ -43,6 +43,7 @@ export class AssetFormComponent implements OnInit {
     if(this.assetId != 0){
       this._assetService.GetAssetById(this.assetId).subscribe((data :any)=>{
         this.asset = data.result;
+        this.asset.accusationDate = this.asset.accusationDateString;
       })
     }
   }
@@ -50,7 +51,6 @@ export class AssetFormComponent implements OnInit {
   GetAssetGroup() {
     this._assetGroupService.GetAssetGroup().subscribe((data :any)=>{
        this.assetGroups = data.result;
-       console.log(this.assetGroups)
     })
   }
 
@@ -67,14 +67,12 @@ export class AssetFormComponent implements OnInit {
   GetAssetVendor() {
     this._assetVendorService.GetAssetVendor().subscribe((data :any)=>{
        this.assetVendors = data.result;
-       console.log(this.assetVendors)
     })
   }
 
   GetBranch() {
     this._branchService.GetBranches().subscribe((data :any)=>{
        this.branches = data.result;
-       console.log(this.branches)
     })
   }
 
@@ -82,14 +80,33 @@ export class AssetFormComponent implements OnInit {
     this.router.navigate(['/asset']);
   }
 
+  fileResult: any = null;
+  fileInput : any = null;
+  async onFileChange(event){
+    try {
+      let result = await fileUpload(event);
+      this.fileResult = result;
+    }
+    catch{
+      this.fileResult = null;
+    }
+  }
+
   SaveAsset()
   {
     this.btnClicked=true;
     this.asset.assetGroupId = parseInt(this.asset.assetGroupId.toString());
     this.asset.assetVendorId = parseInt(this.asset.assetVendorId.toString());
-    this.asset.branchId = parseInt(this.asset.branchId  .toString());
+    this.asset.branchId = parseInt(this.asset.branchId.toString());
+    this.asset.price = parseFloat(this.asset.price.toString());
+    this.asset.quantity = parseInt(this.asset.quantity.toString());
 
-    console.log(this.asset);
+    if(this.fileResult !=null)
+    {
+      this.asset.base64File = this.fileResult.base64;
+      this.asset.fileName = this.fileResult.name
+    }
+
 
     if(this.assetId ==0){
       this._assetService.AddAsset(this.asset).subscribe((data : any) =>{
@@ -121,7 +138,6 @@ export class AssetFormComponent implements OnInit {
         if(data.code === 500)
         {
           this._toastSrv.error("Failed",data.message);
-          this.ClearObject();
           this.btnClicked=false;
         }
       },
@@ -133,6 +149,7 @@ export class AssetFormComponent implements OnInit {
       );
     }
   }
+
 
   ngOnInit() {
     this.GetAssetGroup();
@@ -165,12 +182,16 @@ export interface AssetModel
   model: string;
   manufacturingYear: number;
   accusationDate: string;
+  accusationDateString: string;
   assetVendorName: string;
   assetVendorId: number;
   assetGroupName: string;
   assetGroupId: number;
   branchName: string;
   branchId: number;
+  base64File:string;
+  fileName:string;
+  image:string;
 }
 
 export interface AssetGroupModel 

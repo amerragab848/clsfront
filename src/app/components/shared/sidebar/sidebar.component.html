@@ -11,21 +11,24 @@
                 <div class="panel-heading" role="tab" id="headingOne">
                   <h4 class="panel-title">
                     <a class="accordion-toggle collapsed"  role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                      Definations
+                      Course Management
                     </a>
                   </h4>
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                   <div class="panel-body">
                     <ul id="course-menu">
-                          <li><a [routerLink]="['/coursetype']" ><span>Courses Types</span></a></li>
-                          <li><a [routerLink]="['/examtype']" ><span>Exam Types</span></a></li>
-                          <li><a [routerLink]="['/labtype']" ><span>Lab Types</span></a></li>
-                          <li><a [routerLink]="['/materialtype']" ><span>Material Types</span></a></li>
-                          <li><a [routerLink]="['/deliverytype']" ><span>Delivery Type</span></a></li>
-                          <li><a [routerLink]="['/vendor']" ><span>Vendors</span></a></li>
-                          <li><a [routerLink]="['/coursecategory']" ><span>Courses Category</span></a></li>
-                          <li><a [routerLink]="['/subcategory']" ><span>SubCategory</span></a></li>
+                        <li><a [routerLink]="['/course']" ><span>Course</span></a></li>
+                        <li><a [routerLink]="['/instructor']" ><span>Instructors</span></a></li>
+                        <li><a [routerLink]="['/learningpath']" ><span>Learning Path</span></a></li>
+                        <li><a [routerLink]="['/coursetype']" ><span>Courses Types</span></a></li>
+                        <li><a [routerLink]="['/examtype']" ><span>Exam Types</span></a></li>
+                        <li><a [routerLink]="['/labtype']" ><span>Lab Types</span></a></li>
+                        <li><a [routerLink]="['/materialtype']" ><span>Material Types</span></a></li>
+                        <li><a [routerLink]="['/deliverytype']" ><span>Delivery Type</span></a></li>
+                        <li><a [routerLink]="['/vendor']" ><span>Course Vendors</span></a></li>
+                        <li><a [routerLink]="['/coursecategory']" ><span>Courses Category</span></a></li>
+                        <li><a [routerLink]="['/subcategory']" ><span>SubCategory</span></a></li>
                         </ul>
                   </div>
                 </div>
@@ -34,7 +37,7 @@
                 <div class="panel-heading" role="tab" id="headingTwo">
                   <h4 class="panel-title">
                     <a class="accordion-toggle collapsed"  role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                      Entities
+                      Finance
                     </a>
                   </h4>
                 </div>
@@ -43,18 +46,16 @@
                     <ul id="course-menu">
                       <li><a [routerLink]="['/branch']" ><span>Branches</span></a></li>
                       <li><a [routerLink]="['/lab']" ><span>Labs</span></a></li>
-                      <li><a [routerLink]="['/course']" ><span>Course</span></a></li>
-                      <li><a [routerLink]="['/instructor']" ><span>Instructors</span></a></li>
-                      <!-- <li><a [routerLink]="['/learningpath']" ><span>Learning Path</span></a></li> -->
+                      <li><a [routerLink]="['/assetgroup']" ><span>Asset Group</span></a></li>
+                      <li><a [routerLink]="['/assetvendor']" ><span>Asset Vendor</span></a></li>
+                      <li><a [routerLink]="['/asset']" ><span>Asset</span></a></li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
           </li>
-          <li><a [routerLink]="['/assetgroup']" ><span>Asset Group</span></a></li>
-          <li><a [routerLink]="['/assetvendor']" ><span>Asset Vendor</span></a></li>
-          <li><a [routerLink]="['/asset']" ><span>Asset</span></a></li>
+
         </ul>
       </div>
     </div>
