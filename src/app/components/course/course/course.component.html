@@ -93,9 +93,13 @@
 
         <div class="col-lg-12">
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#tab1">Tab 1</a></li>
-                <li><a data-toggle="tab" href="#tab2">Tab 2</a></li>
-                <li><a data-toggle="tab" href="#tab3">Tab 3</a></li>
+                <li class="active"><a data-toggle="tab" href="#main">Main</a></li>
+                <li><a data-toggle="tab" href="#outline">Outline</a></li>
+                <li><a data-toggle="tab" href="#outcome">Outcomes</a></li>
+                <li><a data-toggle="tab" href="#benefit">Benefits</a></li>
+                <li><a data-toggle="tab" href="#overview">Overview</a></li>
+                <li><a data-toggle="tab" href="#prerequisite">Prerequisites</a></li>
+                <li><a data-toggle="tab" href="#audianceProfile">Audiance Profile</a></li>
               </ul>
             <div class="panel">
                 <div class="panel-heading">
@@ -105,7 +109,7 @@
                     <form #form="ngForm" class="form-horizontal" (submit)="SaveCourse()" role="form">
                         <div class="tab-content">
 
-                            <div id="tab1" class="tab-pane fade in active">
+                            <div id="main" class="tab-pane fade in active">
                                 <div class="form-group">
                                     <div class="col-sm-4">
                                         <div class="form-control-material static">
@@ -137,9 +141,6 @@
                                 
 
                                 </div>
-                            </div>
-
-                            <div id="tab2" class="tab-pane fade">
                                 <div class="form-group">
                                     <div class="col-sm-4">
                                         <label for="examTypeName">
@@ -217,65 +218,85 @@
                                 </div>
                             </div>
 
-                            <div id="tab3" class="tab-pane fade">
+                            <div id="outline" class="tab-pane fade">
                                 <div class="form-group">
                                     <div class="col-sm-1">
                                         <label class="control-label">
                                             Outline
                                         </label>
                                     </div>
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-11">
                                         <angular-editor [(ngModel)]="course.outline" name="outline" id="outline"></angular-editor>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div id="outcome" class="tab-pane fade">
+                                <div class="form-group">
 
                                     <div class="col-sm-1">
                                         <label class="control-label">
                                             Outcomes
                                         </label>
                                     </div>
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-11">
                                         <angular-editor [(ngModel)]="course.outcomes" name="outcomes" id="outcomes"></angular-editor>
                                     </div>
                                 </div>
+                            </div>
 
+                            <div id="benefit" class="tab-pane fade">
                                 <div class="form-group">
                                     <div class="col-sm-1">
                                         <label class="control-label">
                                             Benefits
                                         </label>
                                     </div>
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-11">
                                         <angular-editor [(ngModel)]="course.benefits" name="benefits" id="benefits"></angular-editor>
                                     </div>
+                                </div>
+                            </div>
 
+                            <div id="overview" class="tab-pane fade">
+                                <div class="form-group">
                                     <div class="col-sm-1">
                                         <label class="control-label text-right">
                                             Overview
                                         </label>
                                     </div>
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-11">
                                         <angular-editor [(ngModel)]="course.overview" name="overview" id="overview"></angular-editor>
                                     </div>
+                                </div>
+                            </div>
 
+                            <div id="prerequisite" class="tab-pane fade">
+                                <div class="form-group">
                                     <div class="col-sm-1">
                                         <label class="control-label text-right">
                                             Prerequisites
                                         </label>
                                     </div>
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-11">
                                         <angular-editor [(ngModel)]="course.prerequisites" name="prerequisites" id="prerequisites"></angular-editor>
                                     </div>
+                                </div>
+                            </div>
 
+                            <div id="audianceProfile" class="tab-pane fade">
+                                <div class="form-group">
                                     <div class="col-sm-1">
                                         <label class="control-label text-right">
                                             Audiance Profile
                                         </label>
                                     </div>
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-11">
                                         <angular-editor [(ngModel)]="course.audianceProfile" name="audianceProfile" id="audianceProfile"></angular-editor>
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                             <div class="form-group margin-none">
                                 <div class="col-sm-12">
