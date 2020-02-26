@@ -5,9 +5,33 @@
                 Round Details
             </div>
             <div class="panel-body">
-                <form>
+                <form #saveForm="ngForm" (submit)="SaveRound()">
                     <div class="form-group form-control-material static">
-                        <input type="date" class="form-control" required>
+                        <input #roundDuration="ngModel" name="roundDuration" [(ngModel)]="round.roundDuration" type="number" class="form-control" required>
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label >
+                            Round Duration in Hours <span class="text-danger">*</span>
+                        </label>
+                    </div>
+                    <div class="form-group form-control-material static">
+                        <input #sessionDuration="ngModel" name="sessionDuration" [(ngModel)]="round.sessionDuration" type="number" class="form-control" required>
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label >
+                            Session Duration in Hours <span class="text-danger">*</span>
+                        </label>
+                    </div>
+                    <div class="form-group form-control-material static">
+                        <input #totalSessions="ngModel" name="totalSessions" [(ngModel)]="round.roundDuration /round.sessionDuration" readonly type="number" class="form-control" required>
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label >
+                            Total Sessions <span class="text-danger">*</span>
+                        </label>
+                    </div>
+                    <div class="form-group form-control-material static">
+                        <input #startDate="ngModel" name="startDate" [(ngModel)]="round.startDate" type="date" (focusout)="CalculateEndDate()" class="form-control" required>
                         <span class="ma-form-highlight"></span>
                         <span class="ma-form-bar"></span>
                         <label >
@@ -15,7 +39,7 @@
                         </label>
                     </div>
                     <div class="form-group form-control-material static">
-                        <input type="date" class="form-control" required>
+                        <input #endDate="ngModel" name="endDate" [(ngModel)]="round.endDate" type="date" class="form-control" required>
                         <span class="ma-form-highlight"></span>
                         <span class="ma-form-bar"></span>
                         <label data-toggle="modal" data-target="#timeTableModal">
@@ -26,37 +50,50 @@
                         <label >
                             Round Type <span class="text-danger">*</span>
                         </label>
-                        <select class="form-control">
-                            <option>Full Day</option>
-                            <option>Half Day</option>
+                        <select  [(ngModel)]="round.courseTypeId" name="courseTypeId" class="form-control" #courseTypeId  required>
+                            <option *ngFor="let item of courseTypes" [ngValue]="item.id">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label >
                             Delivery Type <span class="text-danger">*</span>
                         </label>
-                        <select class="form-control">
-                            <option>On Site</option>
-                            <option>Offline</option>
+                        <select  [(ngModel)]="round.deliveryTypeId" name="deliveryTypeId" class="form-control" #deliveryTypeId  required>
+                            <option *ngFor="let item of deliveryTypes" [ngValue]="item.id">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label >
+                        <label>
                             Branch <span class="text-danger">*</span>
                         </label>
-                        <select class="form-control"></select>
+                        <select (change)="GetLabs($event.target.value)"  name="deliveryTypeId" class="form-control">
+                            <option></option>
+                            <option *ngFor="let item of branches" value="{{item.id}}">{{item.name}}</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label data-toggle="modal" data-target="#timeTableModal">
                             Lab <span class="text-danger">*</span>
                         </label>
-                        <select class="form-control"></select>
+                        <select  [(ngModel)]="round.labId" name="labId" class="form-control" #labId  required>
+                            <option *ngFor="let item of labs" [ngValue]="item.id">{{item.name}}</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label >
                             Instructors <span class="text-danger">*</span>
                         </label>
-                        <select class="form-control"></select>
+                        <ng-select name="Instructors" class="form-control" bindLabel="name"
+                                (change)="SelectInstrctor()" 
+                                appendTo="body"
+                                multiple="true"
+                                [searchable]="true" 
+                                [clearable]="true"
+                                [(ngModel)]="selectedInstructors">
+                                <ng-option [value]="item.id" [disabled]="item.disabled" *ngFor="let item of instructors">
+                                    {{item.name}}
+                                </ng-option>
+                        </ng-select>
                     </div>
                     <br />
                     <button type="submit" class="btn btn-success form-control">Save Round</button>
@@ -75,44 +112,50 @@
                 Round Days
             </div>
             <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">
-                                Day <span class="text-danger">*</span>
-                            </label>
-                            <select class="form-control" required>
-                                <option>Sunday</option>
-                                <option>Monday</option>
-                                <option>Tuesday</option>
-                                <option>Wednesday</option>
-                                <option>Thursday</option>
-                                <option>Friday</option>
-                                <option>Saturday</option>
-                            </select>
+                <form #addDayForm="ngForm" (submit)="AddDayToRoundWeek()">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">
+                                    Day <span class="text-danger">*</span>
+                                </label>
+                                <select #dayName="ngModel" [(ngModel)]="weekDay.day" name="dayName" class="form-control" required>
+                                    <option value="Sunday">Sunday</option>
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="">
+                                    Time From <span class="text-danger">*</span>
+                                </label>
+                                <select #from="ngModel" required  name="from" [(ngModel)]="weekDay.startTime" name="from" class="form-control" required>
+                                    <option *ngFor="let t of times" value="{{t.time}}">{{t.time}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="">
+                                    Time To <span class="text-danger">*</span>
+                                </label>
+                                <select #to="ngModel" required  name="to" [(ngModel)]="weekDay.endTime" name="to" class="form-control" required>
+                                    <option *ngFor="let t of times" value="{{t.time}}">{{t.time}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <p>.</p>
+                            <button class="btn btn-success" type="submit" [disabled]="addDayForm.invalid" >Add</button>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="">
-                                Time From <span class="text-danger">*</span>
-                            </label>
-                            <input type="text" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="">
-                                Time To <span class="text-danger">*</span>
-                            </label>
-                            <input type="text" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <p>.</p>
-                        <button class="btn btn-success" >Add</button>
-                    </div>
-                </div>
+                </form>
                 <hr />
                 <div class="row">
                     <div class="col-md-12">
@@ -125,21 +168,13 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody *ngFor="let d of roundWeek">
                                 <tr>
-                                    <td>Sunday</td>
-                                    <td>03:00 PM</td>
-                                    <td>05:00 PM</td>
+                                    <td>{{d.day}}</td>
+                                    <td>{{d.startTime}}</td>
+                                    <td>{{d.endTime}}</td>
                                     <td>
-                                        <a class="btn btn-danger">X</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Sunday</td>
-                                    <td>03:00 PM</td>
-                                    <td>05:00 PM</td>
-                                    <td>
-                                        <a class="btn btn-danger">X</a>
+                                        <button class="btn btn-danger" (click)="DeleteDayFromRoundWeek(d)">X</button>
                                     </td>
                                 </tr>
                             </tbody>

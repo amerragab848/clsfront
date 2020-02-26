@@ -34,6 +34,7 @@ import { AssetGroupComponent, assetGroupFilterPipe } from './components/asset-gr
 import { AssetVendorComponent, assetVendorFilterPipe } from './components/asset-vendor/asset-vendor.component';
 import { AssetInfoComponent, assetFilterPipe } from './components/asset/asset-info/asset-info.component';
 import { AssetFormComponent } from './components/asset/asset-form/asset-form.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { AssetFormComponent } from './components/asset/asset-form/asset-form.com
     FormsModule,
     BrowserAnimationsModule,
     AngularEditorModule,
+    NgSelectModule,
     RouterModule.forRoot([
       {path: '', component: DashboardComponent},
       {path:'coursetype', component : CourseTypeComponent},
@@ -112,6 +114,7 @@ import { AssetFormComponent } from './components/asset/asset-form/asset-form.com
       {path:'assetvendor', component : AssetVendorComponent},
       {path:'asset', component : AssetInfoComponent},
       {path:'assetform/:id', component : AssetFormComponent},
+      {path:'rounds/:id',component:RoundComponent}
     ])
   ],
   providers: [],
