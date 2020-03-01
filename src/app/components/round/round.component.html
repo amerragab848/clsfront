@@ -42,9 +42,11 @@
                         <input #endDate="ngModel" name="endDate" [(ngModel)]="round.endDate" type="date" class="form-control" required>
                         <span class="ma-form-highlight"></span>
                         <span class="ma-form-bar"></span>
-                        <label data-toggle="modal" data-target="#timeTableModal">
+                        <label>
+                            <!-- data-toggle="modal" data-target="#timeTableModal" -->
                             End Date <span class="text-danger">*</span>
                         </label>
+
                     </div>
                     <div class="form-group">
                         <label >
@@ -72,7 +74,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label data-toggle="modal" data-target="#timeTableModal">
+                        <label>
+                            <!-- data-toggle="modal" data-target="#timeTableModal" -->
                             Lab <span class="text-danger">*</span>
                         </label>
                         <select  [(ngModel)]="round.labId" name="labId" class="form-control" #labId  required>
