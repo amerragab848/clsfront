@@ -1,0 +1,144 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Corporate
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-sm-9">
+                            <div class="form-control-material">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                    <input id="addon" type="text" class="form-control" [(ngModel)]=searchKey
+                                        name="searchKey" placeholder="search key"><span
+                                        class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+                                    <label for="addon">Search</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <table class="table table-bordered v-middle table-hover table-striped ">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Fax</th>
+                                    <th>Email</th>
+                                    <th>Contact Person Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody *ngFor="let corporate of pageOfItems | corporateFilter : searchKey">
+                                <tr>
+                                    <td>{{corporate.name}}</td>
+                                    <td>{{corporate.fax}}</td>
+                                    <td>{{corporate.email}}</td>
+                                    <td>{{corporate.contactPersonEmail}}</td>
+                                    <td>{{corporate.phone}}</td>
+                                    <td>{{corporate.address}}</td>
+                                    <td>
+                                        <a (click)="SelectCorporateToEdit(corporate)" class="btn btn-warning">Edit</a> |
+                                        <a (click)="DeleteCorporate(corporate.id)" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-footer">
+                <jw-pagination [pageSize]=4 [items]="corporates" (changePage)="onChangePage($event)"></jw-pagination>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Save Corporate
+            </div>
+            <div class="panel-body">
+                <form (submit)="SaveCorporate()" #form="ngForm">
+                    <div class="form-group form-control-material static">
+                        <input id="corporateName" [(ngModel)]="corporate.name" type="text" class="form-control"
+                            name="corporateName" #corporateName required
+                            placeholder="Enter corporate name">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="corporateName">
+                            Corporate Name <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group form-control-material static">
+                        <input id="corporateFax" [(ngModel)]="corporate.fax" type="text" class="form-control"
+                            name="corporateFax" #corporateFax required
+                            placeholder="Enter corporate fax">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="corporateFax">
+                            Corporate Fax <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group form-control-material static">
+                        <input id="corporateEmail" [(ngModel)]="corporate.email" type="text" class="form-control"
+                            name="corporateEmail" #corporateEmail required placeholder="Enter corporate email">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="corporateEmail">
+                            Corporate Email <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group form-control-material static">
+                        <input id="corporatePersonEmail" [(ngModel)]="corporate.contactPersonEmail" type="text" class="form-control"
+                            name="corporatePersonEmail" #corporatePersonEmail required placeholder="Enter corporate contact person email">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="clientNotes">
+                            Corporate Contact Person Email <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group form-control-material static">
+                        <input id="corporatePhone" [(ngModel)]="corporate.phone" type="text" class="form-control"
+                            name="corporatePhone" #corporatePhone required placeholder="Enter corporate phone">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="corporatePhone">
+                            Corporate Phone <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group form-control-material static">
+                        <input id="corporateAddress" [(ngModel)]="corporate.address" type="text" class="form-control"
+                            name="corporateAddress" #corporateAddress required placeholder="Enter corporate address">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="corporateAddress">
+                            Corporate Address <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <button type="submit" [disabled]="form.invalid || btnClicked"
+                        class="btn btn-success form-control">Submit</button>
+                    <hr />
+                    <button type="button" (click)="ClearObject()" class="btn btn-danger form-control">Clear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

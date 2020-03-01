@@ -1,0 +1,169 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Clients
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-sm-9">
+                            <div class="form-control-material">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                    <input id="addon" type="text" class="form-control" [(ngModel)]=searchKey
+                                        name="searchKey" placeholder="search key"><span
+                                        class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+                                    <label for="addon">Search</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <table class="table table-bordered v-middle table-hover table-striped ">
+                            <thead>
+                                <tr>
+                                    <th>Name In English</th>
+                                    <th>Name In Arabic</th>
+                                    <th>Email</th>
+                                    <th>Mobile Number</th>
+                                    <th>Address</th>
+                                    <th>Birthday Date</th>
+                                    <th>Title</th>
+                                    <th>Notes</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody *ngFor="let client of pageOfItems | clientFilter : searchKey">
+                                <tr>
+                                    <td>{{client.nameAR}}</td>
+                                    <td>{{client.nameEN}}</td>
+                                    <td>{{client.email}}</td>
+                                    <td>{{client.mobileNumber}}</td>
+                                    <td>{{client.address}}</td>
+                                    <td>{{client.birthday}}</td>
+                                    <td>{{client.title}}</td>
+                                    <td>{{client.notes}}</td>
+                                    <td>
+                                        <a (click)="SelectClientToEdit(client)" class="btn btn-warning">Edit</a> |
+                                        <a (click)="DeleteClient(client.id)" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-footer">
+                <jw-pagination [pageSize]=4 [items]="clients" (changePage)="onChangePage($event)"></jw-pagination>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Save Client
+            </div>
+            <div class="panel-body">
+                <form (submit)="SaveClient()" #form="ngForm">
+                    <div class="form-group form-control-material static">
+                        <input id="clientArabicName" [(ngModel)]="client.nameAR" type="text" class="form-control"
+                            name="clientArabicName" #clientArabicName required
+                            placeholder="Enter client name in arabic">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="clientArabicName">
+                            Client Name In Arabic <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group form-control-material static">
+                        <input id="clientEnglishName" [(ngModel)]="client.nameEN" type="text" class="form-control"
+                            name="clientEnglishName" #clientEnglishName required
+                            placeholder="Enter client name in english">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="clientEnglishName">
+                            Client Name In English <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group form-control-material static">
+                        <input id="clientEmail" [(ngModel)]="client.email" type="text" class="form-control"
+                            name="clientEmail" #clientEmail required placeholder="Enter client email">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="clientEmail">
+                            Client Email <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group form-control-material static">
+                        <input id="clientPhone" [(ngModel)]="client.mobileNumber" type="text" class="form-control"
+                            name="clientPhone" #clientPhone required placeholder="Enter client mobile number">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="clientPhone">
+                            Client Mobile Number <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group form-control-material static">
+                        <input id="clientAddress" [(ngModel)]="client.address" type="text" class="form-control"
+                            name="clientAddress" #clientAddress required placeholder="Enter client address">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="clientAddress">
+                            Client Address <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group form-control-material static">
+                        <input id="clientBirthday" [(ngModel)]="client.birthday" type="date" class="form-control"
+                            name="clientBirthday" #clientBirthday required placeholder="Enter client birthday date">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="clientBirthday">
+                            Client Birthday Date <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group form-control-material static">
+                        <input id="clientTitle" [(ngModel)]="client.title" type="text" class="form-control"
+                            name="clientTitle" #clientTitle required placeholder="Enter client title">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="clientTitle">
+                            Client Title <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+
+                    <div class="form-group form-control-material static">
+                        <input id="clientNotes" [(ngModel)]="client.notes" type="text" class="form-control"
+                            name="clientNotes" #clientNotes required placeholder="Enter client notes">
+                        <span class="ma-form-highlight"></span>
+                        <span class="ma-form-bar"></span>
+                        <label for="clientNotes">
+                            Client Notes <span class="text-danger">*</span>
+                        </label>
+
+                    </div>
+                    <button type="submit" [disabled]="form.invalid || btnClicked"
+                        class="btn btn-success form-control">Submit</button>
+                    <hr />
+                    <button type="button" (click)="ClearObject()" class="btn btn-danger form-control">Clear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

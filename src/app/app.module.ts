@@ -35,6 +35,8 @@ import { AssetVendorComponent, assetVendorFilterPipe } from './components/asset-
 import { AssetInfoComponent, assetFilterPipe } from './components/asset/asset-info/asset-info.component';
 import { AssetFormComponent } from './components/asset/asset-form/asset-form.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ClientComponent, clientFilterPipe } from './components/client/client.component';
+import { CorporateComponent, corporateFilterPipe } from './components/corporate/corporate.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AssetInfoComponent,
     AssetFormComponent,
     assetFilterPipe,
+    ClientComponent,
+    clientFilterPipe,
+    CorporateComponent,
+    corporateFilterPipe,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -114,7 +120,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
       {path:'assetvendor', component : AssetVendorComponent},
       {path:'asset', component : AssetInfoComponent},
       {path:'assetform/:id', component : AssetFormComponent},
-      {path:'rounds/:id',component:RoundComponent}
+      {path:'rounds/:id',component:RoundComponent},
+      {path:'client', component: ClientComponent},
+      {path:'corporate', component: CorporateComponent},
     ])
   ],
   providers: [],
