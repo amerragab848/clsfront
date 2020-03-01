@@ -58,7 +58,8 @@
                                         <td>
                                             <a class="btn btn-warning" (click)="SelectCourseToEdit(course)">Edit</a> | 
                                             <a   (click)="DeleteCourse(course.id)"class="btn btn-danger">Delete</a> |
-                                            <a [routerLink]="['/courseoutline', course.id]" class="btn btn-warning outline-btn">Outline</a>
+                                            <a [routerLink]="['/courseoutline', course.id]" class="btn btn-warning outline-btn">Outline</a> |
+                                            <a [routerLink]="['/rounds', course.id]" class="btn btn-primary">Rounds</a>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -13,6 +13,22 @@ export class RoundService {
     this.baseURL = environment.baseURL;
    }
 
+   GetCourseRounds(coursrId){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.get(this.baseURL+"Round/course/"+coursrId+"/rounds",{
+      headers : headers
+    });
+   }
+
+   GetRoundDetails(roundId){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.get(this.baseURL+"Round/"+roundId+"/details",{
+      headers : headers
+    });
+   }
+
    GetRoundEndDate(startDate,weeks)
    {
      let headers: HttpHeaders = new HttpHeaders();
@@ -28,5 +44,21 @@ export class RoundService {
      return this.http.post(this.baseURL+"Round/",round,{
        headers : headers
      });
+   }
+
+   ExecuteRound(roundId){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.get(this.baseURL+"Round/"+roundId+"/execute",{
+      headers : headers
+    });
+   }
+
+   DeleteRound(roundId){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"Round/"+roundId,{
+      headers : headers
+    });
    }
 }

@@ -24,6 +24,11 @@ export class RoundComponent implements OnInit {
   deliveryTypes:any[];
   courseTypes:any[];
 
+  roundWithDetails : any = {
+    roundDetils : null,
+    instructors : null
+  };
+  rounds :any[];
   round : Round = <Round>{};
   roundWeek : WeekDay[] = [];
   weekDay :WeekDay =<WeekDay>{};
@@ -204,8 +209,24 @@ export class RoundComponent implements OnInit {
     this.GetCourseTypes();
     this.GetDeliveryTypes();
     this.GetInstructors();
+    this.GetCourseRounds();
   }
 
+  GetRoundDetails(roundId)
+  {
+     this._roundSrv.GetRoundDetails(roundId).subscribe((data : any)=>{
+        this.roundWithDetails = data.result;
+        console.log(this.roundWithDetails);
+     });
+  }
+
+  GetCourseRounds()
+  {
+    this._roundSrv.GetCourseRounds(this.router.snapshot.params.id).subscribe((data : any)=>{
+      this.rounds = data.result;
+      console.log(data);
+    });
+  }
   SaveRound(){
     this._roundSrv.SaveRound({
       startDate:this.round.startDate,
@@ -213,11 +234,11 @@ export class RoundComponent implements OnInit {
       roundDetails : this.roundWeek,
       roundDuration:this.round.roundDuration,
       sessionDuration:this.round.sessionDuration,
-      TotalSessions:this.round.totalSessions,
-      CourseId:this.router.snapshot.params.id,
-      LabId:this.round.labId,
-      DeliveryTypeId:this.round.deliveryTypeId,
-      CourseTypeId:this.round.courseTypeId,
+      totalSessions:this.round.totalSessions,
+      courseId: parseFloat(this.router.snapshot.params.id),
+      labId:this.round.labId,
+      deliveryTypeId:this.round.deliveryTypeId,
+      courseTypeId:this.round.courseTypeId,
       selectedInstructors : this.selectedInstructors
     }).subscribe((data : any)=>{
       if(data.code === 200){
@@ -226,8 +247,35 @@ export class RoundComponent implements OnInit {
       }
     });
   }
+  ExecuteRound(roundId){
+    this._roundSrv.ExecuteRound(roundId).subscribe((data : any)=>{
+      if(data.code === 200){
+        this._toastSrv.success("","Saved Successfully");
+        this.GetCourseRounds();
+      }
+      if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      }
+    );
+  }
+
+  
+  
+  DeleteRound(roundId){
+    this._roundSrv.DeleteRound(roundId).subscribe((data : any)=>{
+      if(data.code === 200){
+        this._toastSrv.success("","Deleted Successfully");
+        this.GetCourseRounds();
+      }
+    });
+  }
   ClearRound(){
     this.round = <Round>{};
+    this.selectedInstructors =[];
+    this.roundWeek =[];
+    this.GetCourseRounds();
   }
   CalculateEndDate()
   {
