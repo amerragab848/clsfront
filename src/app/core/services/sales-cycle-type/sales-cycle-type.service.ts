@@ -21,18 +21,18 @@ export class SalesCycleTypeService {
     });
   }
 
-  AddSalesCycleType(salesCycle){
+  AddSalesCycleType(salesCycleType){
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
-    return this.http.post(this.baseURL+"SalesCycleType",salesCycle,{
+    return this.http.post(this.baseURL+"SalesCycleType",salesCycleType,{
       headers : headers
     });
   }
 
-  EditSalesCycleType(salesCycle){
+  EditSalesCycleType(salesCycleType){
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
-    return this.http.put(this.baseURL+"SalesCycleType",salesCycle,{
+    return this.http.put(this.baseURL+"SalesCycleType",salesCycleType,{
       headers : headers
     });
   }

@@ -35,8 +35,8 @@ import { AssetVendorComponent, assetVendorFilterPipe } from './components/asset-
 import { AssetInfoComponent, assetFilterPipe } from './components/asset/asset-info/asset-info.component';
 import { AssetFormComponent } from './components/asset/asset-form/asset-form.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { SalesCycleComponent } from './components/sales-cycle/sales-cycle/sales-cycle.component';
 import { SalesCycleTypeComponent, salesCycleTypeFilterPipe } from './components/sales-cycle-type/sales-cycle-type/sales-cycle-type.component';
+import { SalesCycleComponent, salesCycleFilterPipe } from './components/sales-cycle/sales-cycle/sales-cycle.component';
 
 @NgModule({
   declarations: [
@@ -84,9 +84,10 @@ import { SalesCycleTypeComponent, salesCycleTypeFilterPipe } from './components/
     AssetInfoComponent,
     AssetFormComponent,
     assetFilterPipe,
-    SalesCycleComponent,
     SalesCycleTypeComponent,
     salesCycleTypeFilterPipe,
+    SalesCycleComponent,
+    salesCycleFilterPipe,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -120,7 +121,8 @@ import { SalesCycleTypeComponent, salesCycleTypeFilterPipe } from './components/
       {path:'asset', component : AssetInfoComponent},
       {path:'assetform/:id', component : AssetFormComponent},
       {path:'rounds/:id',component:RoundComponent},
-      {path:'salesCycleType',component:SalesCycleTypeComponent}
+      {path:'salesCycleType',component:SalesCycleTypeComponent},
+      {path:'salesCycle',component:SalesCycleComponent}
     ])
   ],
   providers: [],
