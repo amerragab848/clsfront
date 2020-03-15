@@ -92,8 +92,11 @@ export class CourseComponent implements OnInit {
 
   SaveCourse()
   {
-
+    console.log(this.course);
     this.course.courseSubCategoryId =  parseInt(this.course.courseSubCategoryId.toString());
+    this.course.courseCategoryId =  parseInt(this.course.courseCategoryId.toString());
+
+    console.log(this.course);
     this.btnClicked=true;
     if(this.fileResult !=null)
     {

@@ -29,6 +29,31 @@ export class RoundService {
     });
    }
 
+   
+   GetRoundById(roundId){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.get(this.baseURL+"Round/"+roundId+"",{
+      headers : headers
+    });
+   }
+
+    GetRoundSessions(roundId){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.get(this.baseURL+"Round/"+roundId+"/sessions",{
+      headers : headers
+    });
+   }
+
+   GetRoundsTimeTable(labId,courseId,startDate,endDate){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.get(this.baseURL+"Round/"+labId+ "/"+courseId+"/"+ startDate +"/"+endDate+"/timetable",{
+      headers : headers
+    });
+   }
+
    GetRoundEndDate(startDate,weeks)
    {
      let headers: HttpHeaders = new HttpHeaders();
@@ -37,6 +62,7 @@ export class RoundService {
        headers : headers
      });
    }
+
    SaveRound(round)
    {
      let headers: HttpHeaders = new HttpHeaders();
@@ -61,4 +87,5 @@ export class RoundService {
       headers : headers
     });
    }
+
 }

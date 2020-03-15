@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,6 +38,9 @@ import { AssetFormComponent } from './components/asset/asset-form/asset-form.com
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ClientComponent, clientFilterPipe } from './components/client/client.component';
 import { CorporateComponent, corporateFilterPipe } from './components/corporate/corporate.component';
+import { YearVacationService } from './core/services/year-vacation/year-vacation.service';
+import { YearVacationComponent, yearVacationFilterPipe } from './components/year-vacation/year-vacation/year-vacation.component';
+import { RoundSessionsComponent } from './components/round-sessions/round-sessions/round-sessions.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +92,9 @@ import { CorporateComponent, corporateFilterPipe } from './components/corporate/
     clientFilterPipe,
     CorporateComponent,
     corporateFilterPipe,
+    YearVacationComponent,
+    yearVacationFilterPipe,
+    RoundSessionsComponent,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -123,9 +130,12 @@ import { CorporateComponent, corporateFilterPipe } from './components/corporate/
       {path:'rounds/:id',component:RoundComponent},
       {path:'client', component: ClientComponent},
       {path:'corporate', component: CorporateComponent},
+      {path:'vacations', component: YearVacationComponent},
+      {path:'roundsessions/:id', component: RoundSessionsComponent},
+
     ])
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

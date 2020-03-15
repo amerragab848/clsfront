@@ -9,6 +9,7 @@ import {CourseTypeService} from 'src/app/core/services/course-type/course-type.s
 import { ActivatedRoute,Router } from '@angular/router';
 import { from } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-round',
@@ -190,6 +191,8 @@ export class RoundComponent implements OnInit {
       priority :38
     }
   ];
+  timeTable :any[];
+  branchId:any;
   constructor(
     private _roundSrv : RoundService,
     private router : ActivatedRoute,
@@ -199,6 +202,7 @@ export class RoundComponent implements OnInit {
     private _deliveryTypeSrv : DeliveryTypeService,
     private _courseTypeSrv : CourseTypeService,
     private _instructorSrv : InstructorService,
+    private datepipe: DatePipe,
 
   ) { 
 
@@ -219,7 +223,24 @@ export class RoundComponent implements OnInit {
         console.log(this.roundWithDetails);
      });
   }
+  GetRoundById(roundId)
+  {
+     this._roundSrv.GetRoundById(roundId).subscribe((data : any)=>{
+       this.GetAllLabs();
+       this.round = data.result
+       this.roundWeek = data.result.roundDetails;
+       this.round.startDate =  this.datepipe.transform(this.round.startDate,'yyyy-MM-dd');
+      //  this.round.endDate =  this.datepipe.transform(this.round.endDate,'yyyy-MM-dd');
+       this.CalculateEndDate();
+       this.selectedInstructors= data.result.selectedInstructors;
+     });
+  }
 
+  GetAllLabs(){
+    this._labSrv.GetLabs().subscribe((data : any)=>{
+      this.labs = data.result;
+   });
+  }
   GetCourseRounds()
   {
     this._roundSrv.GetCourseRounds(this.router.snapshot.params.id).subscribe((data : any)=>{
@@ -229,6 +250,7 @@ export class RoundComponent implements OnInit {
   }
   SaveRound(){
     this._roundSrv.SaveRound({
+      id : this.round.id,
       startDate:this.round.startDate,
       endDate:this.round.endDate,
       roundDetails : this.roundWeek,
@@ -244,6 +266,7 @@ export class RoundComponent implements OnInit {
       if(data.code === 200){
         this._toastSrv.success("","Saved Successfully");
         this.ClearRound();
+        this.GetCourseRounds();
       }
     });
   }
@@ -261,7 +284,12 @@ export class RoundComponent implements OnInit {
     );
   }
 
-  
+  GetRoundsTimeTable(){
+    this._roundSrv.GetRoundsTimeTable(this.round.labId,parseFloat(this.router.snapshot.params.id),this.round.startDate,this.round.endDate).subscribe((data : any)=>{
+      this.timeTable =  data;
+      console.log(data);
+    });
+  }  
   
   DeleteRound(roundId){
     this._roundSrv.DeleteRound(roundId).subscribe((data : any)=>{
@@ -332,6 +360,7 @@ export class RoundComponent implements OnInit {
   }
   SelectInstrctor()
   {
+    console.log(this.selectedInstructors);
   }
 }
 
@@ -344,11 +373,12 @@ export interface WeekDay
 
 export interface  Round
 {
+  id:number;
   roundDuration : number;
   sessionDuration :number;
   totalSessions : number;
-  startDate :  Date;
-  endDate : DataCue; 
+  startDate :  string;
+  endDate : string; 
   courseId:number;
   labId:number;
   courseTypeId:number;

@@ -68,14 +68,14 @@
                         <label>
                             Branch <span class="text-danger">*</span>
                         </label>
-                        <select (change)="GetLabs($event.target.value)"  name="deliveryTypeId" class="form-control">
+                        <select    (change)="GetLabs($event.target.value)"  name="deliveryTypeId" class="form-control">
                             <option></option>
                             <option *ngFor="let item of branches" value="{{item.id}}">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>
-                            <!-- data-toggle="modal" data-target="#timeTableModal" -->
+                        <label (click)="GetRoundsTimeTable()"  data-toggle="modal" data-target="#timeTableModal">
+                            <!-- -->
                             Lab <span class="text-danger">*</span>
                         </label>
                         <select  [(ngModel)]="round.labId" name="labId" class="form-control" #labId  required>
@@ -210,8 +210,8 @@
                 </thead>
                 <tbody *ngFor="let r of rounds">
                     <tr>
-                        <td>{{r.startDate }}</td>
-                        <td>{{r.endDate }}</td>
+                        <td>{{r.startDate}}</td>
+                        <td>{{r.endDate}}</td>
                         <td>{{r.roundDuration}}</td>
                         <td>{{r.sessionDuration}}</td>
                         <td>{{r.totalSessions}}</td>
@@ -226,6 +226,9 @@
                             <a class="btn btn-primary" data-toggle="modal" data-target="#roundDetailsModal" (click)="GetRoundDetails(r.id)">Details</a> | 
                             <a class="btn btn-danger" (dblclick)="DeleteRound(r.id)">Remove</a> | 
                             <button class="btn btn-warning"  [disabled]="(r.isExecuted == true)" (dblclick)="ExecuteRound(r.id)" >Execute</button> 
+                            | 
+                            <a class="btn btn-info" [routerLink]="['/roundsessions', r.id]">Sessions</a> | 
+                            <button class="btn btn-default" [disabled]="(r.isExecuted == true)" (click)="GetRoundById(r.id)">Edit</button>
                         </td>
                     </tr>
                 </tbody>
@@ -250,8 +253,8 @@
         <h4 class="modal-title">Rounds Time Table</h4>
       </div>
       <div class="modal-body">
-          <div class="row">
-              <div class="col-md-4">
+          <div class="row" >
+              <div class="col-md-4" *ngFor="let t of timeTable">
                 <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated="">
                     <div class="panel-heading">
                       <h4 class="text-headline"> Round</h4>
@@ -259,93 +262,17 @@
                     <div class="panel-body">
                       <p class="text-caption">
                         <!-- <i class="fa fa-clock-o fa-fw"></i> 4 hrs &nbsp; -->
-                        <i class="fa fa-calendar fa-fw"></i> 02/02/2020 to 03/03/2020 
+                        <i class="fa fa-calendar fa-fw"></i>{{t.startDate | date}} <b> to</b> {{t.endDate | date }}
                         <br>
-                        <i class="fa fa-user fa-fw"></i> Instructors: Adrian Demian,Adrian Demian
+                        <!-- <i class="fa fa-user fa-fw"></i> Instructors: Adrian Demian,Adrian Demian -->
                         <br>
-                        <i class="fa fa-mortar-board fa-fw"></i> Days: sunday - monday
-                        <br>
-                        <i class="fa fa-clock-o"></i> Time: 02:00 to 03:00
-                      </p>
+                        <p  *ngFor="let d of t.roundDetails">
+                        <i class="fa fa-clock-o"></i> {{d.day}}: {{d.startTime}} to {{d.endTime}}
+                        </p>
                     </div>
                   </div>
               </div>
-              <div class="col-md-4">
-                <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated="">
-                    <div class="panel-heading">
-                      <h4 class="text-headline"> Round</h4>
-                    </div>
-                    <div class="panel-body">
-                      <p class="text-caption">
-                        <!-- <i class="fa fa-clock-o fa-fw"></i> 4 hrs &nbsp; -->
-                        <i class="fa fa-calendar fa-fw"></i> 02/02/2020 to 03/03/2020 
-                        <br>
-                        <i class="fa fa-user fa-fw"></i> Instructors: Adrian Demian,Adrian Demian
-                        <br>
-                        <i class="fa fa-mortar-board fa-fw"></i> Days: sunday - monday
-                        <br>
-                        <i class="fa fa-clock-o"></i> Time: 02:00 to 03:00
-                      </p>
-                    </div>
-                  </div>
-              </div>
-              <div class="col-md-4">
-                <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated="">
-                    <div class="panel-heading">
-                      <h4 class="text-headline"> Round</h4>
-                    </div>
-                    <div class="panel-body">
-                      <p class="text-caption">
-                        <!-- <i class="fa fa-clock-o fa-fw"></i> 4 hrs &nbsp; -->
-                        <i class="fa fa-calendar fa-fw"></i> 02/02/2020 to 03/03/2020 
-                        <br>
-                        <i class="fa fa-user fa-fw"></i> Instructors: Adrian Demian,Adrian Demian
-                        <br>
-                        <i class="fa fa-mortar-board fa-fw"></i> Days: sunday - monday
-                        <br>
-                        <i class="fa fa-clock-o"></i> Time: 02:00 to 03:00
-                      </p>
-                    </div>
-                  </div>
-              </div>
-              <div class="col-md-4">
-                <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated="">
-                    <div class="panel-heading">
-                      <h4 class="text-headline"> Round</h4>
-                    </div>
-                    <div class="panel-body">
-                      <p class="text-caption">
-                        <!-- <i class="fa fa-clock-o fa-fw"></i> 4 hrs &nbsp; -->
-                        <i class="fa fa-calendar fa-fw"></i> 02/02/2020 to 03/03/2020 
-                        <br>
-                        <i class="fa fa-user fa-fw"></i> Instructors: Adrian Demian,Adrian Demian
-                        <br>
-                        <i class="fa fa-mortar-board fa-fw"></i> Days: sunday - monday
-                        <br>
-                        <i class="fa fa-clock-o"></i> Time: 02:00 to 03:00
-                      </p>
-                    </div>
-                  </div>
-              </div>
-              <div class="col-md-4">
-                <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated="">
-                    <div class="panel-heading">
-                      <h4 class="text-headline"> Round</h4>
-                    </div>
-                    <div class="panel-body">
-                      <p class="text-caption">
-                        <!-- <i class="fa fa-clock-o fa-fw"></i> 4 hrs &nbsp; -->
-                        <i class="fa fa-calendar fa-fw"></i> 02/02/2020 to 03/03/2020 
-                        <br>
-                        <i class="fa fa-user fa-fw"></i> Instructors: Adrian Demian,Adrian Demian
-                        <br>
-                        <i class="fa fa-mortar-board fa-fw"></i> Days: sunday - monday
-                        <br>
-                        <i class="fa fa-clock-o"></i> Time: 02:00 to 03:00
-                      </p>
-                    </div>
-                  </div>
-              </div>
+         
           </div>
       </div>
       <div class="modal-footer">
@@ -404,7 +331,7 @@
                                 <td>{{i.name}}</td>
                                 <td>{{i.phone}}</td>
                                 <td>
-                                    <img height="70" src="https://localhost:44384{{i.image}}" />
+                                    <img height="70" src="http://clslearn.net{{i.image}}" />
                                 </td>
                             </tr>
                         </tbody>
