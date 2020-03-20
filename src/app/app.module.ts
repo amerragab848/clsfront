@@ -37,6 +37,7 @@ import { AssetFormComponent } from './components/asset/asset-form/asset-form.com
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SalesCycleTypeComponent, salesCycleTypeFilterPipe } from './components/sales-cycle-type/sales-cycle-type/sales-cycle-type.component';
 import { SalesCycleComponent, salesCycleFilterPipe } from './components/sales-cycle/sales-cycle/sales-cycle.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { SalesCycleComponent, salesCycleFilterPipe } from './components/sales-cy
     salesCycleTypeFilterPipe,
     SalesCycleComponent,
     salesCycleFilterPipe,
+    LoginComponent,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
