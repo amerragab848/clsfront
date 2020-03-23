@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwPaginationComponent } from 'jw-angular-pagination';
-import { HttpClientModule , HttpClient }    from '@angular/common/http';
+import { HttpClientModule , HttpClient, HTTP_INTERCEPTORS }    from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { FixedNavbarComponent } from './components/shared/fixed-navbar/fixed-navbar.component';
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
@@ -43,6 +43,9 @@ import { YearVacationComponent, yearVacationFilterPipe } from './components/year
 import { RoundSessionsComponent } from './components/round-sessions/round-sessions/round-sessions.component';
 import { SalesCycleComponent } from './components/sales-cycle/sales-cycle/sales-cycle.component';
 import { SalesCycleTypeComponent } from './components/sales-cycle-type/sales-cycle-type/sales-cycle-type.component';
+import { MainComponent } from './components/main/main.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { AuthInterceptor } from './core/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -99,6 +102,7 @@ import { SalesCycleTypeComponent } from './components/sales-cycle-type/sales-cyc
     RoundSessionsComponent,
     SalesCycleComponent,
     SalesCycleTypeComponent,
+    MainComponent,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -139,7 +143,15 @@ import { SalesCycleTypeComponent } from './components/sales-cycle-type/sales-cyc
       {path:'salesCycleType',component:SalesCycleTypeComponent}
     ])
   ],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    AuthGuard,
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : AuthInterceptor,
+      multi : true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
