@@ -4,7 +4,7 @@
 
 export const environment = {
   // baseURL : "http://htvtesthost-001-site1.gtempurl.com/api/",
-  baseURL :"https://localhost:44384/api/",
+  baseURL :"https://localhost:44384",
   production: false
 };
  
@@ -16,3 +16,4 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
