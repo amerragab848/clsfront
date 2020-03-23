@@ -41,8 +41,8 @@ import { CorporateComponent, corporateFilterPipe } from './components/corporate/
 import { YearVacationService } from './core/services/year-vacation/year-vacation.service';
 import { YearVacationComponent, yearVacationFilterPipe } from './components/year-vacation/year-vacation/year-vacation.component';
 import { RoundSessionsComponent } from './components/round-sessions/round-sessions/round-sessions.component';
-import { SalesCycleComponent } from './components/sales-cycle/sales-cycle/sales-cycle.component';
-import { SalesCycleTypeComponent } from './components/sales-cycle-type/sales-cycle-type/sales-cycle-type.component';
+import { SalesCycleComponent, salesCycleFilterPipe } from './components/sales-cycle/sales-cycle/sales-cycle.component';
+import { SalesCycleTypeComponent, salesCycleTypeFilterPipe } from './components/sales-cycle-type/sales-cycle-type/sales-cycle-type.component';
 import { MainComponent } from './components/main/main.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
@@ -102,8 +102,11 @@ import { LoginComponent } from './components/login/login.component';
     yearVacationFilterPipe,
     RoundSessionsComponent,
     SalesCycleComponent,
+    salesCycleFilterPipe,
     SalesCycleTypeComponent,
+    salesCycleTypeFilterPipe,
     MainComponent,
+    LoginComponent
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -115,35 +118,7 @@ import { LoginComponent } from './components/login/login.component';
     AngularEditorModule,
     NgSelectModule,
     RouterModule.forRoot([
-      {path: '', component: DashboardComponent},
-      {path:'coursetype', component : CourseTypeComponent},
-      {path:'examtype', component : ExamTypeComponent},
-      {path:'labtype', component : LabTypeComponent},
-      {path:'materialtype', component : MaterialTypeComponent},
-      {path:'vendor', component : VendorComponent},
-      {path:'coursecategory', component : CourseCategoryComponent},
-      {path:'deliverytype', component : DeliveryTypeComponent},
-      {path:'course', component: CourseComponent},
-      {path:'subcategory', component: SubCategoryComponent},
-      {path:'branch', component: BranchComponent},
-      {path:'lab', component: LabComponent},
-      {path:'instructor', component: InstructorComponent},
-      {path:'facility/:id', component: FacilityComponent},
-      {path:'courseoutline/:id', component: CourseOutlineComponent},
-      {path:'learningpath', component : LearningPathComponent},
-      {path:'rounds', component : RoundComponent},
-      {path:'assetgroup', component : AssetGroupComponent},
-      {path:'assetvendor', component : AssetVendorComponent},
-      {path:'asset', component : AssetInfoComponent},
-      {path:'assetform/:id', component : AssetFormComponent},
-      {path:'rounds/:id',component:RoundComponent},
-      {path:'client', component: ClientComponent},
-      {path:'corporate', component: CorporateComponent},
-      {path:'vacations', component: YearVacationComponent},
-      {path:'roundsessions/:id', component: RoundSessionsComponent},
-      {path:'salesCycleType',component:SalesCycleTypeComponent},
-      {path:'salesCycleType',component:SalesCycleTypeComponent},
-      {path:'salesCycle',component:SalesCycleComponent}
+
     ])
   ],
   providers: [

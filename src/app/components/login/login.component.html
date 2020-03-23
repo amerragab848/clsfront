@@ -5,18 +5,18 @@
     <div class="login__avatar">
       <i class="fa fa-user"></i>
     </div>
-    <form class="login__form">
+    <form #frm="ngForm" (submit)="Login()" class="login__form">
       <div class="field">
         <div class="control">
-          <input class="login__input" type="email" placeholder="Your Email" autofocus="">
+          <input class="login__input" type="text" name="username" #username="ngModel" [(ngModel)]="user.username" required placeholder="Your Username" autofocus="">
         </div>
       </div>
       <div class="field">
         <div class="control">
-          <input class="login__input" type="password" placeholder="Your Password">
+          <input class="login__input" type="password"  name="password" #password="ngModel" [(ngModel)]="user.password" required  placeholder="Your Password">
         </div>
       </div>
-      <button class="login__button">Login</button>
+      <button [disabled]="frm.invalid" type="submit" class="login__button">Login</button>
     </form>
   </div>
 </div>

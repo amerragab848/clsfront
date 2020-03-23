@@ -28,6 +28,8 @@ import { CorporateComponent } from './components/corporate/corporate.component';
 import { YearVacationComponent } from './components/year-vacation/year-vacation/year-vacation.component';
 import { RoundSessionsComponent } from './components/round-sessions/round-sessions/round-sessions.component';
 import { SalesCycleTypeComponent } from './components/sales-cycle-type/sales-cycle-type/sales-cycle-type.component';
+import { SalesCycleComponent } from './components/sales-cycle/sales-cycle/sales-cycle.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 export const routes: Routes = [
@@ -54,7 +56,7 @@ export const routes: Routes = [
       {path:'learningpath', component : LearningPathComponent},
       {path:'rounds', component : RoundComponent},
       {path:'assetgroup', component : AssetGroupComponent},
-      {path:'assetvendor', component : AssetVendorComponent},
+      {path:'assetvendor', component : AssetVendorComponent},   
       {path:'asset', component : AssetInfoComponent},
       {path:'assetform/:id', component : AssetFormComponent},
       {path:'rounds/:id',component:RoundComponent},
@@ -62,14 +64,16 @@ export const routes: Routes = [
       {path:'corporate', component: CorporateComponent},
       {path:'vacations', component: YearVacationComponent},
       {path:'roundsessions/:id', component: RoundSessionsComponent},
-      {path:'salesCycleType',component:SalesCycleTypeComponent}
+      {path:'salesCycleType',component:SalesCycleTypeComponent},
+      {path:'salesCycleType',component:SalesCycleTypeComponent},
+      {path:'salesCycle',component:SalesCycleComponent}
     ]
   },
   {
     path : "auth",
-    //  component : LoginComponent
+     component : LoginComponent
   },
-  {path:"" ,redirectTo:"auth",pathMatch:"full"}
+  {path:"" ,redirectTo:"app",pathMatch:"full"}
 ];
 
 @NgModule({
