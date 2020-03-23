@@ -41,6 +41,8 @@ import { CorporateComponent, corporateFilterPipe } from './components/corporate/
 import { YearVacationService } from './core/services/year-vacation/year-vacation.service';
 import { YearVacationComponent, yearVacationFilterPipe } from './components/year-vacation/year-vacation/year-vacation.component';
 import { RoundSessionsComponent } from './components/round-sessions/round-sessions/round-sessions.component';
+import { SalesCycleComponent } from './components/sales-cycle/sales-cycle/sales-cycle.component';
+import { SalesCycleTypeComponent } from './components/sales-cycle-type/sales-cycle-type/sales-cycle-type.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +97,8 @@ import { RoundSessionsComponent } from './components/round-sessions/round-sessio
     YearVacationComponent,
     yearVacationFilterPipe,
     RoundSessionsComponent,
+    SalesCycleComponent,
+    SalesCycleTypeComponent,
   ],
   imports: [
     SweetAlert2Module.forRoot(),
@@ -132,7 +136,7 @@ import { RoundSessionsComponent } from './components/round-sessions/round-sessio
       {path:'corporate', component: CorporateComponent},
       {path:'vacations', component: YearVacationComponent},
       {path:'roundsessions/:id', component: RoundSessionsComponent},
-
+      {path:'salesCycleType',component:SalesCycleTypeComponent}
     ])
   ],
   providers: [DatePipe],
