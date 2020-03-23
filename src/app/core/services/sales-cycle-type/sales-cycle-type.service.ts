@@ -21,4 +21,29 @@ export class SalesCycleTypeService {
     });
   }
 
+  AddSalesCycleType(salesCycleType){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.post(this.baseURL+"SalesCycleType",salesCycleType,{
+      headers : headers
+    });
+  }
+
+  EditSalesCycleType(salesCycleType){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.put(this.baseURL+"SalesCycleType",salesCycleType,{
+      headers : headers
+    });
+  }
+
+  DeleteSalesCycleType(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"SalesCycleType/"+id,{
+      headers : headers
+    });
+  }
+
 }

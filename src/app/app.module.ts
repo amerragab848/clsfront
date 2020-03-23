@@ -46,6 +46,7 @@ import { SalesCycleTypeComponent } from './components/sales-cycle-type/sales-cyc
 import { MainComponent } from './components/main/main.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -140,7 +141,9 @@ import { AuthInterceptor } from './core/auth/auth.interceptor';
       {path:'corporate', component: CorporateComponent},
       {path:'vacations', component: YearVacationComponent},
       {path:'roundsessions/:id', component: RoundSessionsComponent},
-      {path:'salesCycleType',component:SalesCycleTypeComponent}
+      {path:'salesCycleType',component:SalesCycleTypeComponent},
+      {path:'salesCycleType',component:SalesCycleTypeComponent},
+      {path:'salesCycle',component:SalesCycleComponent}
     ])
   ],
   providers: [
