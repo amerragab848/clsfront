@@ -36,6 +36,8 @@
                                   <td>
                                     <a (click)="SelectFacilityToEdit(facility)"class="btn btn-warning">Edit</a>
                                     | 
+                                    <a   (click)="OpenTransferPopUp(facility.id,facility.labId,facility.number)"class="btn btn-info"  data-toggle="modal" data-target="#transferModal">Transfer</a>
+                                    | 
                                     <a   (click)="DeleteFacility(facility.id)"class="btn btn-danger">Delete</a>
                                   </td>
                               </tr>
@@ -86,4 +88,45 @@
             </div>
           </div>
     </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="transferModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Transfer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <p>Branch</p>
+              <select (change)="GetLabs($event.target.value)"  name="deliveryTypeId" class="form-control">
+                <option></option>
+                <option *ngFor="let item of branches" value="{{item.id}}">{{item.name}}</option>
+            </select>
+            </div>
+            <div class="col-sm-12">
+              <p>To Lap</p>
+              <select [(ngModel)]="labId"   name="labId" class="form-control"   required>
+                <option *ngFor="let item of labs" [ngValue]="item.id">{{item.name}}</option>
+            </select>
+            </div>
+            <div class="col-sm-12">
+              <p>Number</p>
+              <input  [(ngModel)]="transNumber"   name="transNumber" class="form-control"   required />
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" (click)="Transfer()">Save</button>
+      </div>
+    </div>
+  </div>
 </div>

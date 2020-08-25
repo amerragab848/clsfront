@@ -2,6 +2,9 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { InstructorService } from 'src/app/core/services/instructor/instructor.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { CourseService } from 'src/app/core/services/course/course.service';
+
 let fileUpload = require('fuctbase64');
 export interface InstructorModel 
 {
@@ -24,6 +27,10 @@ export interface InstructorModel
   nationalIdPath:string;
   nationalIdBase64:string;
   nationalIdFileName:string;
+  internalRate:string;
+  bloackReason : string;
+  courses:string;
+  state:string;
 }
 
 @Component({
@@ -32,6 +39,12 @@ export interface InstructorModel
   styleUrls: ['./instructor.component.css']
 })
 export class InstructorComponent implements OnInit {
+
+  
+  insCourses : any[];
+  selectedInsCourses = [];
+  allCourses:any[];
+
   fileImageInput:any;
   fileImageResult: any = null;
   async onFileImageChange(event){
@@ -68,7 +81,7 @@ export class InstructorComponent implements OnInit {
   instructor : InstructorModel =<InstructorModel>{
     id :0
   };
-
+  courses : any[];
   instructors : InstructorModel[];
   pageOfItems: Array<any>;
   searchKey:string;
@@ -77,7 +90,14 @@ export class InstructorComponent implements OnInit {
   constructor(
     private _toastSrv : ToastService,
     private _instructorService : InstructorService,
+    private _CourseService : CourseService,
+
   ) { }
+
+  ngOnInit() {
+    this.GetInstructors();
+    this.GetAllCourses();
+  }
 
   GetInstructors() {
     this._instructorService.GetInstructors().subscribe((data :any)=>{
@@ -85,11 +105,83 @@ export class InstructorComponent implements OnInit {
        console.log(this.instructors)
     })
   } 
+  GetAllCourses() {
+    this._CourseService.GetCoursees().subscribe((data :any)=>{
+       this.allCourses = data.result;
+    })
+  } 
 
   onChangePage(pageOfItems: Array<any>) {
     this.pageOfItems = pageOfItems;
   }
+  
+  OpenInstRates(id,instructor)
+  {
+    try{
+      if(instructor.courses.length > 0)
+      {
+        var arr = instructor.courses.toString().split(',');
+          var tempArr = [];
+          arr.forEach(element => {
+            tempArr.push(parseInt(element));
+          });
+          this.selectedInsCourses = tempArr;
+      }
+    }
+    catch{
+      //Ignore
+    }
+    this.rateInstId =id;
+    this.GetInstRates(id);
+    this.rateInstCourses = this.allCourses.filter(x=> this.selectedInsCourses.includes(x.id));
+    console.log(this.rateInstCourses);
+  }
 
+  rateInstCourses: any[];
+  rateInstId : number;
+  rateEGP:number ;
+  rateUSD:number;
+  rateCourseName:string = '';
+  instRates:any[];
+  GetInstRates(id)
+  {
+    this._instructorService.GetInstructorRates(parseFloat(id)).subscribe((data :any)=>{
+      this.instRates = data.result;
+      this.rateInstId = id;
+   })
+  }
+  SaveInstructorRate()
+  {
+    this._instructorService.SaveInstructorRate({
+      courseName:this.rateCourseName,
+      rateEGP:this.rateEGP.toString(),
+      rateUSD:this.rateUSD.toString(),
+      instructorId: parseFloat(this.rateInstId.toString())
+    }).subscribe((data : any) =>{
+      if(data.code === 200){
+        this.GetInstRates(this.rateInstId);
+        this._toastSrv.success("","Saved Successfully");
+        this.rateCourseName = "";
+        this.rateEGP=null;
+        this.rateUSD=null;
+
+      }
+      if(data.code === 500)
+      {
+        this._toastSrv.error("Failed",data.message);
+      }
+    },
+    (error) =>{
+      console.log(error);
+    }
+    );
+  }
+  DeleteRate(id)
+  {
+    this._instructorService.DeleteInstructorRates(parseFloat(id)).subscribe((data :any)=>{
+      this.GetInstRates(this.rateInstId);
+   })
+  }
   ClearObject(){
     this.instructor =<InstructorModel>{
       id:0
@@ -99,7 +191,7 @@ export class InstructorComponent implements OnInit {
     this.fileImageInput = null;
     this.fileCVInput = null;
     this.fileNationalIdInput = null;
-
+    this.selectedInsCourses = [];
   }
 
   SaveInstructor()
@@ -120,6 +212,8 @@ export class InstructorComponent implements OnInit {
       this.instructor.cvBase64 = this.fileCVResult.base64;
         this.instructor.cvFileName = this.fileCVResult.name
     }
+    console.log(this.instructor);
+    this.instructor.courses = this.selectedInsCourses.toString();
     if(this.instructor.id ==0){
       this._instructorService.AddInstructor(this.instructor).subscribe((data : any) =>{
         if(data.code === 200){
@@ -166,13 +260,32 @@ export class InstructorComponent implements OnInit {
 
   SelectInstructorToEdit(instructor)
   {
+    console.log(instructor);
+    try{
+      if(instructor.courses.length > 0)
+      {
+        var arr = instructor.courses.toString().split(',');
+          var tempArr = [];
+          arr.forEach(element => {
+            tempArr.push(parseInt(element));
+          });
+          this.selectedInsCourses = tempArr;
+          console.log( this.selectedInsCourses );
+      }
+    }
+    catch{
+      //Ignore
+    }
     this.instructor = instructor;
   }
 
-  ngOnInit() {
-    this.GetInstructors();
+ 
+  GetCourses(id)
+  {
+    this._instructorService.GetInstructorCourses(parseFloat(id)).subscribe((data :any)=>{
+      this.courses = data.result;
+   })
   }
-
   DeleteInstructor(id)
   {
     this._instructorService.DeleteInstructor(id).subscribe((data : any) =>{

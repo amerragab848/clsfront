@@ -45,7 +45,46 @@ export class InstructorService {
       headers : headers
     });
   }
+  GetInstructorCourses(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.get(this.baseURL+"Instructor/"+id+"/courses",{
+      headers : headers
+    });
+  }
 
+  GetCourseInstructors(id)
+  {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.get(this.baseURL+"Instructor/"+id+"/courseins",{
+      headers : headers
+    });
+  }
+
+  SaveInstructorRate(rate){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.post(this.baseURL+"InstructorCourseRates",rate,{
+      headers : headers
+    });
+  }
+
+  GetInstructorRates(id){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.get(this.baseURL+"InstructorCourseRates/?id="+id,{
+      headers : headers
+    });
+  }
+  DeleteInstructorRates(id){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.delete(this.baseURL+"InstructorCourseRates/?id="+id,{
+      headers : headers
+    });
+  }
 }
 
 

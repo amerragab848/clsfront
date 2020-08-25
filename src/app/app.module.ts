@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule, routes } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwPaginationComponent } from 'jw-angular-pagination';
@@ -117,9 +117,7 @@ import { LoginComponent } from './components/login/login.component';
     BrowserAnimationsModule,
     AngularEditorModule,
     NgSelectModule,
-    RouterModule.forRoot([
-
-    ])
+    RouterModule.forRoot(routes)
   ],
   providers: [
     DatePipe,

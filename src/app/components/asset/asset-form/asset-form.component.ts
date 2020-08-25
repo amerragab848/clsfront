@@ -77,7 +77,7 @@ export class AssetFormComponent implements OnInit {
   }
 
   ClearObject(){
-    this.router.navigate(['/asset']);
+    this.router.navigate(['/app/asset']);
   }
 
   fileResult: any = null;

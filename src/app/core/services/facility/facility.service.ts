@@ -44,4 +44,11 @@ export class FacilityService {
       headers : headers
     });
   }
+  Transfer(facilityId,tolabId,number){
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    return this.http.get(this.baseURL+"Facility/"+facilityId+"/"+tolabId+"/"+number,{
+      headers : headers
+    });
+  }
 }

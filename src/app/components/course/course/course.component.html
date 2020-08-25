@@ -56,10 +56,14 @@
                                             <img src="http://clslearn.net{{course.image}}" width="150" height="70" />
                                         </td>
                                         <td>
-                                            <a class="btn btn-warning" (click)="SelectCourseToEdit(course)">Edit</a> | 
-                                            <a   (click)="DeleteCourse(course.id)"class="btn btn-danger">Delete</a> |
-                                            <a [routerLink]="['/courseoutline', course.id]" class="btn btn-warning outline-btn">Outline</a> |
-                                            <a [routerLink]="['/rounds', course.id]" class="btn btn-primary">Rounds</a>
+                                            <a class="btn btn-warning" title="edit" (click)="SelectCourseToEdit(course)">
+                                                <i class="fa fa-edit"></i>
+                                            </a> | 
+                                            <a   (click)="DeleteCourse(course.id)"class="btn btn-danger" title="delete">X</a> |
+                                            <a  title="outline" [routerLink]="['/app/courseoutline', course.id]" class="btn btn-warning outline-btn"><i class="fa fa-list"></i></a> |
+                                            <a  title="rounds" [routerLink]="['/app/rounds', course.id]" class="btn btn-primary">
+                                                <i class="fa fa-clock-o"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -127,9 +131,10 @@
 
                                     <div class="col-sm-4">
                                         <label for="courseSubCategoryName">
-                                            Course Sub Category   <span class="text-danger">*</span>
+                                            Course Sub Category   
                                         </label>
-                                            <select  [(ngModel)]="course.courseSubCategoryId" name="courseSubCategoryName" class="form-control" #courseSubCategoryName data-live-search="true" required>
+                                            <select  [(ngModel)]="course.courseSubCategoryId" name="courseSubCategoryName" class="form-control" #courseSubCategoryName data-live-search="true" >
+                                                <option value="0"></option>
                                             <option *ngFor="let category of courseSubCategories" [ngValue]="category.id">{{category.name}}</option>
                                             </select>
                                     </div>
@@ -183,6 +188,15 @@
                                             <option *ngFor="let item of learningPaths" [ngValue]="item.id">{{item.name}}</option>
                                             </select>
                                     </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-control-material static">
+                                            <input type="number" class="form-control" id="hoursDuration"
+                                            [(ngModel)]="course.hoursDuration" name="hoursDuration" class="form-control" #hoursDuration  ><span class="ma-form-highlight"></span><span
+                                                class="ma-form-bar"></span>
+                                            <label for="hoursDuration">Course Hours Duration</label>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
                                     <div class="col-sm-4">
                                         <label for="instructorImage">
                                             Image 

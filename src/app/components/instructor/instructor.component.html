@@ -27,6 +27,7 @@
                                 <th>Email</th>
                                 <th>Job Title</th>
                                 <th>Image</th>
+                                <th>Rate</th>
                                 <th></th>
                               </tr>
                             </thead>
@@ -41,6 +42,7 @@
                                   <td>
                                     <img src="http://clslearn.net{{instructor.image}}" height="70" />
                                   </td>
+                                  <td>{{instructor.internalRate}}</td>
                                   <td>
                                     <div class="btn-group">
                                       <button type="button" class="btn btn-info dropdown-toggle ripple" data-toggle="dropdown" aria-expanded="false"><span class="ink animate" style="height: 196px; width: 196px; top: -72px; left: -38.2031px;"></span>
@@ -54,7 +56,14 @@
                                     </div>
                                     | 
                                     <a   (click)="SelectInstructorToEdit(instructor)"class="btn btn-warning">Edit</a> | 
-                                    <a   (click)="DeleteInstructor(instructor.id)"class="btn btn-danger">Delete</a>
+                                    <a   (click)="DeleteInstructor(instructor.id)"class="btn btn-danger">Delete</a> | 
+                                    <button type="button" class="btn btn-primary" (click)="GetCourses(instructor.id)" data-toggle="modal" data-target="#exampleModalCenter">
+                                      Courses
+                                    </button>
+                                    | 
+                                    <button (click)="OpenInstRates(instructor.id,instructor)" type="button" class="btn btn-info" data-toggle="modal" data-target="#ratesModal">
+                                      Rates
+                                    </button>
                                   </td>
                               </tr>
                           </tbody>
@@ -113,36 +122,28 @@
                     <span class="ma-form-highlight"></span>
                     <span class="ma-form-bar"></span>
                     <label for="instructorPhoneTxt">
-                        Instructor Phone  <span class="text-danger">*</span>
+                        Instructor Cell Phone  <span class="text-danger">*</span>
                     </label>            
                   </div>
 
                   <div class="form-group form-control-material static">
-                    <input id="instructorNumberTxt"  [(ngModel)]="instructor.number"  type="text" class="form-control" name="instructorNumber" #instructorNumber required  placeholder="Enter instructor number">
+                    <input id="instructorNumberTxt"  [(ngModel)]="instructor.number"  type="text" class="form-control" name="instructorNumber" #instructorNumber   placeholder="Enter instructor number">
                     <span class="ma-form-highlight"></span>
                     <span class="ma-form-bar"></span>
                     <label for="instructorNumberTxt">
-                        Instructor Number  <span class="text-danger">*</span>
+                        Instructor Home Number 
                     </label>            
                   </div>
 
                   <div class="form-group form-control-material static">
-                    <input id="instructorEmailTxt"  [(ngModel)]="instructor.email"  type="text" class="form-control" name="instructorEmail" #instructorEmail required  placeholder="Enter instructor email">
+                    <input id="instructorEmailTxt"  [(ngModel)]="instructor.email"  type="text" class="form-control" name="instructorEmail" #instructorEmail   placeholder="Enter instructor email">
                     <span class="ma-form-highlight"></span>
                     <span class="ma-form-bar"></span>
                     <label for="instructorEmailTxt">
-                        Instructor Email  <span class="text-danger">*</span>
+                        Instructor Email  
                     </label>            
                   </div>
 
-                  <div class="form-group form-control-material static">
-                    <input id="instructorgradeTxt"  [(ngModel)]="instructor.grade"  type="text" class="form-control" name="instructorGrade" #instructorGrade   placeholder="Enter instructor grade">
-                    <span class="ma-form-highlight"></span>
-                    <span class="ma-form-bar"></span>
-                    <label for="instructorgradeTxt">
-                        Instructor Grade  
-                    </label>            
-                  </div>
 
                   <div class="form-group form-control-material static">
                     <input id="instructorCompanyTxt"  [(ngModel)]="instructor.company"  type="text" class="form-control" name="instructorCompany" #instructorCompany   placeholder="Enter instructor company">
@@ -154,20 +155,20 @@
                   </div>
 
                   <div class="form-group form-control-material static">
-                    <input id="instructorTranningCenterTxt"  [(ngModel)]="instructor.tranningCenter"  type="text" class="form-control" name="tranningCenter" #tranningCenter required  placeholder="Enter instructor tranning center">
+                    <input id="instructorTranningCenterTxt"  [(ngModel)]="instructor.tranningCenter"  type="text" class="form-control" name="tranningCenter" #tranningCenter  placeholder="Enter instructor tranning center">
                     <span class="ma-form-highlight"></span>
                     <span class="ma-form-bar"></span>
                     <label for="instructorTranningCenterTxt">
-                        Instructor Tranning Center  <span class="text-danger">*</span>
+                        Instructor Tranning Center  
                     </label>            
                   </div>
 
                   <div class="form-group form-control-material static">
-                    <input id="instructorMajorTxt"  [(ngModel)]="instructor.major"  type="text" class="form-control" name="instructorMajor" #instructorMajor required  placeholder="Enter instructor job title">
+                    <input id="instructorMajorTxt"  [(ngModel)]="instructor.major"  type="text" class="form-control" name="instructorMajor" #instructorMajor   placeholder="Enter instructor job title">
                     <span class="ma-form-highlight"></span>
                     <span class="ma-form-bar"></span>
                     <label for="instructorMajorTxt">
-                        Instructor Job Title  <span class="text-danger">*</span>
+                        Instructor Job Title 
                     </label>            
                   </div>
 
@@ -179,7 +180,66 @@
                         Instructor Job Title  <span class="text-danger">*</span>
                     </label>            
                   </div> -->
+                  <div class="form-group form-control-material static">
+                    <!-- <input id="instructorgradeTxt"  [(ngModel)]="instructor.grade"  type="text" class="form-control" name="instructorGrade" #instructorGrade   placeholder="Enter instructor grade"> -->
+                    <select class="form-control" [(ngModel)]="instructor.internalRate" name="internalRate" #internalRate >
+                      <option value=""></option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="instructorgradeTxt">
+                      Internal Rate
+                    </label>            
+                  </div>
+                  <div class="form-group form-control-material static">
+                    <select class="form-control" [(ngModel)]="instructor.state" name="state" #state >
+                      <option value="Active">Active</option>
+                      <option value="Blocked">Blocked</option>
+                    </select>
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="instructorgradeTxt">
+                      State
+                    </label>            
+                  </div>
+                  <div class="form-group form-control-material static" [hidden]="instructor.state != 'Blocked'">
+                    <input id="bloackReasonTxt"  [(ngModel)]="instructor.bloackReason"  type="text" class="form-control" name="bloackReason" #bloackReason  >
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="instructorMajorTxt">
+                        Block Reason
+                    </label>            
+                  </div>
 
+                  <div class="form-group">
+                    <label >
+                        Courses 
+                    </label>
+                    <ng-select name="courses" class="form-control" bindLabel="name"
+                            appendTo="body"
+                            multiple="true"
+                            [searchable]="true" 
+                            [clearable]="true"
+                            [(ngModel)]="selectedInsCourses"
+                           >
+                            <ng-option  [value]="item.id" [disabled]="item.disabled" *ngFor="let item of allCourses" >
+                                <span style="background: #f7f7f7;width: 100%; margin: 0px;page-break-after: 5px; display: inline-block;" >{{item.name}}</span>
+                            </ng-option>
+                    </ng-select>
+                </div>
+
+                  <div class="form-group form-control-material static">
+                    <span class="ma-form-highlight"></span>
+                    <span class="ma-form-bar"></span>
+                    <label for="instructorMajorTxt">
+                        Instructor Bio
+                    </label>            
+                  </div>
                   <angular-editor [placeholder]="'Enter instructor bio'" [(ngModel)]="instructor.bio" name="instructorBio"></angular-editor>
                 <br/>
                 <button type="submit"  class="btn btn-success form-control">Submit</button>
@@ -189,4 +249,102 @@
             </div>
           </div>
     </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Courses</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row" *ngFor="let c of courses">
+          <div class="col-lg-4 text-center" >
+            <img src="http://clslearn.net{{c.image}}" style="width: 150px;">
+            <h4>
+              <a data-dismiss="modal" [routerLink]="['/app/rounds', c.id]" >
+                {{c.name}}
+              </a>
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ratesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Instructor Rates</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+              <p>Course</p>
+            <select  class="form-control" [(ngModel)]="rateCourseName" >
+              <option></option>
+              <option *ngFor="let c of rateInstCourses" [ngValue]="c.name">{{c.name}}</option>
+            </select>
+            </div>
+            <div class="col-sm-4">
+              <p>EGP Rate</p>
+              <input type="number" class="form-control" name="rateCourseName" [(ngModel)]="rateEGP"   />
+            </div>
+            <div class="col-sm-4">
+              <p>USD Rate</p>
+              <input type="number" class="form-control"name="rateCourseName" [(ngModel)]="rateUSD" />
+            </div>
+            <hr/>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Course</th>
+                  <th>EGP Rate</th>
+                  <th>USD Rate</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let r of instRates">
+                <tr>
+                  <td>{{r.courseName}}</td>
+                  <td>{{r.rateEGP}}</td>
+                  <td>{{r.rateUSD}}</td>
+                  <td>
+                    <button class="btn btn-danger" (click)="DeleteRate(r.id)">X</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" (click)="SaveInstructorRate()">Save Changes</button>
+      </div>
+    </div>
+  </div>
 </div>

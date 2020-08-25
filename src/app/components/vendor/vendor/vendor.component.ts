@@ -2,6 +2,10 @@ import { Component, OnInit,PipeTransform, Pipe } from '@angular/core';
 import {VendorService} from '../../../core/services/vendor/vendor.service';
 import {ToastService} from 'src/app/core/services/toast/toast.service';
 import { from } from 'rxjs';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { CourseCategoryService } from 'src/app/core/services/course-category/course-category.service';
+// Imports
+let fileUpload = require('fuctbase64');
 
 @Component({
   selector: 'app-vendor',
@@ -9,6 +13,10 @@ import { from } from 'rxjs';
   styleUrls: ['./vendor.component.css']
 })
 export class VendorComponent implements OnInit {
+
+  categories : any[];
+  selectedCategories = [];
+
 
   vendor : VendorModel =<VendorModel>{
     id :0
@@ -22,11 +30,13 @@ export class VendorComponent implements OnInit {
 
   constructor(
     private _toastSrv : ToastService,
-    private _vendorService : VendorService
+    private _vendorService : VendorService,
+    private _categoreisService : CourseCategoryService
     ) {
   }
   ngOnInit() {
     this.GetVendors();
+    this.GetCategories();
   }
 
   ClearObject(){
@@ -35,11 +45,30 @@ export class VendorComponent implements OnInit {
       id:0
     };
     this.GetVendors();
+    this.fileInput = null;
   }
+
+  fileResult: any = null;
+  fileInput : any = null;
+  async onFileChange(event){
+    try {
+      let result = await fileUpload(event);
+      this.fileResult = result;
+    }
+    catch{
+      this.fileResult = null;
+    }
+}
 
   SaveVendor()
   {
     this.btnClicked=true;
+    if(this.fileResult !=null)
+    {
+      this.vendor.base64File = this.fileResult.base64;
+        this.vendor.fileName = this.fileResult.name
+    }
+    this.vendor.categories = this.selectedCategories.toString();
     if(this.vendor.id ==0){
       this._vendorService.AddVendor(this.vendor).subscribe((data : any) =>{
         if(data.code === 200){
@@ -93,11 +122,30 @@ export class VendorComponent implements OnInit {
   {
     this._vendorService.GetVendors().subscribe((data :any)=>{
        this.vendors = data.result;
+       console.log(this.vendors);
     })
-  } 
-
-  SelectCategoryToEdit(vendor)
+  }
+  GetCategories()
   {
+    this._categoreisService.GetCourseCategories().subscribe((data :any)=>{
+       this.categories = data.result;
+    })
+  }  
+
+  SelectVendorToEdit(vendor)
+  {
+    try{
+      var arr = vendor.categories.toString().split(',');
+      var tempArr = [];
+      arr.forEach(element => {
+        tempArr.push(parseInt(element));
+      });
+      // this.selectedCategories =  [parseInt('1'),parseInt('2')];
+      this.selectedCategories = tempArr;
+    }
+    catch{
+      //Ignore
+    }
     this.vendor = vendor;
   }
 
@@ -106,12 +154,20 @@ export class VendorComponent implements OnInit {
     this.pageOfItems = pageOfItems;
   }
 
+  SelectCategory(){
+    console.log(this.selectedCategories);
+  }
+
 }
 
 export interface VendorModel 
 {
   id:number;
   name:string;
+  base64File:string;
+  logo:string;
+  fileName:string;
+  categories:string;
 }
 
 

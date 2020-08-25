@@ -31,7 +31,6 @@ import { SalesCycleTypeComponent } from './components/sales-cycle-type/sales-cyc
 import { SalesCycleComponent } from './components/sales-cycle/sales-cycle/sales-cycle.component';
 import { LoginComponent } from './components/login/login.component';
 
-
 export const routes: Routes = [
   {
     path:"app",
@@ -71,9 +70,9 @@ export const routes: Routes = [
   },
   {
     path : "auth",
-     component : LoginComponent
+    component : LoginComponent
   },
-  {path:"" ,redirectTo:"app",pathMatch:"full"}
+  {path:"" ,redirectTo:"auth",pathMatch:"full"}
 ];
 
 @NgModule({

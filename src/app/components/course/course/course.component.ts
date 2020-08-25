@@ -92,17 +92,25 @@ export class CourseComponent implements OnInit {
 
   SaveCourse()
   {
-    console.log(this.course);
-    this.course.courseSubCategoryId =  parseInt(this.course.courseSubCategoryId.toString());
+    try{
+      this.course.courseSubCategoryId =  parseInt(this.course.courseSubCategoryId.toString());
+    }
+    catch{
+      this.course.courseSubCategoryId =  null;
+    }
     this.course.courseCategoryId =  parseInt(this.course.courseCategoryId.toString());
 
-    console.log(this.course);
     this.btnClicked=true;
     if(this.fileResult !=null)
     {
       this.course.base64File = this.fileResult.base64;
         this.course.fileName = this.fileResult.name
     }
+    if(this.course.courseSubCategoryId  ==0)
+    {
+      this.course.courseSubCategoryId =null;
+    }
+    console.log(this.course);
     if(this.course.id ==0){
       this._courseService.AddCourse(this.course).subscribe((data : any) =>{
         if(data.code === 200){
@@ -291,6 +299,7 @@ export interface CourseModel
   base64File:string;
   image:string;
   fileName:string;
+  hoursDuration:number;
 }
 
 

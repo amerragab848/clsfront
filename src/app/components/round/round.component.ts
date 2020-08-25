@@ -10,6 +10,7 @@ import { ActivatedRoute,Router } from '@angular/router';
 import { from } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DatePipe } from '@angular/common';
+import { CourseService } from 'src/app/core/services/course/course.service';
 
 @Component({
   selector: 'app-round',
@@ -24,6 +25,7 @@ export class RoundComponent implements OnInit {
   labs : any[];
   deliveryTypes:any[];
   courseTypes:any[];
+  course:any;
 
   roundWithDetails : any = {
     roundDetils : null,
@@ -198,6 +200,7 @@ export class RoundComponent implements OnInit {
     private router : ActivatedRoute,
     private _toastSrv : ToastService,
     private _labSrv : LabService,
+    private _courseSrv : CourseService,
     private _branchSrv : BranchService,
     private _deliveryTypeSrv : DeliveryTypeService,
     private _courseTypeSrv : CourseTypeService,
@@ -214,6 +217,7 @@ export class RoundComponent implements OnInit {
     this.GetDeliveryTypes();
     this.GetInstructors();
     this.GetCourseRounds();
+    this.GetCourse();
   }
 
   GetRoundDetails(roundId)
@@ -246,6 +250,14 @@ export class RoundComponent implements OnInit {
     this._roundSrv.GetCourseRounds(this.router.snapshot.params.id).subscribe((data : any)=>{
       this.rounds = data.result;
       console.log(data);
+    });
+  }
+  GetCourse()
+  {
+    this._courseSrv.GetCoursees().subscribe((data : any)=>{
+      this.course = data.result.find(c=>c.id == this.router.snapshot.params.id);
+      console.log(this.course);
+      this.round.roundDuration = this.course.hoursDuration;
     });
   }
   SaveRound(){
@@ -305,10 +317,37 @@ export class RoundComponent implements OnInit {
     this.roundWeek =[];
     this.GetCourseRounds();
   }
+  CalculateTotalSession()
+  {
+    var rLength = this.roundWeek.length -1;
+    var rc =0;
+    var totalHours = this.course.hoursDuration;
+    var sCounter =0;
+    while(totalHours > 0)
+    {
+      try{
+        var from = parseFloat(this.roundWeek[rc].endTime.toString().replace(':','').replace('AM','').replace('PM','')) ;
+        var to =parseFloat(this.roundWeek[rc].startTime.toString().replace(':','').replace('AM','').replace('PM',''));
+        var hoursDiff =from - to ;
+        totalHours = totalHours - parseFloat(hoursDiff.toString().replace('00',''));
+        if(rc == rLength)
+        {
+          rc =0;
+        }else{
+          rc++;
+        }
+        sCounter++;
+      }
+      catch{
+      }
+    }
+    this.round.totalSessions= sCounter;
+  }
   CalculateEndDate()
   {
-    this.round.totalSessions =this.round.roundDuration /this.round.sessionDuration;
-     let weeks = this.round.totalSessions / this.roundWeek.length;
+    // this.round.totalSessions =this.round.roundDuration /this.round.sessionDuration;
+      let weeks = this.round.totalSessions / this.roundWeek.length;
+     
     this._roundSrv.GetRoundEndDate(this.round.startDate,parseFloat(weeks.toString())).subscribe((data:any)=>{
       console.log(data);
       this.round.endDate =data;
@@ -354,7 +393,7 @@ export class RoundComponent implements OnInit {
   }
   GetInstructors()
   {
-    this._instructorSrv.GetInstructors().subscribe((data :any)=>{
+    this._instructorSrv.GetCourseInstructors(this.router.snapshot.params.id).subscribe((data :any)=>{
       this.instructors = data.result;
    }); 
   }

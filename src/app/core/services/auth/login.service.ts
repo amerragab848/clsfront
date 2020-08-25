@@ -13,7 +13,6 @@ export class LoginService {
    }
 
   Login(user){
-    console.log(user);
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
     return this.http.post(this.baseURL+"authenticate",user,{

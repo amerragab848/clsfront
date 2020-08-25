@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'App';
+  constructor(){
+  }
+  getState(outlet) {
+    return outlet.isActivated ? outlet.activatedRoute : '';
+  }
 }

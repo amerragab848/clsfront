@@ -3,7 +3,7 @@
       <div data-scrollable>
 
         <ul  class="sidebar-menu">
-          <li class=""><a [routerLink]="['/']"><i class="fa fa-bar-chart-o"></i><span>Dashboard</span></a></li>
+          <li class=""><a [routerLink]="['/app']"><i class="fa fa-bar-chart-o"></i><span>Dashboard</span></a></li>
           <li class="hasSubmenu">
             <!-- <a href="#course-menu"><i class="fa fa-mortar-board"></i><span>Courses Defination</span></a> -->
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -18,17 +18,17 @@
                 <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                   <div class="panel-body">
                     <ul id="course-menu">
-                        <li><a [routerLink]="['/course']" ><span>Course</span></a></li>
-                        <li><a [routerLink]="['/instructor']" ><span>Instructors</span></a></li>
-                        <li><a [routerLink]="['/learningpath']" ><span>Learning Path</span></a></li>
+                        <li><a [routerLink]="['/app/course']" ><span>Course</span></a></li>
+                        <li><a [routerLink]="['/app/instructor']" ><span>Instructors</span></a></li>
+                        <li><a [routerLink]="['/app/learningpath']" ><span>Learning Path</span></a></li>
                         <li><a [routerLink]="['/app/coursetype']" ><span>Courses Types</span></a></li>
-                        <li><a [routerLink]="['/examtype']" ><span>Exam Types</span></a></li>
-                        <li><a [routerLink]="['/labtype']" ><span>Lab Types</span></a></li>
-                        <li><a [routerLink]="['/materialtype']" ><span>Material Types</span></a></li>
-                        <li><a [routerLink]="['/deliverytype']" ><span>Delivery Type</span></a></li>
-                        <li><a [routerLink]="['/vendor']" ><span>Course Vendors</span></a></li>
-                        <li><a [routerLink]="['/coursecategory']" ><span>Courses Category</span></a></li>
-                        <li><a [routerLink]="['/subcategory']" ><span>SubCategory</span></a></li>
+                        <li><a [routerLink]="['/app/examtype']" ><span>Exam Types</span></a></li>
+                        <li><a [routerLink]="['/app/labtype']" ><span>Lab Types</span></a></li>
+                        <li><a [routerLink]="['/app/materialtype']" ><span>Material Types</span></a></li>
+                        <li><a [routerLink]="['/app/deliverytype']" ><span>Delivery Type</span></a></li>
+                        <li><a [routerLink]="['/app/vendor']" ><span>Course Vendors</span></a></li>
+                        <li><a [routerLink]="['/app/coursecategory']" ><span>Courses Category</span></a></li>
+                        <li><a [routerLink]="['/app/subcategory']" ><span>SubCategory</span></a></li>
                         </ul>
                   </div>
                 </div>
@@ -44,11 +44,11 @@
                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                   <div class="panel-body">
                     <ul id="course-menu">
-                      <li><a [routerLink]="['/branch']" ><span>Branches</span></a></li>
-                      <li><a [routerLink]="['/lab']" ><span>Labs</span></a></li>
-                      <li><a [routerLink]="['/assetgroup']" ><span>Asset Group</span></a></li>
-                      <li><a [routerLink]="['/assetvendor']" ><span>Asset Vendor</span></a></li>
-                      <li><a [routerLink]="['/asset']" ><span>Asset</span></a></li>
+                      <li><a [routerLink]="['/app/branch']" ><span>Branches</span></a></li>
+                      <li><a [routerLink]="['/app/lab']" ><span>Labs</span></a></li>
+                      <li><a [routerLink]="['/app/assetgroup']" ><span>Asset Group</span></a></li>
+                      <li><a [routerLink]="['/app/assetvendor']" ><span>Asset Vendor</span></a></li>
+                      <li><a [routerLink]="['/app/asset']" ><span>Asset</span></a></li>
                       
                     </ul>
                   </div>
@@ -65,12 +65,12 @@
                 <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                   <div class="panel-body">
                     <ul id="course-menu">
-                      <li><a [routerLink]="['/client']" ><span>Client</span></a></li>
-                      <li><a [routerLink]="['/corporate']" ><span>Corporate</span></a></li>
-                      <li><a [routerLink]="['/vacations']" ><span>Vacations</span></a></li>
-                      <li><a><span>Students</span></a></li>
-                      <li><a [routerLink]="['/salesCycleType']" ><span>Sales Cycle Type</span></a></li>
-                      <li><a [routerLink]="['/salesCycle']" ><span>Sales Cycle</span></a></li>
+                      <li><a [routerLink]="['/app/client']" ><span>Client</span></a></li>
+                      <li><a [routerLink]="['/app/corporate']" ><span>Corporate</span></a></li>
+                      <li><a [routerLink]="['/app/vacations']" ><span>Vacations</span></a></li>
+                      <!-- <!-- <li><a><span>Students</span></a></li> --> -->
+                      <li><a [routerLink]="['/app/salesCycleType']" ><span>Sales Cycle Type</span></a></li>
+                      <li><a [routerLink]="['/app/salesCycle']" ><span>Sales Cycle</span></a></li>
                     </ul>
                   </div>
                 </div>

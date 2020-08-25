@@ -2,19 +2,19 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Round Details
+                <b>{{course.name}}</b> Rounds Config
             </div>
             <div class="panel-body">
                 <form #saveForm="ngForm" (submit)="SaveRound()">
                     <div class="form-group form-control-material static">
-                        <input #roundDuration="ngModel" name="roundDuration" [(ngModel)]="round.roundDuration" type="number" class="form-control" required>
+                        <input #roundDuration="ngModel" disabled name="roundDuration" [(ngModel)]="round.roundDuration" type="number" class="form-control" required>
                         <span class="ma-form-highlight"></span>
                         <span class="ma-form-bar"></span>
                         <label >
                             Round Duration in Hours <span class="text-danger">*</span>
                         </label>
                     </div>
-                    <div class="form-group form-control-material static">
+                    <div style="display: none;" class="form-group form-control-material static">
                         <input #sessionDuration="ngModel" name="sessionDuration" [(ngModel)]="round.sessionDuration" type="number" class="form-control" required>
                         <span class="ma-form-highlight"></span>
                         <span class="ma-form-bar"></span>
@@ -23,7 +23,7 @@
                         </label>
                     </div>
                     <div class="form-group form-control-material static">
-                        <input #totalSessions="ngModel" name="totalSessions" [(ngModel)]="round.roundDuration /round.sessionDuration" readonly type="number" class="form-control" required>
+                        <input (click)="CalculateTotalSession()" #totalSessions="ngModel" name="totalSessions" [(ngModel)]="round.totalSessions" readonly type="number" class="form-control" required>
                         <span class="ma-form-highlight"></span>
                         <span class="ma-form-bar"></span>
                         <label >
@@ -202,7 +202,7 @@
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Duration</th>
-                        <th>Session Duration</th>
+                        <!-- <th>Session Duration</th> -->
                         <th>Sessions</th>
                         <th>State</th>
                         <th></th>
@@ -213,7 +213,7 @@
                         <td>{{r.startDate}}</td>
                         <td>{{r.endDate}}</td>
                         <td>{{r.roundDuration}}</td>
-                        <td>{{r.sessionDuration}}</td>
+                        <!-- <td>{{r.sessionDuration}}</td> -->
                         <td>{{r.totalSessions}}</td>
                         <th [hidden]="!r.isExecuted">
                             <button  class="btn btn-danger btn-xs">executed</button>
@@ -227,8 +227,9 @@
                             <a class="btn btn-danger" (dblclick)="DeleteRound(r.id)">Remove</a> | 
                             <button class="btn btn-warning"  [disabled]="(r.isExecuted == true)" (dblclick)="ExecuteRound(r.id)" >Execute</button> 
                             | 
-                            <a class="btn btn-info" [routerLink]="['/roundsessions', r.id]">Sessions</a> | 
-                            <button class="btn btn-default" [disabled]="(r.isExecuted == true)" (click)="GetRoundById(r.id)">Edit</button>
+                            <a class="btn btn-info" [routerLink]="['/app/roundsessions', r.id]">Sessions</a> 
+                            <!-- | 
+                            <button class="btn btn-default" [disabled]="(r.isExecuted == true)" (click)="GetRoundById(r.id)">Edit</button> -->
                         </td>
                     </tr>
                 </tbody>
