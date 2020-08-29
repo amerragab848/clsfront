@@ -48,8 +48,13 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { LoginComponent } from './components/login/login.component';
 
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [
+  
     JwPaginationComponent,
     ToastComponent,
     AppComponent,
@@ -109,6 +114,11 @@ import { LoginComponent } from './components/login/login.component';
     LoginComponent
   ],
   imports: [
+    MatCheckboxModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTableModule,
+    //
     SweetAlert2Module.forRoot(),
     BrowserModule,
     AppRoutingModule,   

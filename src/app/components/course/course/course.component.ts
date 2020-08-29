@@ -11,7 +11,8 @@ import {LabTypeService} from '../../../core/services/lab-type/lab-type.service';
 import {MaterialTypeService} from '../../../core/services/material-type/material-type.service';
 import {VendorService} from '../../../core/services/vendor/vendor.service';
 import {LearningPathService} from '../../../core/services/learning-path/learning-path.service';
-
+import {  SelectionModel  } from '@angular/cdk/collections';  
+import {   MatTableDataSource } from '@angular/material/table'; 
 // Imports
 let fileUpload = require('fuctbase64');
 
@@ -25,7 +26,7 @@ export class CourseComponent implements OnInit {
   course : CourseModel =<CourseModel>{
     id:0
   }
-  courses : CourseModel[];
+  //courses : CourseModel[];
   materialTypes :MaterialTypeModel[];
   labTypes :LabTypeModel[];
   examTypes :ExamTypeModel[];
@@ -38,6 +39,10 @@ export class CourseComponent implements OnInit {
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
+
+  selection = new SelectionModel <CourseModel> (true, []);  
+  courses: MatTableDataSource < CourseModel > ;  
+
 
   constructor(
     private _materialTypeSrv :MaterialTypeService,
@@ -58,7 +63,25 @@ export class CourseComponent implements OnInit {
     this.GetCourses();
     this.GetAllLockups();
   }
-
+//
+   /** Whether the number of selected elements matches the total number of rows. */  
+   isAllSelected() {  
+    const numSelected = this.selection.selected.length;  
+    const numRows = !!this.courses && this.courses.data.length;  
+    return numSelected === numRows;  
+}  
+/** Selects all rows if they are not all selected; otherwise clear selection. */  
+masterToggle() {  
+    this.isAllSelected() ? this.selection.clear() : this.courses.data.forEach(r => this.selection.select(r));  
+}  
+/** The label for the checkbox on the passed row */  
+checkboxLabel(row: CourseModel): string {  
+    if (!row) {  
+        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;  
+    }  
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;  
+} 
+//
   GetCourses() {
     this._courseService.GetCoursees().subscribe((data :any)=>{
        this.courses = data.result;
@@ -176,6 +199,38 @@ export class CourseComponent implements OnInit {
         this._toastSrv.error("Failed","You can not delete this record");
       }
       );
+  }
+
+  DeleteData()
+  {
+    
+      //////
+      debugger;  
+      const numSelected = this.selection.selected;  
+    //   var obj = numSelected.filter(function(node) {
+    //     return node.id;
+    // });
+    var id=numSelected[0].id;
+      if (numSelected.length > 0) {  
+        this._courseService.DeleteCourse(id).subscribe((data : any) =>{
+          if(data.code === 200){
+            this._toastSrv.success("Success","");
+            this.ClearObject();
+          }
+          if(data.code === 500)
+          {
+            this._toastSrv.error("Failed",data.message);
+          }
+        },
+        (error) =>{
+          this._toastSrv.error("Failed","You can not delete this record");
+        }
+        );
+      } else {  
+         // alert("");  
+          this._toastSrv.error("Failed","Select at least one row");
+
+      }
   }
 
 

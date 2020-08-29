@@ -4,6 +4,25 @@
             <div class="panel-heading">
                 <h3>All Courses</h3>
             </div>
+            <div>
+                
+                    <a class="btn btn-warning" title="edit" (click)="SelectCourseToEdit(course)">
+                        <i class="fa fa-edit"></i>
+                    </a> | 
+                    <a   (click)="DeleteData()"class="btn btn-danger" title="delete">X</a> |
+                    <a  title="outline" [routerLink]="['/app/courseoutline', course.id]" class="btn btn-warning outline-btn"><i class="fa fa-list"></i></a> |
+                    <a  title="rounds" [routerLink]="['/app/rounds', course.id]" class="btn btn-primary">
+                        <i class="fa fa-clock-o"></i>
+                    </a>
+               
+            </div>
+          <!-- added -->
+          <!-- <div class="row push-right">  
+            <input type="button" class="btn btn-danger" (click)="DeleteData()" value="Delete Education">  
+                <br>  
+         </div>  
+                <br>   -->
+          <!-- ended -->
             <div class="panel-body">
                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                     <div class="row">
@@ -30,6 +49,12 @@
                                 style="width: 100%;">
                                 <thead>
                                     <tr role="row">
+                                         <th>select</th> 
+                                         <!-- <th style="width: 100px;" mat-header-cell *matHeaderCellDef>  -->
+                                            <!-- <th> 
+                                            <mat-checkbox (change)="$event ? masterToggle() : null"   [checked]="selection.hasValue() && isAllSelected()"  
+                                            [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox>  
+                                        </th>   -->
                                         <th>Name</th>
                                         <th>Category</th>
                                         <th>Sub Category</th>
@@ -39,11 +64,23 @@
                                         <th>Vendor</th>
                                         <th>Learning Path</th>
                                         <th>Image</th>
-                                        <th>Actions</th>
+                                        <!-- <th>Actions</th> -->
                                     </tr>
                                 </thead>
                                 <tbody  *ngFor="let course of pageOfItems | courseFilter : searchKey">
                                     <tr>
+                                        <!-- <input type="checkbox" (change)="$event ? masterToggle() : null"  
+                                        [checked]="selection.hasValue() && isAllSelected()"  
+                                        [indeterminate]="selection.hasValue() && !isAllSelected()"/> -->
+    <!-- Checkbox Column -->  
+    <!-- <ng-container matColumnDef="select">   -->
+
+                                      <!-- <td mat-cell *matCellDef="let row">   -->
+                                      <td>
+                                      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(course) : null"  
+                                      [checked]="selection.isSelected(course)" [aria-label]="checkboxLabel(course)"></mat-checkbox>  
+                                      </td>  
+    <!-- </ng-container>  -->
                                         <td>{{course.name}}</td>
                                         <td>{{course.courseCategoryName}}</td>
                                         <td>{{course.courseSubCategoryName}}</td>
@@ -55,16 +92,7 @@
                                         <td>
                                             <img src="http://clslearn.net{{course.image}}" width="150" height="70" />
                                         </td>
-                                        <td>
-                                            <a class="btn btn-warning" title="edit" (click)="SelectCourseToEdit(course)">
-                                                <i class="fa fa-edit"></i>
-                                            </a> | 
-                                            <a   (click)="DeleteCourse(course.id)"class="btn btn-danger" title="delete">X</a> |
-                                            <a  title="outline" [routerLink]="['/app/courseoutline', course.id]" class="btn btn-warning outline-btn"><i class="fa fa-list"></i></a> |
-                                            <a  title="rounds" [routerLink]="['/app/rounds', course.id]" class="btn btn-primary">
-                                                <i class="fa fa-clock-o"></i>
-                                            </a>
-                                        </td>
+                                       
                                     </tr>
                                 </tbody>
                             </table>
