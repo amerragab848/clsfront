@@ -3,6 +3,16 @@
         <div class="panel">
             <div class="panel-heading">
                 <h3>All Courses</h3>
+                <div class="d-flex">
+                    <a class="btn btn-warning" title="edit" (click)="SelectCourseToEdit(course)" >
+                        <i class="fa fa-edit"></i>
+                    </a> | 
+                    <a   (click)="DeleteCourse(course.id)"class="btn btn-danger" title="delete">X</a> |
+                    <a  title="outline" [routerLink]="['/app/courseoutline', course.id]" class="btn btn-warning outline-btn"><i class="fa fa-list"></i></a> |
+                    <a  title="rounds" [routerLink]="['/app/rounds', course.id]" class="btn btn-primary">
+                        <i class="fa fa-clock-o"></i>
+                    </a>
+                </div>
             </div>
             <div>
                 
