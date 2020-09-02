@@ -4,6 +4,13 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 Exam Types
+                <div>
+                 
+                    <a   (click)="SelectToEdit()"class="btn btn-warning">Edit</a>
+                    | 
+                    <a   (click)="DeleteExamType()"class="btn btn-danger">Delete</a>
+                
+                </div>>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -22,19 +29,20 @@
                         <table class="table table-bordered v-middle table-hover table-striped ">
                             <thead>
                               <tr>
+                                <th>Select</th>
                                 <th>Name</th>
-                                <th>Action</th>
+                               
                               </tr>
                             </thead>
                    
                             <tbody  *ngFor="let type of pageOfItems | examTypeFilter : searchKey ">
                               <tr>
+                                <td>
+                                  <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(type) : null"  
+                                  [checked]="selection.isSelected(type)" ></mat-checkbox>  
+                                  </td>  
                                   <td>{{type.name}}</td>
-                                  <td>
-                                    <a   (click)="SelectCategoryToEdit(type)"class="btn btn-warning">Edit</a>
-                                    | 
-                                    <a   (click)="DeleteType(type.id)"class="btn btn-danger">Delete</a>
-                                  </td>
+                                 
                               </tr>
                           </tbody>
                           </table>

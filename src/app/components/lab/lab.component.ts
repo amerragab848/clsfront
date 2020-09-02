@@ -2,7 +2,9 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { LabService } from 'src/app/core/services/lab/lab.service';
 import { BranchService } from 'src/app/core/services/branch/branch.service';
-
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import {  SelectionModel  } from '@angular/cdk/collections';  
+import {   MatTableDataSource } from '@angular/material/table'; 
 export interface LabModel 
 {
   id:number;
@@ -32,13 +34,15 @@ export class LabComponent implements OnInit {
     id :0
   };
 
-  labs : LabModel[];
+  //labs : LabModel[];
   branches : BranchModel[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
-
+  selection = new SelectionModel <LabModel> (false, []);  
+  labs: MatTableDataSource < LabModel > ;  
   constructor(
+    private route: Router,
     private _toastSrv : ToastService,
     private _labService : LabService,
     private _branchService : BranchService
@@ -67,7 +71,25 @@ export class LabComponent implements OnInit {
     };
     this.GetLabs();
   }
-
+//
+   /** Whether the number of selected elements matches the total number of rows. */  
+   isAllSelected() {  
+    const numSelected = this.selection.selected.length;  
+    const numRows = !!this.labs && this.labs.data.length;  
+    return numSelected === numRows;  
+}  
+/** Selects all rows if they are not all selected; otherwise clear selection. */  
+masterToggle() {  
+    this.isAllSelected() ? this.selection.clear() :this.selection.select();//this.labs.data.forEach(r => this.selection.select(r));  
+}  
+/** The label for the checkbox on the passed row */  
+checkboxLabel(row: LabModel): string {  
+    if (!row) {  
+        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;  
+    }  
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;  
+} 
+//
   SaveLab()
   {
     this.btnClicked=true;
@@ -118,7 +140,12 @@ export class LabComponent implements OnInit {
   {
     this.lab = lab;
   }
-
+  SelectLabForEdit()
+  {
+            const lab = this.selection.selected; 
+    				this.lab = lab[0];
+   
+  }
   DeleteLab(id)
   {
       this._labService.DeleteLab(id).subscribe((data : any) =>{
@@ -135,6 +162,31 @@ export class LabComponent implements OnInit {
         this._toastSrv.error("Failed","You can not delete this record");
       }
       );
+  }
+  DeleteLabData()
+  {
+    const numSelected = this.selection.selected;  
+    var id=numSelected[0].id;
+      this._labService.DeleteLab(id).subscribe((data : any) =>{
+        if(data.code === 200){
+          this._toastSrv.success("Success","");
+          this.ClearObject();
+        }
+        if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      },
+      (error) =>{
+        this._toastSrv.error("Failed","You can not delete this record");
+      }
+      );
+  }
+  GotoFacility(){
+    this.ClearObject();
+    const numSelected = this.selection.selected; 
+    this.lab = numSelected[0];
+    this.route.navigate(['/app/facility', { id : this.lab.id }]);
   }
   ngOnInit() {
     this.GetLabs();

@@ -4,6 +4,8 @@ import {ToastService} from 'src/app/core/services/toast/toast.service';
 import { from } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CourseCategoryService } from 'src/app/core/services/course-category/course-category.service';
+import {  SelectionModel  } from '@angular/cdk/collections';  
+import {   MatTableDataSource } from '@angular/material/table'; 
 // Imports
 let fileUpload = require('fuctbase64');
 
@@ -21,13 +23,15 @@ export class VendorComponent implements OnInit {
   vendor : VendorModel =<VendorModel>{
     id :0
   };
-  vendors : VendorModel[];
+  
+ // vendors : VendorModel[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
   errorMessage:string;
 
-
+  selection = new SelectionModel <VendorModel> (true, []);  
+  vendors: MatTableDataSource < VendorModel > ;  
   constructor(
     private _toastSrv : ToastService,
     private _vendorService : VendorService,
@@ -59,7 +63,25 @@ export class VendorComponent implements OnInit {
       this.fileResult = null;
     }
 }
-
+//
+   /** Whether the number of selected elements matches the total number of rows. */  
+   isAllSelected() {  
+    const numSelected = this.selection.selected.length;  
+    const numRows = !!this.vendors && this.vendors.data.length;  
+    return numSelected === numRows;  
+}  
+/** Selects all rows if they are not all selected; otherwise clear selection. */  
+masterToggle() {  
+    this.isAllSelected() ? this.selection.clear() :this.selection.select();// this.vendors.data.forEach(r => this.selection.select(r));  
+}  
+/** The label for the checkbox on the passed row */  
+checkboxLabel(row: VendorModel): string {  
+    if (!row) {  
+        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;  
+    }  
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;  
+} 
+//
   SaveVendor()
   {
     this.btnClicked=true;
@@ -148,7 +170,26 @@ export class VendorComponent implements OnInit {
     }
     this.vendor = vendor;
   }
-
+  SelectVendorForEdit()
+  {
+    const vendor = this.selection.selected; 
+   debugger;
+    try{
+     
+    
+      var arr = vendor[0].categories.toString().split(',');
+      var tempArr = [];
+      arr.forEach(element => {
+        tempArr.push(parseInt(element));
+      });
+      // this.selectedCategories =  [parseInt('1'),parseInt('2')];
+      this.selectedCategories = tempArr;
+    }
+    catch{
+      //Ignore
+    }
+    this.vendor = vendor[0];
+  }
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
     this.pageOfItems = pageOfItems;

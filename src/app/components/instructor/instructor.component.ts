@@ -4,7 +4,8 @@ import { InstructorService } from 'src/app/core/services/instructor/instructor.s
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CourseService } from 'src/app/core/services/course/course.service';
-
+import {  SelectionModel  } from '@angular/cdk/collections';  
+import {   MatTableDataSource } from '@angular/material/table'; 
 let fileUpload = require('fuctbase64');
 export interface InstructorModel 
 {
@@ -44,7 +45,8 @@ export class InstructorComponent implements OnInit {
   insCourses : any[];
   selectedInsCourses = [];
   allCourses:any[];
-
+  selection = new SelectionModel <InstructorModel> (false, []);  
+  instructors: MatTableDataSource < InstructorModel > ;  
   fileImageInput:any;
   fileImageResult: any = null;
   async onFileImageChange(event){
@@ -82,7 +84,7 @@ export class InstructorComponent implements OnInit {
     id :0
   };
   courses : any[];
-  instructors : InstructorModel[];
+  //instructors : InstructorModel[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
@@ -98,7 +100,25 @@ export class InstructorComponent implements OnInit {
     this.GetInstructors();
     this.GetAllCourses();
   }
-
+//
+   /** Whether the number of selected elements matches the total number of rows. */  
+   isAllSelected() {  
+    const numSelected = this.selection.selected.length;  
+    const numRows = !!this.instructors && this.instructors.data.length;  
+    return numSelected === numRows;  
+}  
+/** Selects all rows if they are not all selected; otherwise clear selection. */  
+masterToggle() {  
+    this.isAllSelected() ? this.selection.clear() :this.instructors.data.forEach(r => this.selection.select(r));  
+}  
+/** The label for the checkbox on the passed row */  
+checkboxLabel(row: InstructorModel): string {  
+    if (!row) {  
+        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;  
+    }  
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;  
+} 
+//
   GetInstructors() {
     this._instructorService.GetInstructors().subscribe((data :any)=>{
        this.instructors = data.result;
@@ -279,13 +299,29 @@ export class InstructorComponent implements OnInit {
     this.instructor = instructor;
   }
 
- 
-  GetCourses(id)
+  EditInstructor()
   {
-    this._instructorService.GetInstructorCourses(parseFloat(id)).subscribe((data :any)=>{
-      this.courses = data.result;
-   })
+    debugger;
+    const numSelected = this.selection.selected; 
+    console.log(numSelected);
+    try{
+      if(numSelected[0].courses.length > 0)
+      {
+        var arr = numSelected[0].courses.toString().split(',');
+          var tempArr = [];
+          arr.forEach(element => {
+            tempArr.push(parseInt(element));
+          });
+          this.selectedInsCourses = tempArr;
+          console.log( this.selectedInsCourses );
+      }
+    }
+    catch{
+      //Ignore
+    }
+    this.instructor = numSelected[0];
   }
+  
   DeleteInstructor(id)
   {
     this._instructorService.DeleteInstructor(id).subscribe((data : any) =>{
@@ -303,7 +339,38 @@ export class InstructorComponent implements OnInit {
     }
     );
   }
+  GetCourses(id)
+  {
+    this._instructorService.GetInstructorCourses(parseFloat(id)).subscribe((data :any)=>{
+      this.courses = data.result;
+   })
+  }
+  DeleteSelectedInstructor()
+  {
+    debugger;
+    const numSelected = this.selection.selected;  
+    var id=numSelected[0].id;
+    this._instructorService.DeleteInstructor(id).subscribe((data : any) =>{
+      if(data.code === 200){
+        this._toastSrv.success("Success","");
+        this.ClearObject();
+      }
+      if(data.code === 500)
+      {
+        this._toastSrv.error("Failed",data.message);
+      }
+    },
+    (error) =>{
+      this._toastSrv.error("Failed","You can not delete this record");
+    }
+    );
+  }
+
+
+
+
 }
+
 
 @Pipe({
   name:'instructorFilter'

@@ -11,6 +11,8 @@ import {LabTypeService} from '../../../core/services/lab-type/lab-type.service';
 import {MaterialTypeService} from '../../../core/services/material-type/material-type.service';
 import {VendorService} from '../../../core/services/vendor/vendor.service';
 import {LearningPathService} from '../../../core/services/learning-path/learning-path.service';
+//added
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {  SelectionModel  } from '@angular/cdk/collections';  
 import {   MatTableDataSource } from '@angular/material/table'; 
 // Imports
@@ -40,11 +42,12 @@ export class CourseComponent implements OnInit {
   searchKey: string;
   btnClicked: boolean = false;
 
-  selection = new SelectionModel <CourseModel> (true, []);  
+  selection = new SelectionModel <CourseModel> (false, []);  
   courses: MatTableDataSource < CourseModel > ;  
 
 
   constructor(
+    private route: Router,
     private _materialTypeSrv: MaterialTypeService,
     private _labTypeSrv: LabTypeService,
     private _examTypeSrv: ExamTypeService,
@@ -71,7 +74,7 @@ export class CourseComponent implements OnInit {
 }  
 /** Selects all rows if they are not all selected; otherwise clear selection. */  
 masterToggle() {  
-    this.isAllSelected() ? this.selection.clear() : this.courses.data.forEach(r => this.selection.select(r));  
+    this.isAllSelected() ? this.selection.clear() : this.selection.select();//this.courses.data.forEach(r => this.selection.select(r));  
 }  
 /** The label for the checkbox on the passed row */  
 checkboxLabel(row: CourseModel): string {  
@@ -81,6 +84,20 @@ checkboxLabel(row: CourseModel): string {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;  
 } 
 //
+//added
+GoToOutline() {
+   this.ClearObject();
+  const numSelected = this.selection.selected; 
+  this.course = numSelected[0];
+  this.route.navigate(['/app/courseoutline', { id : this.course.id }]);
+}
+GoToRound() {
+    this.ClearObject();
+  const numSelected = this.selection.selected; 
+  this.course = numSelected[0];
+  this.route.navigate(['/app/rounds', { id : this.course.id }]);
+}
+
   GetCourses() {
     this._courseService.GetCoursees().subscribe((data: any) => {
       this.courses = data.result;
@@ -112,6 +129,7 @@ checkboxLabel(row: CourseModel): string {
   }
 
   SaveCourse() {
+    debugger;
     try {
       this.course.courseSubCategoryId = parseInt(
         this.course.courseSubCategoryId.toString()
@@ -175,6 +193,7 @@ checkboxLabel(row: CourseModel): string {
   }
 
   SelectCourseToEdit(course) {
+    debugger;
     this.course = course;
     console.log(course);
   }
@@ -196,15 +215,18 @@ checkboxLabel(row: CourseModel): string {
     );
   }
 
+  EditCourse() {
+    debugger;
+    const numSelected = this.selection.selected; 
+    this.course = numSelected[0];
+    console.log(numSelected);
+  }
   DeleteData()
   {
     
       //////
       debugger;  
       const numSelected = this.selection.selected;  
-    //   var obj = numSelected.filter(function(node) {
-    //     return node.id;
-    // });
     var id=numSelected[0].id;
       if (numSelected.length > 0) {  
         this._courseService.DeleteCourse(id).subscribe((data : any) =>{

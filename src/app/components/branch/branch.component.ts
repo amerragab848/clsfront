@@ -1,7 +1,8 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { BranchService } from 'src/app/core/services/branch/branch.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
-
+import {  SelectionModel  } from '@angular/cdk/collections';  
+import {   MatTableDataSource } from '@angular/material/table'; 
 export interface BranchModel 
 {
   id:number;
@@ -20,11 +21,12 @@ export class BranchComponent implements OnInit {
     id :0
   };
 
-  branches : BranchModel[];
+ // branches : BranchModel[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
-
+  selection = new SelectionModel <BranchModel> (false, []);  
+  branches: MatTableDataSource < BranchModel > ;  
   constructor(
     private _toastSrv : ToastService,
     private _branchService : BranchService
@@ -35,7 +37,25 @@ export class BranchComponent implements OnInit {
        this.branches = data.result;
     })
   } 
-
+//
+   /** Whether the number of selected elements matches the total number of rows. */  
+   isAllSelected() {  
+    const numSelected = this.selection.selected.length;  
+    const numRows = !!this.branches && this.branches.data.length;  
+    return numSelected === numRows;  
+}  
+/** Selects all rows if they are not all selected; otherwise clear selection. */  
+masterToggle() {  
+    this.isAllSelected() ? this.selection.clear() :this.selection.select();// this.branches.data.forEach(r => this.selection.select(r));  
+}  
+/** The label for the checkbox on the passed row */  
+checkboxLabel(row: BranchModel): string {  
+    if (!row) {  
+        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;  
+    }  
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;  
+} 
+//
   onChangePage(pageOfItems: Array<any>) {
     this.pageOfItems = pageOfItems;
   }
@@ -98,7 +118,13 @@ export class BranchComponent implements OnInit {
   {
     this.branch = branch;
   }
-
+  SelectBranchForEdit()
+  {
+    
+    const branch = this.selection.selected; 
+    this.branch = branch[0];
+    
+  }
   DeleteBranch(id)
   {
       this._branchService.DeleteBranch(id).subscribe((data : any) =>{
@@ -116,7 +142,26 @@ export class BranchComponent implements OnInit {
       }
       );
   }
-
+  DeleteBranchData()
+  {
+    debugger;
+    const numSelected = this.selection.selected;  
+    var id=numSelected[0].id;
+      this._branchService.DeleteBranch(id).subscribe((data : any) =>{
+        if(data.code === 200){
+          this._toastSrv.success("Success","");
+          this.ClearObject();
+        }
+        if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      },
+      (error) =>{
+        this._toastSrv.error("Failed","You can not delete this record");
+      }
+      );
+  }
   ngOnInit() {
     this.GetBranches();
   }
