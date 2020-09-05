@@ -2,6 +2,8 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { AssetVendorService } from 'src/app/core/services/asset-vendor/asset-vendor.service';
 
+import {  SelectionModel  } from '@angular/cdk/collections';  
+import {   MatTableDataSource } from '@angular/material/table'; 
 export interface AssetVendorModel 
 {
   id:number;
@@ -33,10 +35,12 @@ export class AssetVendorComponent implements OnInit {
     id :0
   };
 
-  assetVendors : AssetVendorModel[];
+ // assetVendors : AssetVendorModel[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
+  selection = new SelectionModel <AssetVendorModel> (false, []);  
+  assetVendors: MatTableDataSource < AssetVendorModel > ;  
 
   constructor(
     private _toastSrv : ToastService,
@@ -49,6 +53,27 @@ export class AssetVendorComponent implements OnInit {
        console.log(this.assetVendors)
     })
   } 
+
+//
+   /** Whether the number of selected elements matches the total number of rows. */  
+   isAllSelected() {  
+    const numSelected = this.selection.selected.length;  
+    const numRows = !!this.assetVendors && this.assetVendors.data.length;  
+    return numSelected === numRows;  
+}  
+/** Selects all rows if they are not all selected; otherwise clear selection. */  
+masterToggle() {  
+    this.isAllSelected() ? this.selection.clear() : this.selection.select();//this.materialTypes.data.forEach(r => this.selection.select(r));  
+}  
+/** The label for the checkbox on the passed row */  
+checkboxLabel(row: AssetVendorModel): string {  
+    if (!row) {  
+        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;  
+    }  
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;  
+} 
+//
+
 
   onChangePage(pageOfItems: Array<any>) {
     this.pageOfItems = pageOfItems;
@@ -125,12 +150,35 @@ export class AssetVendorComponent implements OnInit {
       }
       );
   }
-
+  DeleteAssetVendorData()
+  {
+    const numSelected = this.selection.selected;  
+    var id=numSelected[0].id;
+      this._assetVendorService.DeleteAssetVendor(id).subscribe((data : any) =>{
+        if(data.code === 200){
+          this._toastSrv.success("Success","");
+          this.ClearObject();
+        }
+        if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      },
+      (error) =>{
+        this._toastSrv.error("Failed","You can not delete this record");
+      }
+      );
+  }
   SelectAssetVendorToEdit(vendor)
   {
     this.assetVendor = vendor;
   }
-
+  SelectAssetVendorForEdit()
+  {
+    const vendor = this.selection.selected; 
+    				this.assetVendor = vendor[0];
+   
+  }
   ngOnInit() {
     this.GetAssetVendor();
   }
