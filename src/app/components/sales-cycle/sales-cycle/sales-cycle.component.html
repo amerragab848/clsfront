@@ -39,8 +39,10 @@
                             <tbody  *ngFor="let salesCycle of pageOfItems | salesCycleFilter : searchKey ">
                               <tr>
                                 <td>
-                                  <input type="checkbox" (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(salesCycle) : null"  
-                                  [checked]="selection.isSelected(salesCycle)" /> 
+                                  <td>
+                                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(salesCycle) : null"  
+                                    [checked]="selection.isSelected(salesCycle)" ></mat-checkbox>  
+                                    </td>  
                                   </td>  
                                   <td>{{salesCycle.name}}</td>
                                   <td>{{salesCycle.percentage}}</td>
