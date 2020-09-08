@@ -57,6 +57,7 @@ export const routes = [
             { path: 'assetgroup', component: AssetGroupComponent },
             { path: 'assetvendor', component: AssetVendorComponent },
             { path: 'asset', component: AssetInfoComponent },
+            { path: 'assetform', component: AssetFormComponent },
             { path: 'assetform/:id', component: AssetFormComponent },
             { path: 'rounds/:id', component: RoundComponent },
             { path: 'client', component: ClientComponent },

@@ -1,6 +1,9 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { ClientService } from 'src/app/core/services/client/client.service';
+import {  SelectionModel  } from '@angular/cdk/collections';  
+import {   MatTableDataSource } from '@angular/material/table'; 
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 export interface ClientModel 
 {
@@ -26,16 +29,35 @@ export class ClientComponent implements OnInit {
     id :0
   };
 
-  clients : ClientModel[];
+  //clients : ClientModel[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
-
+  selection = new SelectionModel <ClientModel> (false, []);  
+  clients: MatTableDataSource < ClientModel > ;  
   constructor(
     private _toastSrv : ToastService,
     private _clientService : ClientService
   ) { }
-
+//
+   /** Whether the number of selected elements matches the total number of rows. */  
+   isAllSelected() {  
+    const numSelected = this.selection.selected.length;  
+    const numRows = !!this.clients && this.clients.data.length;  
+    return numSelected === numRows;  
+}  
+/** Selects all rows if they are not all selected; otherwise clear selection. */  
+masterToggle() {  
+    this.isAllSelected() ? this.selection.clear() : this.selection.select();//this.materialTypes.data.forEach(r => this.selection.select(r));  
+}  
+/** The label for the checkbox on the passed row */  
+checkboxLabel(row: ClientModel): string {  
+    if (!row) {  
+        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;  
+    }  
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;  
+} 
+//
   GetClients() {
     this._clientService.GetClients().subscribe((data :any)=>{
        this.clients = data.result;
@@ -104,7 +126,13 @@ export class ClientComponent implements OnInit {
   {
     this.client = client;
   }
-
+  SelectClientForEdit()
+  {
+    
+    const client = this.selection.selected; 
+    this.client = client[0];
+   
+  }
   DeleteClient(id)
   {
       this._clientService.DeleteClient(id).subscribe((data : any) =>{
@@ -122,7 +150,25 @@ export class ClientComponent implements OnInit {
       }
       );
   }
-
+  DeleteClientData()
+  {
+      const numSelected = this.selection.selected;  
+       var id=numSelected[0].id;
+      this._clientService.DeleteClient(id).subscribe((data : any) =>{
+        if(data.code === 200){
+          this._toastSrv.success("Success","");
+          this.ClearObject();
+        }
+        if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      },
+      (error) =>{
+        this._toastSrv.error("Failed","You can not delete this record");
+      }
+      );
+  }
   ngOnInit() {
     this.GetClients();
   }

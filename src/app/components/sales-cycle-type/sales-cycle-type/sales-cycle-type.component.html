@@ -5,6 +5,12 @@
             <div class="panel-heading">
                 Sales Cycle Type
             </div>
+            <div style="width:800px; margin:0 auto;">
+              
+                <a   (click)="SelectSalesCycleTypeForEdit()"class="btn btn-warning">Edit</a> | 
+                <a   (click)="DeleteSalesCycleTypeData()"class="btn btn-danger">Delete</a>
+             
+            </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
@@ -22,18 +28,20 @@
                         <table class="table table-bordered v-middle table-hover table-striped ">
                             <thead>
                               <tr>
+                                <th>Select</th>
                                 <th>Name</th>
-                                <th>Action</th>
+                              
                               </tr>
                             </thead>
                             
                             <tbody  *ngFor="let cycleType of pageOfItems | salesCycleTypeFilter : searchKey ">
                               <tr>
+                                <td>
+                                  <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(cycleType) : null"  
+                                  [checked]="selection.isSelected(cycleType)" ></mat-checkbox>  
+                                  </td>  
                                   <td>{{cycleType.name}}</td>
-                                  <td>
-                                    <a   (click)="SelectSalesCycleTypeToEdit(cycleType)"class="btn btn-warning">Edit</a> | 
-                                    <a   (click)="DeleteSalesCycleType(cycleType.id)"class="btn btn-danger">Delete</a>
-                                  </td>
+                                 
                               </tr>
                           </tbody>
                           </table>

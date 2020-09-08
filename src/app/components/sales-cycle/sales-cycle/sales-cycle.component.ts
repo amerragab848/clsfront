@@ -2,7 +2,9 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { SalesCycleService } from 'src/app/core/services/sales-cycle/sales-cycle.service';
 import { SalesCycleTypeService } from 'src/app/core/services/sales-cycle-type/sales-cycle-type.service';
-
+import {  SelectionModel  } from '@angular/cdk/collections';  
+import {   MatTableDataSource } from '@angular/material/table'; 
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 export interface SalesCycleModel 
 {
   id:number;
@@ -31,12 +33,13 @@ export class SalesCycleComponent implements OnInit {
     id :0
   };
 
-  salesCycles : SalesCycleModel[];
+  //salesCycles : SalesCycleModel[];
   salesCycleTypes : SalesCycleTypeModel[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
-
+  selection = new SelectionModel <SalesCycleModel> (false, []);  
+  salesCycles: MatTableDataSource < SalesCycleModel > ; 
   constructor(
     private _toastSrv : ToastService,
     private _SalesCycleService : SalesCycleService,
@@ -49,7 +52,25 @@ export class SalesCycleComponent implements OnInit {
        console.log(this.salesCycles)
     }) 
   } 
-
+//
+   /** Whether the number of selected elements matches the total number of rows. */  
+   isAllSelected() {  
+    const numSelected = this.selection.selected.length;  
+    const numRows = !!this.salesCycles && this.salesCycles.data.length;  
+    return numSelected === numRows;  
+}  
+/** Selects all rows if they are not all selected; otherwise clear selection. */  
+masterToggle() {  
+    this.isAllSelected() ? this.selection.clear() : this.selection.select();//this.materialTypes.data.forEach(r => this.selection.select(r));  
+}  
+/** The label for the checkbox on the passed row */  
+checkboxLabel(row: SalesCycleModel): string {  
+    if (!row) {  
+        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;  
+    }  
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;  
+} 
+//
   GetSalesCycleTypes()
   {
     this._SalesCycleTypeService.GetSalesCycleType().subscribe((data :any)=>{
@@ -121,7 +142,12 @@ export class SalesCycleComponent implements OnInit {
   {
     this.salesCycle = salesCycle;
   }
-
+  SelectSalesCycleForEdit()
+  {
+    const salesCycle = this.selection.selected; 
+    this.salesCycle = salesCycle[0];
+   
+  }
   DeleteSalesCycle(id) {
       this._SalesCycleService.DeleteSalesCycle(id).subscribe((data : any) =>{
         if(data.code === 200){
@@ -138,7 +164,32 @@ export class SalesCycleComponent implements OnInit {
       }
       );
   }
+  DeleteSalesCycleData() {
+    const numSelected = this.selection.selected;  
+    var id=numSelected[0].id;
+ if (numSelected.length > 0) { 
+  this._SalesCycleService.DeleteSalesCycle(id).subscribe((data : any) =>{
+    if(data.code === 200){
+      this._toastSrv.success("Success","");
+      this.ClearObject();
+    }
+    if(data.code === 500)
+    {
+      this._toastSrv.error("Failed",data.message);
+    }
+  },
+  (error) =>{
+    this._toastSrv.error("Failed","You can not delete this record");
+  }
+  );
+  }
+  else {  
+        
+          this._toastSrv.error("Failed","Select at least one row");
 
+      }
+    
+}
   ngOnInit() {
     this.GetSalesCycles();
     this.GetSalesCycleTypes();

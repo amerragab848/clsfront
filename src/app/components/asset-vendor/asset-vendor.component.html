@@ -7,7 +7,7 @@
             <div style="width:800px; margin:0 auto;">
               
                 <a (click)="SelectAssetVendorForEdit()"class="btn btn-warning">Edit</a>
-                <a class="btn btn-info detail-btn" data-toggle="modal" [attr.data-target]="'#detailsModal' + vendor.id">More Details</a>
+                <!-- <a class="btn btn-info detail-btn" data-toggle="modal" [attr.data-target]="'#detailsModal' + vendor.id">More Details</a> -->
                 | <a (click)="DeleteAssetVendorData()" type="button" class="btn btn-danger">Delete</a >
                 
             </div>
@@ -43,6 +43,12 @@
                             
                             <tbody *ngFor="let vendor of pageOfItems | assetVendorFilter : searchKey">
                               <tr>
+                                
+                                <td>
+                                  <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(vendor) : null"  
+                                  [checked]="selection.isSelected(vendor)" ></mat-checkbox>  
+                                  </td>  
+
                                   <td>{{vendor.name}}</td>
                                   <td>{{vendor.email}}</td>
                                   <td>{{vendor.number}}</td>

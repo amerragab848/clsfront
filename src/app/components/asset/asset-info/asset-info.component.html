@@ -4,6 +4,14 @@
         <div class="panel-heading">
             Assets
         </div>
+        <div style="width:800px; margin:0 auto;">
+         
+            <!-- <a [routerLink]="['/app/assetform', asset.id]" class="btn btn-warning">Edit/View</a> -->
+            <a  title="assetform" (click)="GoToAssetForm()" class="btn btn-primary">Edit/View</a>
+
+             | <a (click)="DeleteAssetData()" type="button" class="btn btn-danger">Delete</a >
+         
+          </div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
@@ -21,22 +29,25 @@
                     <table class="table table-bordered v-middle table-hover table-striped ">
                         <thead>
                           <tr>
+                            <th>Select</th>
                             <th>Name</th>                         
                             <th>Barcode</th>
                             <th>Price</th>
-                            <th>Action</th>
+                           
                           </tr>
                         </thead>
                         
                         <tbody *ngFor="let asset of pageOfItems | assetFilter : searchKey">
                           <tr>
+                            
+                              <td>
+                              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(asset) : null"  
+                              [checked]="selection.isSelected(asset)" ></mat-checkbox>  
+                              </td>  
                               <td>{{asset.name}}</td>                          
                               <td>{{asset.barcode}}</td>
                               <td>{{asset.price}}</td>
-                              <td>
-                                <a [routerLink]="['/app/assetform', asset.id]" class="btn btn-warning">Edit/View</a>
-                                 | <a (click)="DeleteAsset(asset.id)" type="button" class="btn btn-danger">Delete</a >
-                              </td>
+                             
                           </tr>
                       </tbody>
                       </table>
