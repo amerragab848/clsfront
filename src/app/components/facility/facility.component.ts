@@ -4,7 +4,8 @@ import { FacilityService } from 'src/app/core/services/facility/facility.service
 import { ActivatedRoute } from '@angular/router';
 import { LabService } from 'src/app/core/services/lab/lab.service';
 import {BranchService} from 'src/app/core/services/branch/branch.service';
-
+import {  SelectionModel  } from '@angular/cdk/collections';  
+import {   MatTableDataSource } from '@angular/material/table'; 
 export interface FacilityModel 
 {
   id:number;
@@ -25,13 +26,14 @@ export class FacilityComponent implements OnInit {
     id :0
   };
 
-  facilities : FacilityModel[];
+ // facilities : FacilityModel[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
   labs : any[];
   branches : any[];
-
+  selection = new SelectionModel <FacilityModel> (false, []);  
+  facilities: MatTableDataSource < FacilityModel > ;  
   constructor(
     private _toastSrv : ToastService,
     private _facilityService : FacilityService,
@@ -43,6 +45,27 @@ export class FacilityComponent implements OnInit {
     this.GetFacilities();
     this.GetBranches();
   }
+  
+//
+   /** Whether the number of selected elements matches the total number of rows. */  
+   isAllSelected() {  
+    const numSelected = this.selection.selected.length;  
+    const numRows = !!this.facilities && this.facilities.data.length;  
+    return numSelected === numRows;  
+}  
+/** Selects all rows if they are not all selected; otherwise clear selection. */  
+masterToggle() {  
+    this.isAllSelected() ? this.selection.clear() : this.selection.select();//this.materialTypes.data.forEach(r => this.selection.select(r));  
+}  
+/** The label for the checkbox on the passed row */  
+checkboxLabel(row: FacilityModel): string {  
+    if (!row) {  
+        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;  
+    }  
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;  
+} 
+//
+
   GetFacilities() {
     this._facilityService.GetFacilities().subscribe((data :any)=>{
        this.facilities = data.result.filter(f=>f.labId == this.activatedRoute.snapshot.params.id );
@@ -122,6 +145,19 @@ export class FacilityComponent implements OnInit {
   {
     this.facility = facility;
   }
+  SelectFacilityForEdit()
+  {
+            const facility = this.selection.selected; 
+            if (facility.length > 0) { 
+              this.facility = facility[0]; 
+             }
+      else {  
+        
+          this._toastSrv.error("Failed","Select at least one row");
+
+      }
+    				
+  }
   DeleteFacility(id)
   {
       this._facilityService.DeleteFacility(id).subscribe((data : any) =>{
@@ -139,7 +175,34 @@ export class FacilityComponent implements OnInit {
       }
       );
   }
+  DeleteFacilityData()
+  {
+      const numSelected = this.selection.selected;  
+       var id=numSelected[0].id;
+       if (numSelected.length > 0) {
+        this._facilityService.DeleteFacility(id).subscribe((data : any) =>{
+          if(data.code === 200){
+            this._toastSrv.success("Success","");
+            this.ClearObject();
+          }
+          if(data.code === 500)
+          {
+            this._toastSrv.error("Failed",data.message);
+          }
+        },
+        (error) =>{
+          this._toastSrv.error("Failed","You can not delete this record");
+        }
+        );
 
+         }
+     else {  
+        
+          this._toastSrv.error("Failed","Select at least one row");
+
+      }
+     
+  }
   selectedFacilityId : any;
   selectedFacilityLabId:any;
   selectedFacilityNumber:any;
@@ -151,7 +214,26 @@ export class FacilityComponent implements OnInit {
     this.selectedFacilityLabId = labId;
     this.selectedFacilityNumber = number;
   }
+  OpenTransferPopUpData(){
+    const numSelected = this.selection.selected;  
+    var id=numSelected[0].id;
+    var labId=numSelected[0].labId;
+    var number=numSelected[0].number;
 
+   
+ if (numSelected.length > 0) { 
+  this.selectedFacilityId = id;
+  this.selectedFacilityLabId = labId;
+  this.selectedFacilityNumber = number;
+
+  }
+else {  
+        
+          this._toastSrv.error("Failed","Select at least one row");
+
+      }
+    
+  }
   Transfer(){
     if(this.transNumber > this.selectedFacilityNumber)
     {

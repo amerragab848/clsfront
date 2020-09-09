@@ -89,13 +89,29 @@ GoToOutline() {
    this.ClearObject();
   const numSelected = this.selection.selected; 
   this.course = numSelected[0];
-  this.route.navigate(['/app/courseoutline', { id : this.course.id }]);
+  if (numSelected.length > 0) {
+  this.route.navigate(['/app/courseoutline', this.course.id ]);
+
+    }
+  else {  
+          
+            this._toastSrv.error("Failed","Select at least one row");
+  
+        }
 }
 GoToRound() {
     this.ClearObject();
   const numSelected = this.selection.selected; 
   this.course = numSelected[0];
+  if (numSelected.length > 0) { 
   this.route.navigate(['/app/rounds', { id : this.course.id }]);
+
+   }
+  else {  
+          
+            this._toastSrv.error("Failed","Select at least one row");
+  
+        }
 }
 
   GetCourses() {
@@ -218,7 +234,15 @@ GoToRound() {
   EditCourse() {
     debugger;
     const numSelected = this.selection.selected; 
+    if (numSelected.length > 0) { 
     this.course = numSelected[0];
+
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
     console.log(numSelected);
   }
   DeleteData()

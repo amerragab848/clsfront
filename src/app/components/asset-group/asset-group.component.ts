@@ -145,8 +145,10 @@ checkboxLabel(row: AssetGroupModel): string {
   }
   DeleteAssetGroupData()
   {
+    
     const numSelected = this.selection.selected;  
     var id=numSelected[0].id;
+    if (numSelected.length > 0) { 
       this._assetGroupService.DeleteAssetGroup(id).subscribe((data : any) =>{
         if(data.code === 200){
           this._toastSrv.success("Success","");
@@ -161,6 +163,13 @@ checkboxLabel(row: AssetGroupModel): string {
         this._toastSrv.error("Failed","You can not delete this record");
       }
       );
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+     
   }
   SelectAssetGroupToEdit(group)
   {
@@ -169,7 +178,15 @@ checkboxLabel(row: AssetGroupModel): string {
   SelectAssetGroupForEdit()
   {
     const group = this.selection.selected; 
-    				this.assetGroup = group[0];
+    if (group.length > 0) { 
+      this.assetGroup = group[0];
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+    			
   }
   ngOnInit() {
     this.GetAssetGroup(); 

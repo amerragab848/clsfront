@@ -138,6 +138,7 @@ checkboxLabel(row: ExamTypeModel): string {
     debugger;
     const numSelected = this.selection.selected;  
     var id=numSelected[0].id;
+    if (numSelected.length > 0) { 
       this._examTypeService.DeleteExamType(id).subscribe((data : any) =>{
         if(data.code === 200){
           this._toastSrv.success("Success","");
@@ -152,6 +153,13 @@ checkboxLabel(row: ExamTypeModel): string {
         this._toastSrv.error("Failed","You can not delete this record");
       }
       );
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+     
   }
 
   SelectCategoryToEdit(examType)
@@ -161,7 +169,15 @@ checkboxLabel(row: ExamTypeModel): string {
   SelectToEdit()
   {
     const examType = this.selection.selected; 
+    if (examType.length > 0) { 
     this.examType = examType[0];
+
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
     
   }
   onChangePage(pageOfItems: Array<any>) {

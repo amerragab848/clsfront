@@ -142,6 +142,7 @@ checkboxLabel(row: CourseCategoryModel): string {
   {
     const numSelected = this.selection.selected;  
     var id=numSelected[0].id;
+    if (numSelected.length > 0) { 
       this._courseCategoryService.DeleteCategory(id).subscribe((data : any) =>{
         if(data.code === 200){
           this._toastSrv.success("Success","");
@@ -156,6 +157,13 @@ checkboxLabel(row: CourseCategoryModel): string {
         this._toastSrv.error("Failed","You can not delete this record");
       }
       );
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+     
   }
   SelectCategoryToEdit(courseCategory)
   {
@@ -164,7 +172,15 @@ checkboxLabel(row: CourseCategoryModel): string {
   SelectCategoryForEdit()
   {
            const courseCategory = this.selection.selected; 
+           if (courseCategory.length > 0) {  
     				this.courseCategory = courseCategory[0];
+
+           }
+           else {  
+                   
+                     this._toastSrv.error("Failed","Select at least one row");
+           
+                 }
   
   }
   ngOnInit() {

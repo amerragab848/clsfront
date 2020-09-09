@@ -127,7 +127,15 @@ checkboxLabel(row: CorporateModel): string {
   SelectCorporateForEdit()
   {
     const corporate = this.selection.selected; 
+    if (corporate.length > 0) { 
     this.corporate = corporate[0];
+
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
     
   }
   DeleteCorporaet(id)
@@ -151,20 +159,28 @@ checkboxLabel(row: CorporateModel): string {
   {
       const numSelected = this.selection.selected;  
        var id=numSelected[0].id;
-      this._corporateService.DeleteCorporate(id).subscribe((data : any) =>{
-        if(data.code === 200){
-          this._toastSrv.success("Success","");
-          this.ClearObject();
+       if (numSelected.length > 0) {
+        this._corporateService.DeleteCorporate(id).subscribe((data : any) =>{
+          if(data.code === 200){
+            this._toastSrv.success("Success","");
+            this.ClearObject();
+          }
+          if(data.code === 500)
+          {
+            this._toastSrv.error("Failed",data.message);
+          }
+        },
+        (error) =>{
+          this._toastSrv.error("Failed","You can not delete this record");
         }
-        if(data.code === 500)
-        {
-          this._toastSrv.error("Failed",data.message);
-        }
-      },
-      (error) =>{
-        this._toastSrv.error("Failed","You can not delete this record");
-      }
-      );
+        );
+         }
+       else {  
+               
+                 this._toastSrv.error("Failed","Select at least one row");
+       
+             }
+    
   }
   ngOnInit() {
     this.GetCorporates();

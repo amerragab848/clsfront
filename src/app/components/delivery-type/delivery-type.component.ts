@@ -139,6 +139,7 @@ checkboxLabel(row: DeliveryTypeModel): string {
     debugger;
     const numSelected = this.selection.selected;  
     var id=numSelected[0].id;
+    if (numSelected.length > 0) { 
       this._deliveryTypeService.DeleteDeliveryType(id).subscribe((data : any) =>{
         if(data.code === 200){
           this._toastSrv.success("Success","");
@@ -153,6 +154,13 @@ checkboxLabel(row: DeliveryTypeModel): string {
         this._toastSrv.error("Failed","You can not delete this record");
       }
       );
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+    
   }
   SelectTypeToEdit(deliveryType)
   {
@@ -161,7 +169,15 @@ checkboxLabel(row: DeliveryTypeModel): string {
   SelectDeliveryTypeToEdit()
   {
     const deliveryType = this.selection.selected; 
+    if (deliveryType.length > 0) { 
     this.deliveryType = deliveryType[0];
+
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
   }
   ngOnInit() {
     this.GetDeliveryTypes();

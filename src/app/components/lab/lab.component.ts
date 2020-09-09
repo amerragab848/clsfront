@@ -143,7 +143,15 @@ checkboxLabel(row: LabModel): string {
   SelectLabForEdit()
   {
             const lab = this.selection.selected; 
+            if (lab.length > 0) { 
     				this.lab = lab[0];
+
+             }
+            else {  
+                    
+                      this._toastSrv.error("Failed","Select at least one row");
+            
+                  }
    
   }
   DeleteLab(id)
@@ -167,6 +175,7 @@ checkboxLabel(row: LabModel): string {
   {
     const numSelected = this.selection.selected;  
     var id=numSelected[0].id;
+    if (numSelected.length > 0) { 
       this._labService.DeleteLab(id).subscribe((data : any) =>{
         if(data.code === 200){
           this._toastSrv.success("Success","");
@@ -181,12 +190,30 @@ checkboxLabel(row: LabModel): string {
         this._toastSrv.error("Failed","You can not delete this record");
       }
       );
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+     
   }
   GotoFacility(){
     this.ClearObject();
     const numSelected = this.selection.selected; 
+    
     this.lab = numSelected[0];
-    this.route.navigate(['/app/facility', { id : this.lab.id }]);
+    if (numSelected.length > 0) {
+    this.route.navigate(['/app/facility',this.lab.id]);
+
+      }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+   // this.route.navigate(['/app/rounds', { id : this.course.id }]);
+  // [routerLink]="['/app/facility', lab.id]"
   }
   ngOnInit() {
     this.GetLabs();

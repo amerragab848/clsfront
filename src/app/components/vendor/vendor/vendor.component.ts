@@ -173,22 +173,29 @@ checkboxLabel(row: VendorModel): string {
   SelectVendorForEdit()
   {
     const vendor = this.selection.selected; 
-   debugger;
-    try{
+    if (vendor.length > 0) {
+      try{
      
     
-      var arr = vendor[0].categories.toString().split(',');
-      var tempArr = [];
-      arr.forEach(element => {
-        tempArr.push(parseInt(element));
-      });
-      // this.selectedCategories =  [parseInt('1'),parseInt('2')];
-      this.selectedCategories = tempArr;
-    }
-    catch{
-      //Ignore
-    }
-    this.vendor = vendor[0];
+        var arr = vendor[0].categories.toString().split(',');
+        var tempArr = [];
+        arr.forEach(element => {
+          tempArr.push(parseInt(element));
+        });
+        // this.selectedCategories =  [parseInt('1'),parseInt('2')];
+        this.selectedCategories = tempArr;
+      }
+      catch{
+        //Ignore
+      }
+      this.vendor = vendor[0];
+      }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+    
   }
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items

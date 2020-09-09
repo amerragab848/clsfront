@@ -80,20 +80,28 @@ checkboxLabel(row: CourseTypeModel): string {
     debugger;
        const numSelected = this.selection.selected;  
        var id=numSelected[0].id;
-      this._courseTypeService.DeleteCourseType(id).subscribe((data : any) =>{
-        if(data.code === 200){
-          this._toastSrv.success("Success","");
-          this.ClearObject();
+       if (numSelected.length > 0) { 
+        this._courseTypeService.DeleteCourseType(id).subscribe((data : any) =>{
+          if(data.code === 200){
+            this._toastSrv.success("Success","");
+            this.ClearObject();
+          }
+          if(data.code === 500)
+          {
+            this._toastSrv.error("Failed",data.message);
+          }
+        },
+        (error) =>{
+          this._toastSrv.error("Failed","You can not delete this record");
         }
-        if(data.code === 500)
-        {
-          this._toastSrv.error("Failed",data.message);
+        );
         }
-      },
-      (error) =>{
-        this._toastSrv.error("Failed","You can not delete this record");
-      }
-      );
+       else {  
+               
+                 this._toastSrv.error("Failed","Select at least one row");
+       
+             }
+     
   }
   SaveCourseType()
   {
@@ -157,7 +165,15 @@ checkboxLabel(row: CourseTypeModel): string {
   {
     debugger;
     const courseType = this.selection.selected; 
+    if (courseType.length > 0) { 
     this.courseType = courseType[0];
+
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
   }
   SelectCategoryToEdit(courseType)
   {

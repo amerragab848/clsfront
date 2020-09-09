@@ -120,9 +120,18 @@ checkboxLabel(row: BranchModel): string {
   }
   SelectBranchForEdit()
   {
+
     
     const branch = this.selection.selected; 
-    this.branch = branch[0];
+    if (branch.length > 0) { 
+      this.branch = branch[0];
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+   
     
   }
   DeleteBranch(id)
@@ -147,6 +156,7 @@ checkboxLabel(row: BranchModel): string {
     debugger;
     const numSelected = this.selection.selected;  
     var id=numSelected[0].id;
+    if (numSelected.length > 0) { 
       this._branchService.DeleteBranch(id).subscribe((data : any) =>{
         if(data.code === 200){
           this._toastSrv.success("Success","");
@@ -161,6 +171,13 @@ checkboxLabel(row: BranchModel): string {
         this._toastSrv.error("Failed","You can not delete this record");
       }
       );
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+     
   }
   ngOnInit() {
     this.GetBranches();

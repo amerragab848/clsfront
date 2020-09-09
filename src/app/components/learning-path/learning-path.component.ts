@@ -120,7 +120,15 @@ checkboxLabel(row: LearningPathModel): string {
   {
     debugger;
     const numSelected = this.selection.selected; 
+    if (numSelected.length > 0) { 
     this.learningPath = numSelected[0];
+
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
     
   }
   SelectLearningPathToEdit(learningPath)

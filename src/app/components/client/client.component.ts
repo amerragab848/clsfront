@@ -130,7 +130,15 @@ checkboxLabel(row: ClientModel): string {
   {
     
     const client = this.selection.selected; 
+    if (client.length > 0) { 
     this.client = client[0];
+
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
    
   }
   DeleteClient(id)
@@ -154,20 +162,28 @@ checkboxLabel(row: ClientModel): string {
   {
       const numSelected = this.selection.selected;  
        var id=numSelected[0].id;
-      this._clientService.DeleteClient(id).subscribe((data : any) =>{
-        if(data.code === 200){
-          this._toastSrv.success("Success","");
-          this.ClearObject();
+       if (numSelected.length > 0) { 
+        this._clientService.DeleteClient(id).subscribe((data : any) =>{
+          if(data.code === 200){
+            this._toastSrv.success("Success","");
+            this.ClearObject();
+          }
+          if(data.code === 500)
+          {
+            this._toastSrv.error("Failed",data.message);
+          }
+        },
+        (error) =>{
+          this._toastSrv.error("Failed","You can not delete this record");
         }
-        if(data.code === 500)
-        {
-          this._toastSrv.error("Failed",data.message);
+        );
         }
-      },
-      (error) =>{
-        this._toastSrv.error("Failed","You can not delete this record");
-      }
-      );
+       else {  
+               
+                 this._toastSrv.error("Failed","Select at least one row");
+       
+             }
+    
   }
   ngOnInit() {
     this.GetClients();

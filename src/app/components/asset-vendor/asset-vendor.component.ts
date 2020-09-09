@@ -152,8 +152,10 @@ checkboxLabel(row: AssetVendorModel): string {
   }
   DeleteAssetVendorData()
   {
+    
     const numSelected = this.selection.selected;  
     var id=numSelected[0].id;
+    if (numSelected.length > 0) { 
       this._assetVendorService.DeleteAssetVendor(id).subscribe((data : any) =>{
         if(data.code === 200){
           this._toastSrv.success("Success","");
@@ -168,6 +170,13 @@ checkboxLabel(row: AssetVendorModel): string {
         this._toastSrv.error("Failed","You can not delete this record");
       }
       );
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+     
   }
   SelectAssetVendorToEdit(vendor)
   {
@@ -176,7 +185,15 @@ checkboxLabel(row: AssetVendorModel): string {
   SelectAssetVendorForEdit()
   {
     const vendor = this.selection.selected; 
-    				this.assetVendor = vendor[0];
+    if (vendor.length > 0) { 
+      this.assetVendor = vendor[0];
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+    			
    
   }
   ngOnInit() {

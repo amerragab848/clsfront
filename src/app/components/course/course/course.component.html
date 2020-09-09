@@ -67,7 +67,7 @@
                                         <th>Vendor</th>
                                         <th>Learning Path</th>
                                         <th>Image</th>
-                                        <th>Actions</th>
+                                     
                                     </tr>
                                 </thead>
                                 <tbody  *ngFor="let course of pageOfItems | courseFilter : searchKey">
@@ -95,9 +95,9 @@
                                         <td>
                                             <img src="http://clslearn.net{{course.image}}" width="150" height="70" />
                                         </td>
-                                       <td>
+                                       <!-- <td>
                                    <a   (click)="DeleteCourse(course.id)"class="btn btn-danger" title="delete">X</a> |
-                                       </td>>
+                                       </td> -->
                                     </tr>
                                 </tbody>
                             </table>

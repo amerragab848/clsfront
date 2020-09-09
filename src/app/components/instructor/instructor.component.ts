@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform,Inject  } from '@angular/core';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { InstructorService } from 'src/app/core/services/instructor/instructor.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -6,6 +6,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CourseService } from 'src/app/core/services/course/course.service';
 import {  SelectionModel  } from '@angular/cdk/collections';  
 import {   MatTableDataSource } from '@angular/material/table'; 
+import { DOCUMENT } from '@angular/common';
 let fileUpload = require('fuctbase64');
 export interface InstructorModel 
 {
@@ -90,6 +91,7 @@ export class InstructorComponent implements OnInit {
   btnClicked:boolean = false;
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private _toastSrv : ToastService,
     private _instructorService : InstructorService,
     private _CourseService : CourseService,
@@ -134,7 +136,10 @@ checkboxLabel(row: InstructorModel): string {
   onChangePage(pageOfItems: Array<any>) {
     this.pageOfItems = pageOfItems;
   }
-  
+  goToNationalIdPath(): void {
+    this.document.location.href = ' href="http://clslearn.net';{this.instructor.nationalIdPath}'"';
+    
+}
   OpenInstRates(id,instructor)
   {
     try{
@@ -156,7 +161,36 @@ checkboxLabel(row: InstructorModel): string {
     this.rateInstCourses = this.allCourses.filter(x=> this.selectedInsCourses.includes(x.id));
     console.log(this.rateInstCourses);
   }
-
+  OpenInstRatesData()
+  {
+    const numSelected = this.selection.selected;  
+      var id=numSelected[0].id;
+      if (numSelected.length > 0) {  try{
+      
+        if(numSelected[0].courses.length > 0)
+        {
+          var arr = numSelected[0].courses.toString().split(',');
+            var tempArr = [];
+            arr.forEach(element => {
+              tempArr.push(parseInt(element));
+            });
+            this.selectedInsCourses = tempArr;
+        }
+      }
+      catch{
+        //Ignore
+      }
+      this.rateInstId =id;
+      this.GetInstRates(id);
+      this.rateInstCourses = this.allCourses.filter(x=> this.selectedInsCourses.includes(x.id));
+      console.log(this.rateInstCourses); }
+      else {  
+              
+                this._toastSrv.error("Failed","Select at least one row");
+      
+            }
+   
+  }
   rateInstCourses: any[];
   rateInstId : number;
   rateEGP:number ;
@@ -304,22 +338,30 @@ checkboxLabel(row: InstructorModel): string {
     debugger;
     const numSelected = this.selection.selected; 
     console.log(numSelected);
-    try{
-      if(numSelected[0].courses.length > 0)
-      {
-        var arr = numSelected[0].courses.toString().split(',');
-          var tempArr = [];
-          arr.forEach(element => {
-            tempArr.push(parseInt(element));
-          });
-          this.selectedInsCourses = tempArr;
-          console.log( this.selectedInsCourses );
+    if (numSelected.length > 0) { 
+      try{
+        if(numSelected[0].courses.length > 0)
+        {
+          var arr = numSelected[0].courses.toString().split(',');
+            var tempArr = [];
+            arr.forEach(element => {
+              tempArr.push(parseInt(element));
+            });
+            this.selectedInsCourses = tempArr;
+            console.log( this.selectedInsCourses );
+        }
       }
-    }
-    catch{
-      //Ignore
-    }
-    this.instructor = numSelected[0];
+      catch{
+        //Ignore
+      }
+      this.instructor = numSelected[0];
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+   
   }
   
   DeleteInstructor(id)
@@ -345,25 +387,49 @@ checkboxLabel(row: InstructorModel): string {
       this.courses = data.result;
    })
   }
+  GetCoursesData()
+  {
+    const numSelected = this.selection.selected;  
+    var id=numSelected[0].id;
+    if (numSelected.length > 0) { 
+      this._instructorService.GetInstructorCourses(parseFloat(id)).subscribe((data :any)=>{
+        this.courses = data.result;
+     })
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+   
+  }
   DeleteSelectedInstructor()
   {
     debugger;
     const numSelected = this.selection.selected;  
     var id=numSelected[0].id;
-    this._instructorService.DeleteInstructor(id).subscribe((data : any) =>{
-      if(data.code === 200){
-        this._toastSrv.success("Success","");
-        this.ClearObject();
+    if (numSelected.length > 0) { 
+      this._instructorService.DeleteInstructor(id).subscribe((data : any) =>{
+        if(data.code === 200){
+          this._toastSrv.success("Success","");
+          this.ClearObject();
+        }
+        if(data.code === 500)
+        {
+          this._toastSrv.error("Failed",data.message);
+        }
+      },
+      (error) =>{
+        this._toastSrv.error("Failed","You can not delete this record");
       }
-      if(data.code === 500)
-      {
-        this._toastSrv.error("Failed",data.message);
-      }
-    },
-    (error) =>{
-      this._toastSrv.error("Failed","You can not delete this record");
-    }
-    );
+      );
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+    
   }
 
 

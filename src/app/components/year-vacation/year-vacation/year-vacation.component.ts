@@ -145,20 +145,28 @@ checkboxLabel(row: VacationModel): string {
   {
         const numSelected = this.selection.selected;  
        var id=numSelected[0].id;
-      this._vacationService.DeleteVacation(id).subscribe((data : any) =>{
-        if(data.code === 200){
-          this._toastSrv.success("Success","");
-          this.ClearObject();
+       if (numSelected.length > 0) { 
+        this._vacationService.DeleteVacation(id).subscribe((data : any) =>{
+          if(data.code === 200){
+            this._toastSrv.success("Success","");
+            this.ClearObject();
+          }
+          if(data.code === 500)
+          {
+            this._toastSrv.error("Failed",data.message);
+          }
+        },
+        (error) =>{
+          this._toastSrv.error("Failed","You can not delete this record");
         }
-        if(data.code === 500)
-        {
-          this._toastSrv.error("Failed",data.message);
+        );
         }
-      },
-      (error) =>{
-        this._toastSrv.error("Failed","You can not delete this record");
-      }
-      );
+       else {  
+               
+                 this._toastSrv.error("Failed","Select at least one row");
+       
+             }
+     
   }
   SelectVacationToEdit(vacation)
   {
@@ -169,10 +177,18 @@ checkboxLabel(row: VacationModel): string {
   SelectVacationForEdit()
   {
     const vacation = this.selection.selected; 
-    this.vacation = vacation[0];
+    if (vacation.length > 0) { 
+      this.vacation = vacation[0];
     
-    this.vacation.startDate = this.datepipe.transform(vacation.startDate,'yyyy-MM-dd');
-    this.vacation.endDate = this.datepipe.transform(vacation.endDate,'yyyy-MM-dd');
+      this.vacation.startDate = this.datepipe.transform(this.vacation.startDate,'yyyy-MM-dd');
+      this.vacation.endDate = this.datepipe.transform(this.vacation.endDate,'yyyy-MM-dd');
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+  
   }
 
 

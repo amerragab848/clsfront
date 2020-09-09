@@ -116,7 +116,8 @@ checkboxLabel(row: AssetModel): string {
   DeleteAssetData()
   {
        const numSelected = this.selection.selected;  
-       var id=numSelected[0].id;
+       if (numSelected.length > 0) {  
+        var id=numSelected[0].id;
         this._assetService.DeleteAsset(id).subscribe((data : any) =>{
         if(data.code === 200){
           this._toastSrv.success("Success","");
@@ -131,12 +132,27 @@ checkboxLabel(row: AssetModel): string {
         this._toastSrv.error("Failed","You can not delete this record");
       }
       );
+       }
+       else {  
+               
+                 this._toastSrv.error("Failed","Select at least one row");
+       
+             }
+      
   }
   GoToAssetForm() {
     this.ClearObject();
    const numSelected = this.selection.selected; 
    this.asset = numSelected[0];
-   this.route.navigate(['/app/assetform', { id : this.asset.id }]);
+   if (numSelected.length > 0) { 
+   this.route.navigate(['/app/assetform', this.asset.id ]);
+
+    }
+   else {  
+           
+             this._toastSrv.error("Failed","Select at least one row");
+   
+         }
  }
   ngOnInit() {
     this.GetAsset();

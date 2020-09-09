@@ -13,17 +13,19 @@
                   </button>
                   <ul class="dropdown-menu pull-right" style="height: auto; display: none; overflow: visible; top: 100%; opacity: 0;">
                     <li><a target="_blank" href="http://clslearn.net{{instructor.nationalIdPath}}">NationalId</a></li>
+                    <!-- <li><a target="_blank" (click)="goToNationalIdPath()">NationalId</a></li> -->
+
                     <li><a target="_blank" href="http://clslearn.net{{instructor.cvPath}}">CV</a></li>
                   </ul>
                 </div>
                 | 
                 <a   (click)="EditInstructor()"class="btn btn-warning">Edit</a> | 
                 <a   (click)="DeleteSelectedInstructor()"class="btn btn-danger">Delete</a> | 
-                <button type="button" class="btn btn-primary" (click)="GetCourses(instructor.id)" data-toggle="modal" data-target="#exampleModalCenter">
+                <button type="button" class="btn btn-primary" (click)="GetCoursesData()" data-toggle="modal" data-target="#exampleModalCenter">
                   Courses
                 </button>
                 | 
-                <button (click)="OpenInstRates(instructor.id,instructor)" type="button" class="btn btn-info" data-toggle="modal" data-target="#ratesModal">
+                <button (click)="OpenInstRatesData()" type="button" class="btn btn-info" data-toggle="modal" data-target="#ratesModal">
                   Rates
                 </button>
              
@@ -53,6 +55,7 @@
                                 <th>Job Title</th>
                                 <th>Image</th>
                                 <th>Rate</th>
+                                <th>action</th>
                                 <th></th>
                               </tr>
                             </thead>
@@ -72,7 +75,20 @@
                                     <img src="http://clslearn.net{{instructor.image}}" height="70" />
                                   </td>
                                   <td>{{instructor.internalRate}}</td>
-                            
+                                  <td>
+                                    <div class="btn-group">
+                                      <button type="button" class="btn btn-info dropdown-toggle ripple" data-toggle="dropdown" aria-expanded="false"><span class="ink animate" style="height: 196px; width: 196px; top: -72px; left: -38.2031px;"></span>
+                                        Files
+                                        <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu pull-right" style="height: auto; display: none; overflow: visible; top: 100%; opacity: 0;">
+                                        <li><a target="_blank" href="http://clslearn.net{{instructor.nationalIdPath}}">NationalId</a></li>
+                                        <!-- <li><a target="_blank" (click)="goToNationalIdPath()">NationalId</a></li> -->
+                    
+                                        <li><a target="_blank" href="http://clslearn.net{{instructor.cvPath}}">CV</a></li>
+                                      </ul>
+                                    </div>
+                                  </td>
                               </tr>
                           </tbody>
                           </table>

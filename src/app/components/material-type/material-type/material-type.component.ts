@@ -132,6 +132,7 @@ checkboxLabel(row: MaterialTypeModel): string {
     debugger;
     const numSelected = this.selection.selected;  
     var id=numSelected[0].id;
+    if (numSelected.length > 0) { 
       this._materialTypeService.DeleteMaterialType(id).subscribe((data : any) =>{
         if(data.code === 200){
           this._toastSrv.success("Success","");
@@ -146,6 +147,13 @@ checkboxLabel(row: MaterialTypeModel): string {
         this._toastSrv.error("Failed","You can not delete this record");
       }
       );
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+     
   }
   GetMaterialTypes()
   {
@@ -162,7 +170,15 @@ checkboxLabel(row: MaterialTypeModel): string {
   SelectToEdit()
   {
     const material = this.selection.selected; 
-    this.materialType = material[0];
+    if (material.length > 0) { 
+      this.materialType = material[0];
+
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
     
   }
 

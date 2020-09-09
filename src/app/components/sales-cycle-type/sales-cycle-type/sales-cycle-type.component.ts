@@ -139,20 +139,28 @@ checkboxLabel(row: SalesCycleTypeModel): string {
     debugger;
        const numSelected = this.selection.selected;  
         var id=numSelected[0].id;
-         this._salesCycleTypeService.DeleteSalesCycleType(id).subscribe((data : any) =>{
-        if(data.code === 200){
-          this._toastSrv.success("Success","");
-          this.ClearObject();
-        }
-        if(data.code === 500)
-        {
-          this._toastSrv.error("Failed",data.message);
-        }
-      },
-      (error) =>{
-        this._toastSrv.error("Failed","You can not delete this record");
-      }
-      );
+        if (numSelected.length > 0) {
+          this._salesCycleTypeService.DeleteSalesCycleType(id).subscribe((data : any) =>{
+            if(data.code === 200){
+              this._toastSrv.success("Success","");
+              this.ClearObject();
+            }
+            if(data.code === 500)
+            {
+              this._toastSrv.error("Failed",data.message);
+            }
+          },
+          (error) =>{
+            this._toastSrv.error("Failed","You can not delete this record");
+          }
+          );
+          }
+        else {  
+                
+                  this._toastSrv.error("Failed","Select at least one row");
+        
+              }
+        
   }
   SelectSalesCycleTypeToEdit(salesCycleType)
   {
@@ -160,8 +168,16 @@ checkboxLabel(row: SalesCycleTypeModel): string {
   }
   SelectSalesCycleTypeForEdit()
   {
-    const salesCycleType = this.selection.selected; 
+    const salesCycleType = this.selection.selected;
+    if (salesCycleType.length > 0) { 
     this.salesCycleType = salesCycleType[0];
+
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
     
   }
   ngOnInit() {

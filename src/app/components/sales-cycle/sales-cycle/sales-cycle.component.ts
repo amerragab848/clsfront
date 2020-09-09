@@ -145,7 +145,15 @@ checkboxLabel(row: SalesCycleModel): string {
   SelectSalesCycleForEdit()
   {
     const salesCycle = this.selection.selected; 
+    if (salesCycle.length > 0) { 
     this.salesCycle = salesCycle[0];
+
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
    
   }
   DeleteSalesCycle(id) {

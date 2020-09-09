@@ -147,7 +147,15 @@ checkboxLabel(row: SubCategoryModel): string {
   SelectSubCategoryForEdit()
   {
     const subCategory = this.selection.selected; 
-    				this.subCategory = subCategory[0];
+    if (subCategory.length > 0) { 
+      this.subCategory = subCategory[0];
+
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
     
   }
   DeleteSubCategory(id)
@@ -171,20 +179,28 @@ checkboxLabel(row: SubCategoryModel): string {
   {
       const numSelected = this.selection.selected;  
       var id=numSelected[0].id;
-      this._SubCategoryService.DeleteCourseSubCategory(id).subscribe((data : any) =>{
-        if(data.code === 200){
-          this._toastSrv.success("Success","");
-          this.ClearObject();
+      if (numSelected.length > 0) { 
+        this._SubCategoryService.DeleteCourseSubCategory(id).subscribe((data : any) =>{
+          if(data.code === 200){
+            this._toastSrv.success("Success","");
+            this.ClearObject();
+          }
+          if(data.code === 500)
+          {
+            this._toastSrv.error("Failed",data.message);
+          }
+        },
+        (error) =>{
+          this._toastSrv.error("Failed","You can not delete this record");
         }
-        if(data.code === 500)
-        {
-          this._toastSrv.error("Failed",data.message);
-        }
-      },
-      (error) =>{
-        this._toastSrv.error("Failed","You can not delete this record");
-      }
-      );
+        );
+       }
+      else {  
+              
+                this._toastSrv.error("Failed","Select at least one row");
+      
+            }
+    
   }
 }
 

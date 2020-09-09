@@ -2,7 +2,9 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { CourseOutlineService } from 'src/app/core/services/course-outline/course-outline.service';
 import { ActivatedRoute } from '@angular/router';
-
+import {  SelectionModel  } from '@angular/cdk/collections';  
+import {   MatTableDataSource } from '@angular/material/table'; 
+import { Router, ParamMap } from '@angular/router';
 export interface CourseOutlineModel 
 {
   id:number;
@@ -21,11 +23,12 @@ export class CourseOutlineComponent implements OnInit {
     id :0
   };
 
-  courseOutlines : CourseOutlineModel[];
+  //courseOutlines : CourseOutlineModel[];
   pageOfItems: Array<any>;
   searchKey:string;
   btnClicked:boolean = false;
-
+  selection = new SelectionModel <CourseOutlineModel> (false, []);  
+  courseOutlines: MatTableDataSource < CourseOutlineModel > ;  
   constructor(
     private _toastSrv : ToastService,
     private _courseOutlineService : CourseOutlineService,
@@ -37,7 +40,25 @@ export class CourseOutlineComponent implements OnInit {
        this.courseOutlines = data.result.filter(o=> o.courseId == this.activatedRoute.snapshot.params.id);
     }) 
   } 
-
+//
+   /** Whether the number of selected elements matches the total number of rows. */  
+   isAllSelected() {  
+    const numSelected = this.selection.selected.length;  
+    const numRows = !!this.courseOutlines && this.courseOutlines.data.length;  
+    return numSelected === numRows;  
+}  
+/** Selects all rows if they are not all selected; otherwise clear selection. */  
+masterToggle() {  
+    this.isAllSelected() ? this.selection.clear() : this.selection.select();//this.materialTypes.data.forEach(r => this.selection.select(r));  
+}  
+/** The label for the checkbox on the passed row */  
+checkboxLabel(row: CourseOutlineModel): string {  
+    if (!row) {  
+        return `${this.isAllSelected() ? 'select' : 'deselect'} all`;  
+    }  
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;  
+} 
+//
   onChangePage(pageOfItems: Array<any>) {
     this.pageOfItems = pageOfItems;
   }
@@ -101,7 +122,20 @@ export class CourseOutlineComponent implements OnInit {
   {
     this.courseOutline = outline;
   }
+  SelectCourseOutlineForEdit()
+  {
+    const outline = this.selection.selected; 
+    if (outline.length > 0) { 
+    this.courseOutline = outline[0];
 
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+    
+  }
   ngOnInit() {
     this.GetCourseOutlines()
   }

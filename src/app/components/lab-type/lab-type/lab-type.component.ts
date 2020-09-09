@@ -124,7 +124,15 @@ checkboxLabel(row: LabTypeModel): string {
 
     SelectToEdit()
     {  const labType = this.selection.selected; 
+      if (labType.length > 0) { 
       this.labType = labType[0];
+
+       }
+      else {  
+              
+                this._toastSrv.error("Failed","Select at least one row");
+      
+            }
     
     }
   DeleteType(id)
@@ -148,6 +156,7 @@ checkboxLabel(row: LabTypeModel): string {
   {
     const numSelected = this.selection.selected;  
     var id=numSelected[0].id;
+    if (numSelected.length > 0) { 
       this._labTypeService.DeleteLabType(id).subscribe((data : any) =>{
         if(data.code === 200){
           this._toastSrv.success("Success","");
@@ -162,6 +171,13 @@ checkboxLabel(row: LabTypeModel): string {
         this._toastSrv.error("Failed","You can not delete this record");
       }
       );
+     }
+    else {  
+            
+              this._toastSrv.error("Failed","Select at least one row");
+    
+          }
+     
   }
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
