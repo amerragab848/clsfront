@@ -7,6 +7,8 @@ import { CourseService } from 'src/app/core/services/course/course.service';
 import {  SelectionModel  } from '@angular/cdk/collections';  
 import {   MatTableDataSource } from '@angular/material/table'; 
 import { DOCUMENT } from '@angular/common';
+import { CourseModel } from '../course/course/course.component';
+import { CommonService } from 'src/app/core/services/common-service';
 let fileUpload = require('fuctbase64');
 export interface InstructorModel 
 {
@@ -44,12 +46,17 @@ export class InstructorComponent implements OnInit {
 
   
   insCourses : any[];
-  selectedInsCourses = [];
+  selectedInsCourses =[];
+  selectedCourse:any ;
   allCourses:any[];
   selection = new SelectionModel <InstructorModel> (false, []);  
   instructors: MatTableDataSource < InstructorModel > ;  
   fileImageInput:any;
   fileImageResult: any = null;
+  //added
+  selectedValue: any;
+  multiple = true;
+
   async onFileImageChange(event){
     try {
       let result = await fileUpload(event);
@@ -95,6 +102,7 @@ export class InstructorComponent implements OnInit {
     private _toastSrv : ToastService,
     private _instructorService : InstructorService,
     private _CourseService : CourseService,
+    private commonService: CommonService
 
   ) { }
 
@@ -111,8 +119,30 @@ export class InstructorComponent implements OnInit {
 }  
 /** Selects all rows if they are not all selected; otherwise clear selection. */  
 masterToggle() {  
-    this.isAllSelected() ? this.selection.clear() :this.instructors.data.forEach(r => this.selection.select(r));  
-}  
+    this.isAllSelected() ? this.selection.clear() :this.instructors.data.forEach(r => this.selection.select(r));
+    const crsCategory = this.selection.selected;  
+    this.instructor=crsCategory[0];
+
+} 
+selectChange() {
+  if (this.multiple) {
+    this.selectedValue = this.commonService.getDropDownText(this.selectedInsCourses, this.allCourses);
+  } else {
+    this.selectedValue = this.commonService.getDropDownText(this.selectedInsCourses, this.allCourses)[0].name;
+  }
+}
+onSelect(courseSelected: any ): void {
+  this.selectedCourse = courseSelected;
+} 
+fillData(){
+  const crsCategory = this.selection.selected;  
+    this.instructor=crsCategory[0];
+}
+fillDataCV(){
+  this.ClearObject();
+  const crsCategory = this.selection.selected;  
+    this.instructor=crsCategory[0];
+}
 /** The label for the checkbox on the passed row */  
 checkboxLabel(row: InstructorModel): string {  
     if (!row) {  
@@ -348,6 +378,12 @@ checkboxLabel(row: InstructorModel): string {
               tempArr.push(parseInt(element));
             });
             this.selectedInsCourses = tempArr;
+
+            if (this.multiple) {
+              this.selectedValue = this.commonService.getDropDownText(this.selectedInsCourses, this.allCourses);
+            } else {
+              this.selectedValue = this.commonService.getDropDownText(this.selectedInsCourses, this.allCourses)[0].name;
+            }
             console.log( this.selectedInsCourses );
         }
       }
@@ -392,7 +428,7 @@ checkboxLabel(row: InstructorModel): string {
     const numSelected = this.selection.selected;  
     var id=numSelected[0].id;
     if (numSelected.length > 0) { 
-      this._instructorService.GetInstructorCourses(parseFloat(id)).subscribe((data :any)=>{
+      this._instructorService.GetInstructorCourses(id).subscribe((data :any)=>{
         this.courses = data.result;
      })
      }

@@ -6,18 +6,18 @@
             </div>
             <div  style="width:800px; margin:0 auto;">
             
-                <div class="btn-group">
-                  <button type="button" class="btn btn-info dropdown-toggle ripple" data-toggle="dropdown" aria-expanded="false"><span class="ink animate" style="height: 196px; width: 196px; top: -72px; left: -38.2031px;"></span>
-                    Files
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu pull-right" style="height: auto; display: none; overflow: visible; top: 100%; opacity: 0;">
-                    <li><a target="_blank" href="http://clslearn.net{{instructor.nationalIdPath}}">NationalId</a></li>
-                    <!-- <li><a target="_blank" (click)="goToNationalIdPath()">NationalId</a></li> -->
+              <div class="btn-group">
+                <button type="button" class="btn btn-info dropdown-toggle ripple" data-toggle="dropdown" aria-expanded="false"><span class="ink animate" style="height: 196px; width: 196px; top: -72px; left: -38.2031px;"></span>
+                  Files
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right" style="height: auto; display: none; overflow: visible; top: 100%; opacity: 0;">
+                  <li><a  (click)="fillData()" target="_blank" href="http://clslearn.net{{instructor.nationalIdPath}}">NationalId</a></li>
+                  <!-- <li><a target="_blank" (click)="goToNationalIdPath()">NationalId</a></li> -->
 
-                    <li><a target="_blank" href="http://clslearn.net{{instructor.cvPath}}">CV</a></li>
-                  </ul>
-                </div>
+                  <li><a (click)="fillDataCV()" target="_blank" href="http://clslearn.net{{instructor.cvPath}}">CV</a></li>
+                </ul>
+              </div>
                 | 
                 <a   (click)="EditInstructor()"class="btn btn-warning">Edit</a> | 
                 <a   (click)="DeleteSelectedInstructor()"class="btn btn-danger">Delete</a> | 
@@ -55,7 +55,7 @@
                                 <th>Job Title</th>
                                 <th>Image</th>
                                 <th>Rate</th>
-                                <th>action</th>
+                                <!-- <th>action</th> -->
                                 <th></th>
                               </tr>
                             </thead>
@@ -75,7 +75,7 @@
                                     <img src="http://clslearn.net{{instructor.image}}" height="70" />
                                   </td>
                                   <td>{{instructor.internalRate}}</td>
-                                  <td>
+                                  <!-- <td>
                                     <div class="btn-group">
                                       <button type="button" class="btn btn-info dropdown-toggle ripple" data-toggle="dropdown" aria-expanded="false"><span class="ink animate" style="height: 196px; width: 196px; top: -72px; left: -38.2031px;"></span>
                                         Files
@@ -85,10 +85,10 @@
                                         <li><a target="_blank" href="http://clslearn.net{{instructor.nationalIdPath}}">NationalId</a></li>
                                         <!-- <li><a target="_blank" (click)="goToNationalIdPath()">NationalId</a></li> -->
                     
-                                        <li><a target="_blank" href="http://clslearn.net{{instructor.cvPath}}">CV</a></li>
+                                        <!-- <li><a target="_blank" href="http://clslearn.net{{instructor.cvPath}}">CV</a></li>
                                       </ul>
                                     </div>
-                                  </td>
+                                  </td>  -->
                               </tr>
                           </tbody>
                           </table>
@@ -250,11 +250,37 @@
                             [searchable]="true" 
                             [clearable]="true"
                             [(ngModel)]="selectedInsCourses"
+                            (change)="selectChange()"
                            >
                             <ng-option  [value]="item.id" [disabled]="item.disabled" *ngFor="let item of allCourses" >
                                 <span style="background: #f7f7f7;width: 100%; margin: 0px;page-break-after: 5px; display: inline-block;" >{{item.name}}</span>
                             </ng-option>
                     </ng-select>
+                    <!-- <ul class="heroes">
+                      <li *ngFor="let item of selectedInsCourses"   >
+                      <span class="badge">{{item.id}}</span> 
+                    </li>
+                    </ul> -->
+                    
+                 <h4>Selected Values</h4>
+
+                <ng-container *ngIf="multiple; else elseTemplate">
+                 <div>
+                 Selected:
+                 <ul class="heroes">
+                 <li *ngFor="let item of selectedValue">
+                  
+                   <span class="badge">  {{item.name}}</span> 
+
+                  </li>
+                  </ul>
+               </div>
+               </ng-container>
+                <ng-template #elseTemplate>
+                <div>
+                Selected: {{selectedValue}}
+                </div>
+                </ng-template>
                 </div>
 
                   <div class="form-group form-control-material static">

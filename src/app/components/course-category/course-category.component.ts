@@ -29,8 +29,7 @@ export class CourseCategoryComponent implements OnInit {
   searchKey:string;
   btnClicked:boolean = false;
   selection = new SelectionModel <CourseCategoryModel> (false, []);  
-  courseCategories: MatTableDataSource < CourseCategoryModel > ;  
-
+  courseCategories: MatTableDataSource <CourseCategoryModel> ;  
   constructor(
     private _toastSrv : ToastService,
     private _courseCategoryService : CourseCategoryService
@@ -45,6 +44,8 @@ export class CourseCategoryComponent implements OnInit {
 /** Selects all rows if they are not all selected; otherwise clear selection. */  
 masterToggle() {  
     this.isAllSelected() ? this.selection.clear() :this.selection.select();// this.courseCategories.data.forEach(r => this.selection.select(r));  
+    const crsCategory = this.selection.selected; 
+   // this.courseCategory=crsCategory[0];
 }  
 /** The label for the checkbox on the passed row */  
 checkboxLabel(row: CourseCategoryModel): string {  
@@ -56,8 +57,10 @@ checkboxLabel(row: CourseCategoryModel): string {
 //
   GetCourseCategories()
   {
-    this._courseCategoryService.GetCourseCategories().subscribe((data :APIWrapper)=>{
-       this.courseCategories = data.result;
+//  this.courseCategories = new MatTableDataSource(CourseCategoryModel);
+
+    this._courseCategoryService.GetCourseCategories().subscribe((data :any)=>{
+       this.courseCategories =  data.result;
     })
    
   } 
